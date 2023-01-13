@@ -35,6 +35,7 @@ Pop A Task is a simple task-reminder tool that lets users invite other users to 
 -
 
 # Out of scope
-- 
-- 
-- 
+- User's live location sharing 
+- SOS services 
+- Amber Alert 
+- Bio-metric Authentication
