@@ -31,3 +31,5 @@ Pop A Task is a simple task-reminder tool that lets users invite other users to 
 -user needs to complete the task
 -assign task
 -
+
+#Out of Scope
