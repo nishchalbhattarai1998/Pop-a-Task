@@ -12,3 +12,15 @@ Pop A Task is a simple task-reminder tool that lets users invite other users to 
 - Registration
 - Authentication
 - User Profile
+- User list
+- Task Category
+- Task Priority
+- Add Task
+- Modify Task
+- Remove Task
+- Task deadline
+- Assign user to a task
+- Remove user from a task
+- Add comment to a task
+- Chat with other users (group Chat)
+- Multimedia Sharing in chat
