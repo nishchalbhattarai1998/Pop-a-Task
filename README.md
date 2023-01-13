@@ -41,5 +41,5 @@ Pop A Task is a simple task-reminder tool that lets users invite other users to 
 - Bio-metric Authentication
 - Video Call
 
-# Technical Specifications
+# Specs
 - 
