@@ -43,4 +43,4 @@ Pop A Task is a simple task-reminder tool that lets users invite other users to 
 - Video Call
 
 # Specs
-- 
+- We will be using swift targeting iOS 12
