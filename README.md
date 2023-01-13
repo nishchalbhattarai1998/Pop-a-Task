@@ -27,9 +27,14 @@ Pop A Task is a simple task-reminder tool that lets users invite other users to 
 
 # User role
 
--True Authentication
--assign task
--complete task task
--check the notification regularly
--help others to complete the task
+- True Authentication
+- assign task
+- complete task task
+- check the notification regularly
+- help others to complete the task
 -
+
+# Out of scope
+- 
+- 
+- 
