@@ -45,3 +45,4 @@ Pop A Task is a simple task-reminder tool that lets users invite other users to 
 # Specs
 - We will be using swift targeting iOS 12
 - We will be using firebase platform for the backend
+- XCode and Simulator
