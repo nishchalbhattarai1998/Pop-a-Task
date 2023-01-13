@@ -32,7 +32,7 @@ Pop A Task is a simple task-reminder tool that lets users invite other users to 
 -assign task
 -
 
-#Out of Scope
+# Out of Scope
 
 - User's live location sharing 
 - SOS services 
