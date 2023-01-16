@@ -6,7 +6,7 @@ Pop A Task is a simple task-reminder tool that lets users invite other users to 
 - Sangam Gurung
 - Manpreet Kaur
 - Harneet Kaur
-- Charles Roy
+- Charles Sudipta Roy
 
 # Features
 - Registration
@@ -18,7 +18,7 @@ Pop A Task is a simple task-reminder tool that lets users invite other users to 
 - Add Task
 - Implement calender
 - Calender event
-- The Asignee will get reminder notification before the deadline
+- Reminder notification before the deadline
 - Modify Task
 - Remove Task
 - Task deadline
