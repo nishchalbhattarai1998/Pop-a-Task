@@ -17,7 +17,7 @@ Pop A Task is a simple task-reminder tool that lets users invite other users to 
 - Task Priority
 - Add Task
 - Implement calender
-- Add the task as a calender event in bothe creator and asignee's calender
+- Calender event
 - The Asignee will get reminder notification before the deadline
 - Modify Task
 - Remove Task
