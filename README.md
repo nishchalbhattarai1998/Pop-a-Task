@@ -16,19 +16,17 @@ Pop A Task is a simple task-reminder tool that lets users invite other users to 
 - Task Category
 - Task Priority
 - Add Task
-- Implement calender
+- Date Picker
 - Calender event
-- Reminder notification before the deadline
+- COlor Grading task
 - Modify Task
 - Remove Task
 - Task deadline
 - Assign user to a task
 - Remove user from a task
 - Add/Remove comment to a task
-- Send messhages
-- Multimedia Sharing through messages
-- Notifications
-- Send Notification through SMS
+- Send message
+- Send Notes through mail
 
 # User role
 
@@ -45,6 +43,8 @@ Pop A Task is a simple task-reminder tool that lets users invite other users to 
 - Amber Alert 
 - Bio-metric Authentication
 - Video Call
+- Notifications
+- Multimedia Sharing through messages
 
 # Specs
 - We will be using swift targeting iOS 12
