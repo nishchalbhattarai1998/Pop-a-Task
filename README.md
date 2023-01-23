@@ -11,39 +11,37 @@ Pop A Task is a simple task-reminder tool that lets users invite other users to 
 # Features
 - Registration
 - Authentication
+- Forget Password
 - User Profile
-- User list
+- Create Group
 - Task Category
-- Task Priority
+- Add Category
 - Add Task
+- Task Priority
 - Date Picker
-- Calender event
-- COlor Grading task
+- Task Deadline
+- Assign User
+- Remove user from task
+- Add Comment
+- Remove Comment
 - Modify Task
+- Calender Event
+- Color Graded task
 - Remove Task
-- Task deadline
-- Assign user to a task
-- Remove user from a task
-- Add/Remove comment to a task
-- Send message
-- Send Notes through mail
+- Log Out
+- Dark Mode
 
 # User role
 
-- True Authentication
-- assign task
-- Complete  task
-- check the notification regularly
-- help others to complete the task
+- Only admin can add or remove members
+- Group members can only invite other member and see the member list
 
 
 # Out of scope
-- User's live location sharing 
-- SOS services 
-- Amber Alert 
 - Bio-metric Authentication
-- Video Call
 - Notifications
+- Sending messages to members
+- Adding multimedia content to the comment section
 - Multimedia Sharing through messages
 
 # Specs
