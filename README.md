@@ -1,5 +1,5 @@
 # Pop-a-Task
-Pop A Task is a simple task-reminder tool that lets users invite other users to create or modify tasks, discuss the work that needs to be done, and reach the milestone in a set period of time. Members can communicate with one another via the chat tool, a shared note, and a shared calendar event. This application can be used at home, in a small group, or in a small business.
+Pop A Task is a simple task-reminder tool that lets users to create or modify tasks, discuss the work that needs to be done, and reach the milestone in a set period of time. This application can be used at home, in a small group, or in a small business.
 
 # Team Group 48(CS)
 - Nishchal Bhattari
