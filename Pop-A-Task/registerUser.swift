@@ -18,23 +18,37 @@ struct RegisterView: View {
         VStack {
             TextField("Name", text: $name)
                 .padding()
-                .background(Color.gray)
+                .frame(width: 350.0, height: 50.0)
+                .background(Color(hue: 0.345, saturation: 0.095, brightness: 0.952))
                 .cornerRadius(5.0)
+                .padding(10)
             
             TextField("Email", text: $email)
                 .padding()
-                .background(Color.gray)
+                .frame(width: 350.0, height: 50.0)
+                .background(Color(hue: 0.345, saturation: 0.095, brightness: 0.952))
                 .cornerRadius(5.0)
+                .padding(10)
             
             SecureField("Password", text: $password)
                 .padding()
-                .background(Color.gray)
+                .frame(width: 350.0, height: 50.0)
+                .background(Color(hue: 0.345, saturation: 0.095, brightness: 0.952))
                 .cornerRadius(5.0)
-            
-            Button(action: register) {
-                Text("Register")
+                .padding(10)
+            Button("Sign Up") {
+                /*@START_MENU_TOKEN@*//*@PLACEHOLDER=Action@*/ /*@END_MENU_TOKEN@*/
             }
+            .padding()
+            .frame(width: 350.0, height: 50.0)
+            .background(Color.green)
+            .foregroundColor(Color.white)
+            .cornerRadius(5.0)
+            .padding()
+
+        }
+
         }
     }
-}
+
 
