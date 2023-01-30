@@ -23,7 +23,23 @@ struct ContentView: View {
                     .foregroundColor(.green)
                 Text("Pop A Task").fontWeight(.bold)
                     .foregroundColor(.green)
-                    .padding(.bottom, 400.0)
+                    .padding(.bottom, 100.0)
+                
+                TextField("Email", text: $email)
+                    .padding()
+                    .frame(width: 300.0, height: 50.0)
+                    .background(Color(hue: 0.345, saturation: 0.095, brightness: 0.952))
+                    .cornerRadius(5.0)
+                    .padding(10)
+                
+                SecureField("Password", text: $password)
+                    .padding()
+                    .frame(width: 300.0, height: 50.0)
+                    .background(Color(hue: 0.345, saturation: 0.095, brightness: 0.952))
+                    .cornerRadius(5.0)
+                    .padding(10)
+                    .padding(.bottom, 250.0)
+                
                 Button("Login") {
                     /*@START_MENU_TOKEN@*//*@PLACEHOLDER=Action@*/ /*@END_MENU_TOKEN@*/
                 }
