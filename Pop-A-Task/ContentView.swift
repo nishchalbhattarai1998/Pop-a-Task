@@ -71,7 +71,7 @@ struct ContentView: View {
                 .foregroundColor(Color.white)
                 .cornerRadius(5.0)
                 
-                NavigationLink(destination: RegisterView()) {
+                NavigationLink(destination: RegisterView().navigationBarBackButtonHidden(true)) {
                     HStack{
                         
                         Text("Don't have an Account?")
@@ -82,9 +82,11 @@ struct ContentView: View {
                             .font(.headline)
                             .fontWeight(.bold)
                             .foregroundColor(Color("AccentColor"))
-                        
-                        
-                    }.padding(.bottom, 100.0)}
+                    }
+                    .padding(.bottom, 100.0)
+                    
+                    
+                }
                 
                 
             }
