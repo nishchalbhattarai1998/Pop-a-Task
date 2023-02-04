@@ -12,6 +12,25 @@ import FirebaseAuth
 
 
 struct ContentView: View {
+    @State private var isLoggedIn: Bool = false
+
+        var body: some View {
+            Group {
+                if isLoggedIn {
+                    HomeView()
+                } else {
+                    LoginView(isLoggedIn: $isLoggedIn)
+                }
+            }
+        }
+    
+    
+}
+    
+    
+    
+    struct LoginView: View {
+        @Binding var isLoggedIn: Bool
     @State var email = "";
     @State var password = "";
     var body: some View {
@@ -44,15 +63,6 @@ struct ContentView: View {
                 
                 Button("Login") {
                     login()
-//                   var received=login()
-//                    if(received){
-//                        NavigationLink(destination: HomeView()) {
-//                                                Text("l")
-//                                            }
-//                    }
-//                    else{
-//                        print("Hum se na ho payega")
-//                    }
                 }
                 .fontWeight(.bold)
                 .padding(0.0)
@@ -72,16 +82,9 @@ struct ContentView: View {
                             .font(.headline)
                             .fontWeight(.bold)
                             .foregroundColor(Color("AccentColor"))
-                        //                    login()
                         
                         
                     }.padding(.bottom, 100.0)}
-//                .fontWeight(.bold)
-//                .padding(0.0)
-//                .frame(width: 300.0, height: 50.0)
-//                .background(Color(hue: 0.343, saturation: 0.361, brightness: 0.978))
-//                .foregroundColor(Color.green)
-//                .cornerRadius(5.0)
                 
                 
             }
@@ -89,21 +92,17 @@ struct ContentView: View {
     }
     
     func login() {
-//        var isvalid = false
         Auth.auth().signIn(withEmail: email, password: password){
             result, error in
             if error != nil{
                 print(error!.localizedDescription)
-//              isvalid=false
             }
             else{
                 print("Login successful")
-//             isvalid=true
+                self.isLoggedIn = true
             }
             
         }
-    print("signin clicked")
-//        return isvalid
     }
     
 }
