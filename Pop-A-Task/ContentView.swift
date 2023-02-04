@@ -32,15 +32,15 @@ struct ContentView: View {
                     .frame(width: 300.0, height: 50.0)
                     .background(Color(hue: 0.345, saturation: 0.095, brightness: 0.952))
                     .cornerRadius(5.0)
-                    .padding(10)
+                    .padding(5)
                 
                 SecureField("Password", text: $password)
                     .padding()
                     .frame(width: 300.0, height: 50.0)
                     .background(Color(hue: 0.345, saturation: 0.095, brightness: 0.952))
                     .cornerRadius(5.0)
-                    .padding(10)
-                    .padding(.bottom, 250.0)
+                    .padding(5)
+                    .padding(.bottom, 10.0)
                 
                 Button("Login") {
                     login()
@@ -53,16 +53,26 @@ struct ContentView: View {
                 .cornerRadius(5.0)
                 
                 NavigationLink(destination: RegisterView()) {
-                    Button("Sign Up") {
-                        /*@START_MENU_TOKEN@*//*@PLACEHOLDER=Action@*/ /*@END_MENU_TOKEN@*/
-                    }
-                    .fontWeight(.bold)
-                    .padding(0.0)
-                    .frame(width: 300.0, height: 50.0)
-                    .background(Color(hue: 0.343, saturation: 0.361, brightness: 0.978))
-                    .foregroundColor(Color.green)
-                    .cornerRadius(5.0)
-                }
+                    HStack{
+                        
+                        Text("Don't have an Account?")
+                            .font(.subheadline)
+                            .foregroundColor(Color.black)
+                            .padding([.top, .leading, .bottom])
+                        Text("Sign Up")
+                            .font(.headline)
+                            .fontWeight(.bold)
+                            .foregroundColor(Color("AccentColor"))
+                        //                    login()
+                        
+                        
+                    }.padding(.bottom, 100.0)}
+//                .fontWeight(.bold)
+//                .padding(0.0)
+//                .frame(width: 300.0, height: 50.0)
+//                .background(Color(hue: 0.343, saturation: 0.361, brightness: 0.978))
+//                .foregroundColor(Color.green)
+//                .cornerRadius(5.0)
                 
                 
             }
@@ -73,6 +83,9 @@ struct ContentView: View {
             result, error in
             if error != nil{
                 print(error!.localizedDescription)
+            }
+            else{
+                print("Login successful")
             }
         }
     print("signin clicked")
