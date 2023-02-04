@@ -13,8 +13,9 @@ import FirebaseAuth
 
 
 struct userprofileView: View {
+//    @Environment(\.drawerState) var drawerState
 
-    let profileMenu = ["User Details", "User Picture", "Message", "Resate Password", "Help", "Log Out"]
+    let profileMenu = ["User Details", "Add Group", "Add Task", "Members", "Help", "Log Out"]
     
     var body: some View {
 
@@ -32,6 +33,9 @@ struct userprofileView: View {
             }
             .onTapGesture {
                 print("You tapped \(profileMenu)")
+                if profileMenu == "Log Out"{
+                    print("Please set the logout function")
+                }
             }
         }
     }

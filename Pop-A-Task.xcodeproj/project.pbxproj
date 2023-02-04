@@ -42,6 +42,7 @@
 		D37E7A742987917200F7ADCD /* FirebaseStorageCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = D37E7A732987917200F7ADCD /* FirebaseStorageCombine-Community */; };
 		D37E7A76298874B300F7ADCD /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D37E7A75298874B300F7ADCD /* GoogleService-Info.plist */; };
 		EDDAC73F298E25260009A250 /* profileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDDAC73E298E25260009A250 /* profileView.swift */; };
+		EDDAC746298E9E790009A250 /* Drawer in Frameworks */ = {isa = PBXBuildFile; productRef = EDDAC745298E9E790009A250 /* Drawer */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -88,6 +89,7 @@
 				D37E7A5A2987917200F7ADCD /* FirebaseFirestoreCombine-Community in Frameworks */,
 				D37E7A6A2987917200F7ADCD /* FirebaseMessaging in Frameworks */,
 				D37E7A662987917200F7ADCD /* FirebaseInstallations in Frameworks */,
+				EDDAC746298E9E790009A250 /* Drawer in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -177,6 +179,7 @@
 				D37E7A6F2987917200F7ADCD /* FirebaseRemoteConfigSwift */,
 				D37E7A712987917200F7ADCD /* FirebaseStorage */,
 				D37E7A732987917200F7ADCD /* FirebaseStorageCombine-Community */,
+				EDDAC745298E9E790009A250 /* Drawer */,
 			);
 			productName = "Pop-A-Task";
 			productReference = A40F6A112975E69B00F82F50 /* Pop-A-Task.app */;
@@ -208,6 +211,7 @@
 			mainGroup = A40F6A082975E69B00F82F50;
 			packageReferences = (
 				D37E7A3E2987917100F7ADCD /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				EDDAC744298E9E790009A250 /* XCRemoteSwiftPackageReference "swiftui-drawer" */,
 			);
 			productRefGroup = A40F6A122975E69B00F82F50 /* Products */;
 			projectDirPath = "";
@@ -451,6 +455,14 @@
 				kind = branch;
 			};
 		};
+		EDDAC744298E9E790009A250 /* XCRemoteSwiftPackageReference "swiftui-drawer" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/maustinstar/swiftui-drawer";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -588,6 +600,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = D37E7A3E2987917100F7ADCD /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = "FirebaseStorageCombine-Community";
+		};
+		EDDAC745298E9E790009A250 /* Drawer */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = EDDAC744298E9E790009A250 /* XCRemoteSwiftPackageReference "swiftui-drawer" */;
+			productName = Drawer;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

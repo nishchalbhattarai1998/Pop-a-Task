@@ -52,27 +52,6 @@ struct RegisterView: View {
         
     }
     func register() {
-        //        Auth.auth().createUser(withEmail: email, password: password){
-        //            result, error in
-        //            if error != nil{
-        //                print(error!.localizedDescription)
-        //            }
-        //        }
-        //        // Save data to Firestore
-        //        let db = Firestore.firestore()
-        //        db.collection("users").document(email).setData([
-        //            "email": email,
-        //            "password": password,
-        //            "name": name
-        //        ]) { err in
-        //            if let err = err {
-        //                print("Error writing document: \(err)")
-        //            } else {
-        //                print("Document successfully written!")
-        //            }
-        //        }
-        //    }
-        
         Auth.auth().createUser(withEmail: email, password: password) { (result, error) in
             if let error = error {
                 print("Error creating user: \(error)")
@@ -91,6 +70,12 @@ struct RegisterView: View {
                 }
             }
         }
+    }
+}
+
+struct RegisterView_Previews: PreviewProvider{
+    static var previews: some View{
+        RegisterView()
     }
 }
 
