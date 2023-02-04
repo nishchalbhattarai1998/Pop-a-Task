@@ -40,6 +40,7 @@
 		D37E7A722987917200F7ADCD /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = D37E7A712987917200F7ADCD /* FirebaseStorage */; };
 		D37E7A742987917200F7ADCD /* FirebaseStorageCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = D37E7A732987917200F7ADCD /* FirebaseStorageCombine-Community */; };
 		D37E7A76298874B300F7ADCD /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D37E7A75298874B300F7ADCD /* GoogleService-Info.plist */; };
+		EDDAC73F298E25260009A250 /* profileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDDAC73E298E25260009A250 /* profileView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,6 +51,7 @@
 		A40F6A1B2975E69D00F82F50 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		D37E7A3C298790D000F7ADCD /* registerUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = registerUser.swift; sourceTree = "<group>"; };
 		D37E7A75298874B300F7ADCD /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		EDDAC73E298E25260009A250 /* profileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = profileView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,6 +112,7 @@
 			isa = PBXGroup;
 			children = (
 				A40F6A142975E69B00F82F50 /* Pop_A_TaskApp.swift */,
+				EDDAC73E298E25260009A250 /* profileView.swift */,
 				A40F6A162975E69B00F82F50 /* ContentView.swift */,
 				D37E7A3C298790D000F7ADCD /* registerUser.swift */,
 				A40F6A182975E69D00F82F50 /* Assets.xcassets */,
@@ -230,6 +233,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EDDAC73F298E25260009A250 /* profileView.swift in Sources */,
 				A40F6A172975E69B00F82F50 /* ContentView.swift in Sources */,
 				D37E7A3D298790D000F7ADCD /* registerUser.swift in Sources */,
 				A40F6A152975E69B00F82F50 /* Pop_A_TaskApp.swift in Sources */,
