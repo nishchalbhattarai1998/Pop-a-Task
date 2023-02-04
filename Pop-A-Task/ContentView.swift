@@ -6,12 +6,14 @@
 //
 
 import SwiftUI
+import Firebase
+import FirebaseFirestore
+import FirebaseAuth
 
 
 struct ContentView: View {
     @State var email = "";
     @State var password = "";
-    @State var name = "";
     var body: some View {
         NavigationView {
             
@@ -41,7 +43,7 @@ struct ContentView: View {
                     .padding(.bottom, 250.0)
                 
                 Button("Login") {
-                    /*@START_MENU_TOKEN@*//*@PLACEHOLDER=Action@*/ /*@END_MENU_TOKEN@*/
+                    login()
                 }
                 .fontWeight(.bold)
                 .padding(0.0)
@@ -66,7 +68,19 @@ struct ContentView: View {
             }
         }
     }
+    func login() {
+        Auth.auth().signIn(withEmail: email, password: password){
+            result, error in
+            if error != nil{
+                print(error!.localizedDescription)
+            }
+        }
+    print("signin clicked")
+    }
+    
 }
+
+
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {

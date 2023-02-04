@@ -39,7 +39,7 @@
 		D37E7A702987917200F7ADCD /* FirebaseRemoteConfigSwift in Frameworks */ = {isa = PBXBuildFile; productRef = D37E7A6F2987917200F7ADCD /* FirebaseRemoteConfigSwift */; };
 		D37E7A722987917200F7ADCD /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = D37E7A712987917200F7ADCD /* FirebaseStorage */; };
 		D37E7A742987917200F7ADCD /* FirebaseStorageCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = D37E7A732987917200F7ADCD /* FirebaseStorageCombine-Community */; };
-		D37E7A76298874B300F7ADCD /* GoogleService-Info (1).plist in Resources */ = {isa = PBXBuildFile; fileRef = D37E7A75298874B300F7ADCD /* GoogleService-Info (1).plist */; };
+		D37E7A76298874B300F7ADCD /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D37E7A75298874B300F7ADCD /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -49,7 +49,7 @@
 		A40F6A182975E69D00F82F50 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A40F6A1B2975E69D00F82F50 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		D37E7A3C298790D000F7ADCD /* registerUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = registerUser.swift; sourceTree = "<group>"; };
-		D37E7A75298874B300F7ADCD /* GoogleService-Info (1).plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info (1).plist"; sourceTree = "<group>"; };
+		D37E7A75298874B300F7ADCD /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,7 +113,7 @@
 				A40F6A162975E69B00F82F50 /* ContentView.swift */,
 				D37E7A3C298790D000F7ADCD /* registerUser.swift */,
 				A40F6A182975E69D00F82F50 /* Assets.xcassets */,
-				D37E7A75298874B300F7ADCD /* GoogleService-Info (1).plist */,
+				D37E7A75298874B300F7ADCD /* GoogleService-Info.plist */,
 				A40F6A1A2975E69D00F82F50 /* Preview Content */,
 			);
 			path = "Pop-A-Task";
@@ -218,7 +218,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A40F6A1C2975E69D00F82F50 /* Preview Assets.xcassets in Resources */,
-				D37E7A76298874B300F7ADCD /* GoogleService-Info (1).plist in Resources */,
+				D37E7A76298874B300F7ADCD /* GoogleService-Info.plist in Resources */,
 				A40F6A192975E69D00F82F50 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
