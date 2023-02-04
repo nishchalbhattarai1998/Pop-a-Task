@@ -20,10 +20,15 @@ struct userprofileView: View {
 
         List(profileMenu, id: \.self) { profileMenu in
             HStack {
-                Image("")
+                Image(systemName: "checkmark.circle")
                     .resizable()
-                    .frame(width: 50, height: 50)
+                    .foregroundColor(Color("AccentColor"))
+                    .frame(width: 30, height: 30)
+                    .padding(20)
                 Text(profileMenu)
+                    .font(.title3)
+                    .fontWeight(.semibold)
+                    .foregroundColor(Color.green)
             }
             .onTapGesture {
                 print("You tapped \(profileMenu)")
