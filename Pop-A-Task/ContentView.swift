@@ -44,6 +44,15 @@ struct ContentView: View {
                 
                 Button("Login") {
                     login()
+//                   var received=login()
+//                    if(received){
+//                        NavigationLink(destination: HomeView()) {
+//                                                Text("l")
+//                                            }
+//                    }
+//                    else{
+//                        print("Hum se na ho payega")
+//                    }
                 }
                 .fontWeight(.bold)
                 .padding(0.0)
@@ -78,17 +87,23 @@ struct ContentView: View {
             }
         }
     }
+    
     func login() {
+//        var isvalid = false
         Auth.auth().signIn(withEmail: email, password: password){
             result, error in
             if error != nil{
                 print(error!.localizedDescription)
+//              isvalid=false
             }
             else{
                 print("Login successful")
+//             isvalid=true
             }
+            
         }
     print("signin clicked")
+//        return isvalid
     }
     
 }
