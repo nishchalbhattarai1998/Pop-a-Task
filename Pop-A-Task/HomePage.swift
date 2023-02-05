@@ -71,8 +71,7 @@ struct HomeView: View {
         }
         
     }
-    
-    
+
     class UserData: ObservableObject {
         @Published var userName: String?
         init() {
