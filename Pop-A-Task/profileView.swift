@@ -13,7 +13,6 @@ import FirebaseAuth
 
 
 struct userprofileView: View {
-//    @Environment(\.drawerState) var drawerState
 
     let profileMenu = ["User Details", "Add Group", "Add Task", "Members", "Help", "Log Out"]
     
@@ -35,6 +34,9 @@ struct userprofileView: View {
                 print("You tapped \(profileMenu)")
                 if profileMenu == "Log Out"{
                     print("Please set the logout function")
+                }
+                if profileMenu == "User Details"{
+                    
                 }
             }
         }

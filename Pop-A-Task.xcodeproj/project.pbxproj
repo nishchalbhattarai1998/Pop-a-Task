@@ -43,6 +43,7 @@
 		D37E7A76298874B300F7ADCD /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D37E7A75298874B300F7ADCD /* GoogleService-Info.plist */; };
 		EDDAC73F298E25260009A250 /* profileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDDAC73E298E25260009A250 /* profileView.swift */; };
 		EDDAC746298E9E790009A250 /* Drawer in Frameworks */ = {isa = PBXBuildFile; productRef = EDDAC745298E9E790009A250 /* Drawer */; };
+		EDDAC74829905F140009A250 /* userDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDDAC74729905F140009A250 /* userDetails.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -55,6 +56,7 @@
 		D37E7A3C298790D000F7ADCD /* registerUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = registerUser.swift; sourceTree = "<group>"; };
 		D37E7A75298874B300F7ADCD /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		EDDAC73E298E25260009A250 /* profileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = profileView.swift; sourceTree = "<group>"; };
+		EDDAC74729905F140009A250 /* userDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = userDetails.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,6 +119,7 @@
 			children = (
 				A40F6A142975E69B00F82F50 /* Pop_A_TaskApp.swift */,
 				EDDAC73E298E25260009A250 /* profileView.swift */,
+				EDDAC74729905F140009A250 /* userDetails.swift */,
 				A40F6A162975E69B00F82F50 /* ContentView.swift */,
 				A4E4756B298E64C100763BEE /* HomePage.swift */,
 				D37E7A3C298790D000F7ADCD /* registerUser.swift */,
@@ -245,6 +248,7 @@
 				A40F6A172975E69B00F82F50 /* ContentView.swift in Sources */,
 				D37E7A3D298790D000F7ADCD /* registerUser.swift in Sources */,
 				A40F6A152975E69B00F82F50 /* Pop_A_TaskApp.swift in Sources */,
+				EDDAC74829905F140009A250 /* userDetails.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

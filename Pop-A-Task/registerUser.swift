@@ -80,10 +80,9 @@ struct RegisterView: View {
                         }.padding(.bottom, 100.0)
                     }
                 }
-                
-            
-            
-        }}
+        }
+        
+    }
      func register() {
          
         Auth.auth().createUser(withEmail: email, password: password) { (result, error) in

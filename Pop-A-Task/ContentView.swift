@@ -27,10 +27,8 @@ struct ContentView: View {
     
 }
     
-    
-    
     struct LoginView: View {
-        @Binding var isLoggedIn: Bool
+    @Binding var isLoggedIn: Bool
     @State var email = "";
     @State var password = "";
     var body: some View {
