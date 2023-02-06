@@ -23,8 +23,6 @@ struct ContentView: View {
                 }
             }
         }
-    
-    
 }
     
     struct LoginView: View {

@@ -88,7 +88,7 @@ struct HomeView: View {
                     self.userName = document.data()?["name"] as? String
                 }
         } else {
-            // No user is signed in.
+            print("User not found")
         }
 
         }

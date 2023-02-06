@@ -87,7 +87,7 @@ class UserData: ObservableObject {
                 self.email = document.data()?["email"] as? String
             }
     } else {
-        // No user is signed in.
+        print("User not found")
     }
 
     }
