@@ -37,7 +37,8 @@ struct ContentView: View {
     @Binding var isLoggedIn: Bool
     @State var email = "";
     @State var password = "";
-    @State private var error = false
+//    @State private var error = false
+    @State private var errorMessage: String = ""
     var body: some View {
         NavigationView {
             
@@ -98,12 +99,10 @@ struct ContentView: View {
 
                 }
                 VStack{
-                    if error {
-                                    Text("Wrong email or password. Try again.")
+                                    Text("\(errorMessage)")
                                         .font(.body)
                                         .foregroundColor(.red)
                                         .padding()
-                    }
                 }.padding(.bottom, -50.0)
                 
             }
@@ -113,11 +112,23 @@ struct ContentView: View {
     func login() {
         Auth.auth().signIn(withEmail: email, password: password){
             result, error in
-            if error != nil{
-                self.error = true
-                print(error!.localizedDescription)
-                        print("isLoggedIn if state login tap: \(self.isLoggedIn)")
-                return
+//            if error != nil{
+//                self.error = true
+//                print(error!.localizedDescription)
+//                        print("isLoggedIn if state login tap: \(self.isLoggedIn)")
+//                return
+//            }
+            if let error = error {
+                switch error.localizedDescription {
+                case "The email address is badly formatted.":
+                    self.errorMessage = "Invalid email format."
+                case "The password is invalid or the user does not have a password.":
+                    self.errorMessage = "Invalid password."
+                case "There is no user record corresponding to this identifier. The user may have been deleted.":
+                    self.errorMessage = "User not found."
+                default:
+                    self.errorMessage = "Login failed. Try again."
+                }
             }
             else{
                 print("Login successful")
