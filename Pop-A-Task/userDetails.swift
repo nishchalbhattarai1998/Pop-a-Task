@@ -32,6 +32,7 @@ struct user: View {
     let menu = ["Home", "Profile", "Groups", "Tasks", "Help", "Logout"]
     @State private var name: String = ""
     @State private var email: String = ""
+    @State private var cell: String = ""
     @ObservedObject var userData: UserData
     @State private var isEditing = false
 //    @Binding var isLoggedIn: Bool
@@ -57,6 +58,7 @@ struct user: View {
                         Section {
                             TextField("Name", text: $name)
                             TextField("Email", text: $email)
+                            TextField("Mobile", text: $cell)
                         }
                     }
                 } else {
@@ -64,6 +66,7 @@ struct user: View {
                         Section {
                             Text("Name: \(userData.userName ?? "")")
                             Text("Email: \(userData.email ?? "")")
+                            Text("Mobile: \(userData.cell ?? "")")
                         }
                     }
                 }
@@ -92,7 +95,7 @@ struct user: View {
     }
 
         func updateUserProfile() {
-            let data: [String: Any] = ["name": self.name,"email": self.email]
+            let data: [String: Any] = ["name": self.name,"email": self.email, "cell": self.cell]
             db.collection("users").document(userData.userID! ).setData(data, merge: true)
         }
     

@@ -14,6 +14,7 @@ class UserData: ObservableObject {
     @Published var userName: String?
     @Published var email: String?
     @Published var userID: String?
+    @Published var cell: String?
 
     init() {
         if Auth.auth().currentUser != nil {
@@ -26,9 +27,11 @@ class UserData: ObservableObject {
                 }
                 self.userName = document.data()?["name"] as? String
                 self.email = document.data()?["email"] as? String
+                self.cell = document.data()?["cell"] as? String
+                print(self.userID!)
                 print(self.userName ?? "")
                 print(self.email ?? "")
-                print(self.userID!)
+                print(self.cell ?? "")
             }
         } else {
             print("User not found in UserData")
