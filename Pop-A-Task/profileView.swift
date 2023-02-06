@@ -79,8 +79,6 @@ struct Blur: UIViewRepresentable {
         uiView.effect = UIBlurEffect(style: style)
     }
 }
-
-
 struct DrawerView_Previews: PreviewProvider {
     static var previews: some View {
         DrawerView(menu: ["Home", "Profile", "Groups", "Tasks", "Help", "Logout"], username: "", isLoggedIn: .constant(false))
