@@ -18,7 +18,7 @@ struct userDetails: View {
         var body: some View {
             Group {
                 if isLoggedIn {
-                    user()
+                    user(userData: UserData())
                 } else {
                     LoginView(isLoggedIn: $isLoggedIn)
                 }
@@ -32,12 +32,12 @@ struct user: View {
     let menu = ["Home", "Profile", "Groups", "Tasks", "Help", "Logout"]
     @State private var name: String = ""
     @State private var email: String = ""
-    @ObservedObject var userData = UserData()
+    @ObservedObject var userData: UserData
     @State private var isEditing = false
 //    @Binding var isLoggedIn: Bool
 
     var db = Firestore.firestore()
-    let userID = Auth.auth().currentUser?.uid
+//    let userID = Auth.auth().currentUser!.uid
 //    init(){ self._name = State(initialValue: userData.userName ?? "Your Name")
 //        self._email = State(initialValue: $userData.email ?? "Your Mail")}
     
@@ -45,7 +45,7 @@ struct user: View {
     var body: some View {
         ZStack {
             if showMenu {
-                DrawerView(menu: menu, username: userData.userName ?? "no name ud", isLoggedIn: .constant(true))
+                DrawerView(menu: menu, username: userData.userName ?? "no name ud", isLoggedIn: .constant(true), userData: UserData())
                     .transition(.slide)
                     .zIndex(1)
             }
@@ -93,7 +93,7 @@ struct user: View {
 
         func updateUserProfile() {
             let data: [String: Any] = ["name": self.name,"email": self.email]
-            db.collection("users").document(userID ?? "").setData(data, merge: true)
+            db.collection("users").document(userData.userID! ).setData(data, merge: true)
         }
     
 }

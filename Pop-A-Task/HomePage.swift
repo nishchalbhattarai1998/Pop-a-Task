@@ -44,7 +44,7 @@ struct Home: View {
         NavigationView {
             ZStack {
                 if showMenu {
-                    DrawerView(menu: menu, username: userData.userName ?? "Loading", isLoggedIn: .constant(true))
+                    DrawerView(menu: menu, username: userData.userName ?? "Loading", isLoggedIn: .constant(true), userData: UserData())
                         .transition(.slide)
                         .zIndex(1)
                     //                            .overlay(Color.black.opacity(0.5))

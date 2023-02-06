@@ -18,7 +18,7 @@ struct DrawerView: View {
     let menu: [String]
     let username: String
     @Binding var isLoggedIn: Bool
-    @ObservedObject var userData = UserData()
+    @ObservedObject var userData: UserData
 
     var body: some View {
         ZStack {
@@ -57,8 +57,11 @@ struct DrawerView: View {
             print("isLoggedIn state at m h t: \(self.isLoggedIn)")
             return AnyView(HomeView(isLoggedIn: .constant(true)))
         case "Logout":
-            logout()
-            print("isLoggedIn state at logout tap: \(self.isLoggedIn)")
+            onTapGesture {
+                logout()
+                print("isLoggedIn state at logout tap: \(self.isLoggedIn)")
+            }
+            
             return AnyView(ContentView())
         default:
             return AnyView(EmptyView())
@@ -94,7 +97,7 @@ struct Blur: UIViewRepresentable {
 }
 struct DrawerView_Previews: PreviewProvider {
     static var previews: some View {
-        DrawerView(menu: ["Home", "Profile", "Groups", "Tasks", "Help", "Logout"], username: "", isLoggedIn: .constant(false))
+        DrawerView(menu: ["Home", "Profile", "Groups", "Tasks", "Help", "Logout"], username: "", isLoggedIn: .constant(false), userData: UserData())
     }
 }
 
