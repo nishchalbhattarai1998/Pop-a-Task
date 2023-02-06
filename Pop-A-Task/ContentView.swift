@@ -12,6 +12,7 @@ import FirebaseAuth
 
 
 struct ContentView: View {
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @State private var isLoggedIn: Bool = false
 
         var body: some View {

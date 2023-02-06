@@ -12,65 +12,40 @@ import FirebaseAuth
 import FirebaseFirestore
 
 struct HomeView: View {
-    @State private var showProfile = false
-//        @State private var userUUID: String?
-    @ObservedObject private var userData = UserData()
-    
-    var body: some View {
 
-        ZStack {
-            Button(action: {
-                self.showProfile.toggle()
-            }) {
-                Image(systemName: "person.crop.circle")
-                    .font(.system(size: 40))
-            }
-            .padding(.top, -387.0)
-            .padding(.leading, 321)
-            
-            if showProfile {
-                //                HStack {
-                //                    Spacer()
-                
-                VStack {
-                    HStack {
-                        Text("\(userData.userName!)")
-                            .font(.title)
-                            .foregroundColor(Color.white)
-                        
-                        Spacer()
-                        Spacer()
-                        
-                        Button(action: {
-                            self.showProfile.toggle()
-                        }) {
-                            Image(systemName: "person.crop.circle")
-                                .foregroundColor(Color.white)
-                                .font(.system(size: 40))
+        @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+        @State private var showMenu = false
+        let menu = ["Home", "Profile", "Groups", "Tasks", "Help", "Logout"]
+        @ObservedObject var userData = UserData()
+
+    var body: some View {
+            NavigationView {
+                ZStack {
+                    if showMenu {
+                        DrawerView(menu: menu, username: userData.userName!)
+                            .transition(.slide)
+                            .zIndex(1)
+//                            .overlay(Color.black.opacity(0.5))
+                    }
+
+                    VStack {
+                        if userData.userName != nil {
+                            Text("Welcome, \(userData.userName!)")
+                        } else {
+                            Text("Loading...")
                         }
                     }
-                    .padding()
-                    
-                    
-                    userprofileView()
                 }
-                .background(Color("AccentColor"))
-                .cornerRadius(15)
-                .shadow(radius: 15)
-                .padding()
-                
-                //                }
-                .transition(.move(edge: .trailing))
+                .edgesIgnoringSafeArea(.bottom)
+                .navigationBarItems(leading:
+                    Button(action: { self.showMenu.toggle() }) {
+                        Image(systemName: "person.circle")
+                            .imageScale(.large)
+                    }
+                )
             }
         }
-        
-        if userData.userName != nil {
-            Text("Welcome, \(userData.userName!)")
-        } else {
-            Text("Loading...")
-        }
-        
-    }
+
 
     class UserData: ObservableObject {
         @Published var userName: String?

@@ -12,7 +12,9 @@ import FirebaseFirestore
 import FirebaseAuth
 
 struct userDetails: View {
-
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+    @State private var showMenu = false
+    let menu = ["Home", "Profile", "Groups", "Tasks", "Help", "Logout"]
     @State private var name: String = ""
     @State private var email: String = ""
     @ObservedObject private var userData = UserData()
@@ -20,18 +22,19 @@ struct userDetails: View {
 
     var db = Firestore.firestore()
     let userID = Auth.auth().currentUser?.uid
-    
-//    init(userData: User) {
-//        self._name = State(initialValue: userData.displayName ?? "")
-//        self._email = State(initialValue: userData.email ?? "")
-//    }
     init(){ self._name = State(initialValue: userData.userName ?? "Your Name")
         self._email = State(initialValue: userData.email ?? "Your Mail")}
     
 
-        var body: some View {
-
-
+    var body: some View {
+        ZStack {
+            if showMenu {
+                DrawerView(menu: menu, username: userData.userName!)
+                    .transition(.slide)
+                    .zIndex(1)
+            }
+            
+            
             VStack {
                 if isEditing {
                     Form {
@@ -62,6 +65,15 @@ struct userDetails: View {
                 }
             }
         }
+//        .edgesIgnoringSafeArea(.bottom)
+            .navigationBarItems(leading:
+                Button(action: { self.showMenu.toggle() }) {
+                    Image(systemName: "person.circle")
+                        .imageScale(.large)
+        
+    }
+                                )
+    }
 
         func updateUserProfile() {
             let data: [String: Any] = ["name": self.name,"email": self.email]
