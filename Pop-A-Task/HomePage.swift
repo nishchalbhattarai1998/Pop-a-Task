@@ -53,8 +53,10 @@ struct Home: View {
                 VStack {
                     if userData.userName != nil {
                         Text("Welcome, \(userData.userName!)")
+                        Text("No group no task.")
+                        
                     } else {
-                        Text("Loading...")
+                        Text("Edit or update user details!!")
                     }
                 }
             }

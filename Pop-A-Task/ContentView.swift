@@ -126,13 +126,13 @@ struct ContentView: View {
             if let error = error {
                 switch error.localizedDescription {
                 case "The email address is badly formatted.":
-                    self.errorMessage = "Invalid email format."
+                    self.errorMessage = "Invalid email format or password."
                 case "The password is invalid or the user does not have a password.":
-                    self.errorMessage = "Invalid password."
+                    self.errorMessage = "Invalid email format or password."
                 case "There is no user record corresponding to this identifier. The user may have been deleted.":
-                    self.errorMessage = "User not found."
+                    self.errorMessage = "User not found. Register to get access. "
                 default:
-                    self.errorMessage = "Login failed. Try again."
+                    self.errorMessage = "Login failed. Verify credintials and try again."
                 }
             }
             else{

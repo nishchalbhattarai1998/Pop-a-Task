@@ -28,7 +28,7 @@ struct DrawerView: View {
                     .font(.title)
 
                 List(menu, id: \.self) { item in
-                    NavigationLink(destination: (self.destination(for: item).navigationBarBackButtonHidden(true))) {
+                    NavigationLink(destination: (self.destination(for: item).navigationBarBackButtonHidden(true ))) {
                         Text(item)
                     }
                 }
@@ -52,7 +52,7 @@ struct DrawerView: View {
             return AnyView(HomeView(isLoggedIn: .constant(true)))
         case "Tasks":
             print("isLoggedIn state at m t t: \(self.isLoggedIn)")
-            return AnyView(HomeView(isLoggedIn: .constant(true)))
+            return AnyView(taskView(isLoggedIn: .constant(true)))
         case "Help":
             print("isLoggedIn state at m h t: \(self.isLoggedIn)")
             return AnyView(HomeView(isLoggedIn: .constant(true)))
