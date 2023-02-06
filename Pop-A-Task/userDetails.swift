@@ -29,7 +29,7 @@ struct userDetails: View {
     var body: some View {
         ZStack {
             if showMenu {
-                DrawerView(menu: menu, username: userData.userName!)
+                DrawerView(menu: menu, username: userData.userName!, isLoggedIn: .constant(false))
                     .transition(.slide)
                     .zIndex(1)
             }
