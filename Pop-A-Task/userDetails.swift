@@ -29,7 +29,7 @@ struct userDetails: View {
     var body: some View {
         ZStack {
             if showMenu {
-                DrawerView(menu: menu, username: userData.userName!, isLoggedIn: .constant(false))
+                DrawerView(menu: menu, username: userData.userName ?? "no name ud", isLoggedIn: .constant(false))
                     .transition(.slide)
                     .zIndex(1)
             }
@@ -99,7 +99,7 @@ class UserData: ObservableObject {
                 self.email = document.data()?["email"] as? String
             }
     } else {
-        print("User not found")
+        print("User not found ud")
     }
 
     }

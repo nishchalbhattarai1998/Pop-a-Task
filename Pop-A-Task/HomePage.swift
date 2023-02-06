@@ -22,7 +22,7 @@ struct HomeView: View {
             NavigationView {
                 ZStack {
                     if showMenu {
-                        DrawerView(menu: menu, username: userData.userName!, isLoggedIn: .constant(false))
+                        DrawerView(menu: menu, username: userData.userName ?? "no name HP", isLoggedIn: .constant(false))
                             .transition(.slide)
                             .zIndex(1)
 //                            .overlay(Color.black.opacity(0.5))
@@ -63,7 +63,7 @@ struct HomeView: View {
                     self.userName = document.data()?["name"] as? String
                 }
         } else {
-            print("User not found")
+            print("User not found hp")
         }
 
         }
