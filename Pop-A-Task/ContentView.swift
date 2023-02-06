@@ -99,10 +99,10 @@ struct ContentView: View {
 
                 }
                 VStack{
-                                    Text("\(errorMessage)")
-                                        .font(.body)
-                                        .foregroundColor(.red)
-                                        .padding()
+                    Text("\(errorMessage)")
+                    .font(.body)
+                    .foregroundColor(.red)
+                    .padding()
                 }.padding(.bottom, -50.0)
                 
             }

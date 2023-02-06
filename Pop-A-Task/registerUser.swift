@@ -13,7 +13,7 @@ import FirebaseAuth
 
 struct RegisterView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-
+    @State private var errorMessage: String = ""
     @State private var email = ""
     @State private var password = ""
     @State private var name = ""
@@ -80,6 +80,19 @@ struct RegisterView: View {
                         }.padding(.bottom, 100.0)
                     }
                 }
+            VStack{
+                if errorMessage == "Successfully Registered" {
+                    Text("\(errorMessage)")
+                    .font(.body)
+                    .foregroundColor(.green)
+                }
+                else{
+                    Text("\(errorMessage)")
+                    .font(.body)
+                    .foregroundColor(.red)
+                    .padding()
+                }
+            }.padding(.bottom, -50.0)
         }
         
     }
@@ -87,8 +100,17 @@ struct RegisterView: View {
          
         Auth.auth().createUser(withEmail: email, password: password) { (result, error) in
             if let error = error {
-                print("Error creating user: \(error)")
-            } else {
+                switch error.localizedDescription {
+                case "The email address is badly formatted.":
+                    self.errorMessage = "Invalid email format."
+                case "The email address is already in use by another account.":
+                    self.errorMessage = "Email already in use."
+                case "Password should be at least 6 characters":
+                    self.errorMessage = "Password must be at least 6 characters."
+                default:
+                    self.errorMessage = "Sign up failed. Try again."
+                }
+            }  else {
                 userID.self = Auth.auth().currentUser?.uid ?? ""
                 let db = Firestore.firestore()
                 db.collection("users").document(self.userID).setData([
@@ -101,6 +123,7 @@ struct RegisterView: View {
                         print("Error writing document: \(error)")
                     } else {
                         print("Document successfully written!")
+                        errorMessage = "Successfully Registered"
                     }
                 }
             }
