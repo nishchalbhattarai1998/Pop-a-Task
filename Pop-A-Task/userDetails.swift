@@ -13,23 +13,39 @@ import FirebaseAuth
 
 struct userDetails: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+    @Binding var isLoggedIn: Bool
+
+        var body: some View {
+            Group {
+                if isLoggedIn {
+                    user()
+                } else {
+                    LoginView(isLoggedIn: $isLoggedIn)
+                }
+            }
+        }
+}
+
+struct user: View {
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @State private var showMenu = false
     let menu = ["Home", "Profile", "Groups", "Tasks", "Help", "Logout"]
     @State private var name: String = ""
     @State private var email: String = ""
-    @ObservedObject private var userData = UserData()
+    @ObservedObject var userData = UserData()
     @State private var isEditing = false
+//    @Binding var isLoggedIn: Bool
 
     var db = Firestore.firestore()
     let userID = Auth.auth().currentUser?.uid
-    init(){ self._name = State(initialValue: userData.userName ?? "Your Name")
-        self._email = State(initialValue: userData.email ?? "Your Mail")}
+//    init(){ self._name = State(initialValue: userData.userName ?? "Your Name")
+//        self._email = State(initialValue: $userData.email ?? "Your Mail")}
     
 
     var body: some View {
         ZStack {
             if showMenu {
-                DrawerView(menu: menu, username: userData.userName ?? "no name ud", isLoggedIn: .constant(false))
+                DrawerView(menu: menu, username: userData.userName ?? "no name ud", isLoggedIn: .constant(true))
                     .transition(.slide)
                     .zIndex(1)
             }
@@ -46,8 +62,8 @@ struct userDetails: View {
                 } else {
                     Form {
                         Section {
-                            Text("Name: \(name)")
-                            Text("Email: \(email)")
+                            Text("Name: \(userData.userName ?? "")")
+                            Text("Email: \(userData.email ?? "")")
                         }
                     }
                 }
@@ -80,36 +96,11 @@ struct userDetails: View {
             db.collection("users").document(userID ?? "").setData(data, merge: true)
         }
     
-
-class UserData: ObservableObject {
-    @Published var userName: String?
-    @Published var email: String?
-    init() {
-    if Auth.auth().currentUser != nil {
-
-            let userID = Auth.auth().currentUser?.uid ?? ""
-            print("\(userID)")
-            let db = Firestore.firestore()
-            db.collection("users").document(userID).addSnapshotListener { documentSnapshot, error in
-                guard let document = documentSnapshot else {
-                    print("Error fetching document: \(error!)")
-                    return
-                }
-                self.userName = document.data()?["name"] as? String
-                self.email = document.data()?["email"] as? String
-            }
-    } else {
-        print("User not found ud")
-    }
-
-    }
-}
-    
 }
 
 struct userDetails_Previews: PreviewProvider {
     static var previews: some View {
-        userDetails()
+        userDetails(isLoggedIn: .constant(true))
        
     }
 }

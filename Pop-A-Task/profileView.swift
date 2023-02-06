@@ -12,11 +12,13 @@ import FirebaseFirestore
 import FirebaseAuth
 import UIKit
 
+
 struct DrawerView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     let menu: [String]
     let username: String
     @Binding var isLoggedIn: Bool
+    @ObservedObject var userData = UserData()
 
     var body: some View {
         ZStack {
@@ -40,18 +42,24 @@ struct DrawerView: View {
     private func destination(for item: String) -> some View {
         switch item {
         case "Home":
-            return AnyView(HomeView())
+            print("isLoggedIn state at m h t: \(self.isLoggedIn)")
+            return AnyView(HomeView(isLoggedIn: .constant(true)))
         case "Profile":
-            return AnyView(userDetails())
+            print("isLoggedIn state at m p t:  \(self.isLoggedIn)")
+            return AnyView(userDetails(isLoggedIn: .constant(true)))
         case "Groups":
-            return AnyView(HomeView())
+            print("isLoggedIn state at m g t: \(self.isLoggedIn)")
+            return AnyView(HomeView(isLoggedIn: .constant(true)))
         case "Tasks":
-            return AnyView(HomeView())
+            print("isLoggedIn state at m t t: \(self.isLoggedIn)")
+            return AnyView(HomeView(isLoggedIn: .constant(true)))
         case "Help":
-            return AnyView(HomeView())
+            print("isLoggedIn state at m h t: \(self.isLoggedIn)")
+            return AnyView(HomeView(isLoggedIn: .constant(true)))
         case "Logout":
             logout()
-            return AnyView(LoginView(isLoggedIn: $isLoggedIn))
+            print("isLoggedIn state at logout tap: \(self.isLoggedIn)")
+            return AnyView(ContentView())
         default:
             return AnyView(EmptyView())
         }
@@ -62,9 +70,14 @@ struct DrawerView: View {
             try Auth.auth().signOut()
         } catch let signOutError as NSError {
             print("Error signing out: %@", signOutError)
+            self.isLoggedIn = false
+            print("isLoggedIn if state inside logout function: \(self.isLoggedIn)")
         }
-
-        isLoggedIn = false
+        self.isLoggedIn = false
+        DispatchQueue.main.async {
+            self.isLoggedIn = false
+            print("isLoggedIn if state inside logout function manual change: \(self.isLoggedIn)")
+        }
     }
 }
 

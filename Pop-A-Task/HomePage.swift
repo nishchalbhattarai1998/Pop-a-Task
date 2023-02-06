@@ -12,64 +12,65 @@ import FirebaseAuth
 import FirebaseFirestore
 
 struct HomeView: View {
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+    @Binding var isLoggedIn: Bool
 
-        @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-        @State private var showMenu = false
-        let menu = ["Home", "Profile", "Groups", "Tasks", "Help", "Logout"]
-        @ObservedObject var userData = UserData()
-
-    var body: some View {
-            NavigationView {
-                ZStack {
-                    if showMenu {
-                        DrawerView(menu: menu, username: userData.userName ?? "no name HP", isLoggedIn: .constant(false))
-                            .transition(.slide)
-                            .zIndex(1)
-//                            .overlay(Color.black.opacity(0.5))
-                    }
-
-                    VStack {
-                        if userData.userName != nil {
-                            Text("Welcome, \(userData.userName!)")
-                        } else {
-                            Text("Loading...")
+        var body: some View {
+            Group {
+                if isLoggedIn {
+                    Home()
+                        .onAppear {
+                            print("isLoggedIn if state home: \(self.isLoggedIn)")
                         }
-                    }
+                } else {
+                    LoginView(isLoggedIn: $isLoggedIn)
+                        .onAppear {
+                            print("isLoggedIn else state home: \(self.isLoggedIn)")
+                        }
                 }
-                .edgesIgnoringSafeArea(.bottom)
-                .navigationBarItems(leading:
-                    Button(action: { self.showMenu.toggle() }) {
-                        Image(systemName: "person.circle")
-                            .imageScale(.large)
-                    }
-                )
             }
         }
+}
 
 
-    class UserData: ObservableObject {
-        @Published var userName: String?
-        init() {
-        if Auth.auth().currentUser != nil {
-            
-                let userID = Auth.auth().currentUser?.uid ?? ""
-                print("\(userID)")
-                let db = Firestore.firestore()
-                db.collection("users").document(userID).addSnapshotListener { documentSnapshot, error in
-                    guard let document = documentSnapshot else {
-                        print("Error fetching document: \(error!)")
-                        return
-                    }
-                    self.userName = document.data()?["name"] as? String
+struct Home: View {
+    
+    @State private var showMenu = false
+    let menu = ["Home", "Profile", "Groups", "Tasks", "Help", "Logout"]
+    @ObservedObject var userData = UserData()
+   
+    
+    var body: some View {
+        NavigationView {
+            ZStack {
+                if showMenu {
+                    DrawerView(menu: menu, username: userData.userName ?? "Loading", isLoggedIn: .constant(true))
+                        .transition(.slide)
+                        .zIndex(1)
+                    //                            .overlay(Color.black.opacity(0.5))
                 }
-        } else {
-            print("User not found hp")
+                
+                VStack {
+                    if userData.userName != nil {
+                        Text("Welcome, \(userData.userName!)")
+                    } else {
+                        Text("Loading...")
+                    }
+                }
+            }
+            .edgesIgnoringSafeArea(.bottom)
+            .navigationBarItems(leading:
+            Button(action: { self.showMenu.toggle() }) {
+            Image(systemName: "person.circle")
+            .imageScale(.large)
+            }
+            )
         }
+    }
+}
 
-        }
-    }}
 struct HomeView_Previews: PreviewProvider{
     static var previews: some View{
-        HomeView()
+        HomeView(isLoggedIn: .constant(true))
     }
 }

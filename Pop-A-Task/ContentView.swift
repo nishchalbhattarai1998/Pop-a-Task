@@ -4,7 +4,7 @@
 //
 //  Created by nishchal bhattarai on 2023-01-16.
 //
-
+import Foundation
 import SwiftUI
 import Firebase
 import FirebaseFirestore
@@ -13,14 +13,21 @@ import FirebaseAuth
 
 struct ContentView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-    @State private var isLoggedIn: Bool = false
+    @State var isLoggedIn: Bool = false
 
         var body: some View {
             Group {
                 if isLoggedIn {
-                    HomeView()
+                    HomeView(isLoggedIn: $isLoggedIn)
+                        .onAppear {
+                            print("isLoggedIn if state: \(self.isLoggedIn)")
+                        }
+                    
                 } else {
                     LoginView(isLoggedIn: $isLoggedIn)
+                        .onAppear {
+                            print("isLoggedIn else state: \(self.isLoggedIn)")
+                        }
                 }
             }
         }
@@ -30,6 +37,7 @@ struct ContentView: View {
     @Binding var isLoggedIn: Bool
     @State var email = "";
     @State var password = "";
+    @State private var error = false
     var body: some View {
         NavigationView {
             
@@ -57,9 +65,15 @@ struct ContentView: View {
                     .cornerRadius(5.0)
                     .padding(5)
                     .padding(.bottom, 10.0)
-                
                 Button("Login") {
-                    login()
+                    if isLoggedIn{
+                        self.isLoggedIn = false
+                        login()
+                    }else{
+                        login()
+                    }
+                    
+//                    self.isLoggedIn = false
                 }
                 .fontWeight(.bold)
                 .padding(0.0)
@@ -81,10 +95,16 @@ struct ContentView: View {
                             .foregroundColor(Color("AccentColor"))
                     }
                     .padding(.bottom, 100.0)
-                    
-                    
+
                 }
-                
+                VStack{
+                    if error {
+                                    Text("Wrong email or password. Try again.")
+                                        .font(.body)
+                                        .foregroundColor(.red)
+                                        .padding()
+                    }
+                }.padding(.bottom, -50.0)
                 
             }
         }
@@ -94,11 +114,15 @@ struct ContentView: View {
         Auth.auth().signIn(withEmail: email, password: password){
             result, error in
             if error != nil{
+                self.error = true
                 print(error!.localizedDescription)
+                        print("isLoggedIn if state login tap: \(self.isLoggedIn)")
+                return
             }
             else{
                 print("Login successful")
                 self.isLoggedIn = true
+                print("isLoggedIn if state login tap ok: \(self.isLoggedIn)")
             }
             
         }
