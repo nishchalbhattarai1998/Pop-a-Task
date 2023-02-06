@@ -56,7 +56,7 @@ struct ContentView: View {
                     .font(.largeTitle)
                 
                 TextField("Email", text: $email)
-                    .padding()
+                    .autocapitalization(.none).padding()
                     .frame(width: 300.0, height: 50.0)
                     .background(Color(hue: 0.345, saturation: 0.095, brightness: 0.952))
                     .cornerRadius(15.0)
