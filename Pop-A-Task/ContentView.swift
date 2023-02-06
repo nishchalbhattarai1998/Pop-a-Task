@@ -48,22 +48,26 @@ struct ContentView: View {
                     .padding(.top, 0.0)
                     .imageScale(.large)
                     .foregroundColor(.green)
-                Text("Pop A Task").fontWeight(.bold)
+                    .font(.largeTitle)
+                
+                Text("Pop A Task").fontWeight(.heavy)
                     .foregroundColor(.green)
-                    .padding(.bottom, 100.0)
+                    .padding(.bottom, 40)
+                    .font(.largeTitle)
                 
                 TextField("Email", text: $email)
                     .padding()
                     .frame(width: 300.0, height: 50.0)
                     .background(Color(hue: 0.345, saturation: 0.095, brightness: 0.952))
-                    .cornerRadius(5.0)
+                    .cornerRadius(15.0)
+                    .padding(.top, 40)
                     .padding(5)
                 
                 SecureField("Password", text: $password)
                     .padding()
                     .frame(width: 300.0, height: 50.0)
                     .background(Color(hue: 0.345, saturation: 0.095, brightness: 0.952))
-                    .cornerRadius(5.0)
+                    .cornerRadius(15.0)
                     .padding(5)
                     .padding(.bottom, 10.0)
                 Button("Login") {
@@ -78,10 +82,10 @@ struct ContentView: View {
                 }
                 .fontWeight(.bold)
                 .padding(0.0)
-                .frame(width: 300.0, height: 50.0)
+                .frame(width: 300.0, height: 50.0, alignment: .center)
                 .background(Color.green)
                 .foregroundColor(Color.white)
-                .cornerRadius(5.0)
+                .cornerRadius(15)
                 
                 NavigationLink(destination: RegisterView().navigationBarBackButtonHidden(true)) {
                     HStack{
@@ -95,7 +99,8 @@ struct ContentView: View {
                             .fontWeight(.bold)
                             .foregroundColor(Color("AccentColor"))
                     }
-                    .padding(.bottom, 100.0)
+                    .padding(.top, 20)
+                    .padding(.bottom, 50)
 
                 }
                 VStack{

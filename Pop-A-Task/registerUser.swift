@@ -17,6 +17,7 @@ struct RegisterView: View {
     @State private var email = ""
     @State private var password = ""
     @State private var name = ""
+    @State private var cell = ""
     @State private var userID = ""
     
     var body: some View {
@@ -25,40 +26,56 @@ struct RegisterView: View {
                 .padding(.top, 0.0)
                 .imageScale(.large)
                 .foregroundColor(.green)
+                .font(.largeTitle)
             
-            Text("Pop A Task").fontWeight(.bold)
+            Text("Pop A Task").fontWeight(.heavy)
                 .foregroundColor(.green)
-                .padding(.bottom, 100.0)
+                .padding(.bottom, 40)
+                .font(.largeTitle)
             
             TextField("Name", text: $name)
                 .padding()
                 .frame(width: 350.0, height: 50.0)
                 .background(Color(hue: 0.345, saturation: 0.095, brightness: 0.952))
-                .cornerRadius(5.0)
+                .cornerRadius(15.0)
+                .padding(10)
+            
+            TextField("Mobile", text: $cell)
+                .padding()
+                .frame(width: 350.0, height: 50.0)
+                .background(Color(hue: 0.345, saturation: 0.095, brightness: 0.952))
+                .cornerRadius(15.0)
                 .padding(10)
             
             TextField("Email", text: $email)
                 .padding()
                 .frame(width: 350.0, height: 50.0)
                 .background(Color(hue: 0.345, saturation: 0.095, brightness: 0.952))
-                .cornerRadius(5.0)
+                .cornerRadius(15.0)
                 .padding(10)
             
             SecureField("Password", text: $password)
                 .padding()
                 .frame(width: 350.0, height: 50.0)
                 .background(Color(hue: 0.345, saturation: 0.095, brightness: 0.952))
-                .cornerRadius(5.0)
+                .cornerRadius(15.0)
                 .padding(10)
             Button("Sign Up") {
-                register()
-                presentationMode.wrappedValue.dismiss()
+                if(email == "" && name == "" && cell == "" ){
+                    errorMessage = "Information missing "
+                }
+                else{
+                    register()
+                    
+                }
+                
+                
             }
             .padding()
-            .frame(width: 350.0, height: 50.0)
+            .frame(width: 350.0, height: 50.0, alignment: .center)
             .background(Color.green)
             .foregroundColor(Color.white)
-            .cornerRadius(5.0)
+            .cornerRadius(15.0)
             .padding()
             
                 NavigationLink(destination: EmptyView(),isActive: .constant(false)) {
@@ -77,7 +94,7 @@ struct RegisterView: View {
                                 .foregroundColor(Color("AccentColor"))
                             
                             
-                        }.padding(.bottom, 100.0)
+                        }.padding(.bottom, 40)
                     }
                 }
             VStack{
@@ -92,7 +109,7 @@ struct RegisterView: View {
                     .foregroundColor(.red)
                     .padding()
                 }
-            }.padding(.bottom, -50.0)
+            }.padding(.bottom, -10.0)
         }
         
     }
@@ -128,6 +145,7 @@ struct RegisterView: View {
                 }
             }
         }
+         presentationMode.wrappedValue.dismiss()
     }
 }
 
