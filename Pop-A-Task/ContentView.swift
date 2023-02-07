@@ -135,12 +135,8 @@ struct ContentView: View {
     func login() {
         Auth.auth().signIn(withEmail: email, password: password){
             result, error in
-//            if error != nil{
-//                self.error = true
-//                print(error!.localizedDescription)
-//                        print("isLoggedIn if state login tap: \(self.isLoggedIn)")
-//                return
-//            }
+        return
+
             if let error = error {
                 switch error.localizedDescription {
                 case "The email address is badly formatted.":
