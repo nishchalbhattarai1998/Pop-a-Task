@@ -63,13 +63,22 @@ struct ContentView: View {
                     .padding(.top, 40)
                     .padding(5)
                 
-                SecureField("Password", text: $password)
+                SecureField("Password", text: $password,onCommit: {
+                    if isLoggedIn && email != ""{
+                        self.isLoggedIn = false
+                        login()
+                    }else{
+                        login()
+                    }
+                })
+                
                     .padding()
                     .frame(width: 300.0, height: 50.0)
                     .background(Color(hue: 0.345, saturation: 0.095, brightness: 0.952))
                     .cornerRadius(15.0)
                     .padding(5)
                     .padding(.bottom, 10.0)
+                   
                 Button("Login") {
                     if isLoggedIn{
                         self.isLoggedIn = false
@@ -79,6 +88,13 @@ struct ContentView: View {
                     }
                     
 //                    self.isLoggedIn = false
+                }.onTapGesture {
+                    if isLoggedIn{
+                        self.isLoggedIn = false
+                        login()
+                    }else{
+                        login()
+                    }
                 }
                 .fontWeight(.bold)
                 .padding(0.0)
@@ -86,6 +102,7 @@ struct ContentView: View {
                 .background(Color.green)
                 .foregroundColor(Color.white)
                 .cornerRadius(15)
+                
                 
                 NavigationLink(destination: RegisterView().navigationBarBackButtonHidden(true)) {
                     HStack{
