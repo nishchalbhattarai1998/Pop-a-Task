@@ -23,7 +23,6 @@ struct taskView: View {
                     DrawerView(menu: menu, username: userData.userName ?? "Loading", isLoggedIn: .constant(true), userData: UserData())
                         .transition(.slide)
                         .zIndex(1)
-                    //                            .overlay(Color.black.opacity(0.5))
                 }
                 
                 VStack {
@@ -40,11 +39,6 @@ struct taskView: View {
             )
         }
     }}
-//}var body: some View {
-//        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
-//        Text("Welcome to task view")
-//    }
-//}
 
 struct taskView_Previews: PreviewProvider {
     static var previews: some View {
