@@ -49,13 +49,13 @@ struct DrawerView: View {
             return AnyView(userDetails(isLoggedIn: .constant(true)))
         case "Groups":
             print("isLoggedIn state at m g t: \(self.isLoggedIn)")
-            return AnyView(HomeView(isLoggedIn: .constant(true)))
+            return AnyView(GroupView(isLoggedIn: .constant(true)))
         case "Tasks":
             print("isLoggedIn state at m t t: \(self.isLoggedIn)")
             return AnyView(taskView(isLoggedIn: .constant(true)))
         case "Help":
             print("isLoggedIn state at m h t: \(self.isLoggedIn)")
-            return AnyView(HomeView(isLoggedIn: .constant(true)))
+            return AnyView(HelpView(isLoggedIn: .constant(true)))
         case "Logout":
             onTapGesture {
                 logout()
