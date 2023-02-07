@@ -48,20 +48,29 @@ struct RegisterView: View {
                 .padding(10)
             
             TextField("Email", text: $email)
+                .autocapitalization(.none)
                 .padding()
                 .frame(width: 350.0, height: 50.0)
                 .background(Color(hue: 0.345, saturation: 0.095, brightness: 0.952))
                 .cornerRadius(15.0)
                 .padding(10)
             
-            SecureField("Password", text: $password)
+            SecureField("Password", text: $password,onCommit: {
+                if(email == "" && name == "" || cell == "" && password == ""){
+                    errorMessage = "Information missing "
+                }
+                else{
+                    register()
+                    
+                }
+            } )
                 .padding()
                 .frame(width: 350.0, height: 50.0)
                 .background(Color(hue: 0.345, saturation: 0.095, brightness: 0.952))
                 .cornerRadius(15.0)
                 .padding(10)
             Button("Sign Up") {
-                if(email == "" && name == "" && cell == "" ){
+                if(email == "" && name == "" || cell == "" && password == ""){
                     errorMessage = "Information missing "
                 }
                 else{
@@ -133,8 +142,9 @@ struct RegisterView: View {
                 db.collection("users").document(self.userID).setData([
                     "userID": userID,
                     "email": self.email,
-                    "password": self.password,
-                    "name": self.name
+                    "name": self.name,
+                    "cell": self.cell,
+                    "password": self.password
                 ]) { (error) in
                     if let error = error {
                         print("Error writing document: \(error)")
@@ -145,7 +155,7 @@ struct RegisterView: View {
                 }
             }
         }
-         presentationMode.wrappedValue.dismiss()
+         DispatchQueue.main.asyncAfter(deadline: .now() + 2.0){presentationMode.wrappedValue.dismiss()}
     }
 }
 
