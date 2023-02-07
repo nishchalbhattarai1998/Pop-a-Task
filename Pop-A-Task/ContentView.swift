@@ -135,8 +135,6 @@ struct ContentView: View {
     func login() {
         Auth.auth().signIn(withEmail: email, password: password){
             result, error in
-        return
-
             if let error = error {
                 switch error.localizedDescription {
                 case "The email address is badly formatted.":
