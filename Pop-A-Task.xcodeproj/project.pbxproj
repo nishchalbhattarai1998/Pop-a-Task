@@ -130,7 +130,7 @@
 				A40F6A142975E69B00F82F50 /* Pop_A_TaskApp.swift */,
 				A4EAFEEB2991B04100F8E84E /* taskView.swift */,
 				D394C9842991D7ED00DBE04B /* HelpView.swift */,
-				D394C9822991D7DC00DBE04B /* GroupView.swift */,
+				D34595C4299C8F5000771E57 /* Groups */,
 				B8E372982991321100EC240E /* UserData.swift */,
 				EDDAC73E298E25260009A250 /* profileView.swift */,
 				B8D1690E2991F5E800CE612E /* AddgroupView.swift */,
@@ -151,6 +151,14 @@
 				A40F6A1B2975E69D00F82F50 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		D34595C4299C8F5000771E57 /* Groups */ = {
+			isa = PBXGroup;
+			children = (
+				D394C9822991D7DC00DBE04B /* GroupView.swift */,
+			);
+			path = Groups;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
