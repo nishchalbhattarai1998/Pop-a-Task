@@ -8,15 +8,118 @@
 import Foundation
 import SwiftUI
 
+
 struct GroupDetail: View {
     let group: Groups
+    @StateObject var viewModel = GroupViewModel()
+    
+    
+    private let dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .medium
+        formatter.timeStyle = .medium
+        return formatter
+    }()
     
     var body: some View {
         VStack {
-            VStack(alignment: .leading){
-                HStack{
-                    Text(group.name)
-                        .font(.largeTitle)
+            Text(group.name)
+                .font(.system(size: 20))
+                .fontWeight(.semibold)
+                .padding(.vertical, 15)
+                .frame(height:25.0)
+
+
+            
+            List {
+                Section(header: Text("Group Details")) {
+                    VStack(alignment: .leading) {
+                        Text(group.description)
+                            .font(.system(size: 15))
+                            .font(.title)
+                            .multilineTextAlignment(.leading)
+                            .padding(.bottom)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                        
+                        HStack {
+                            Text("Created By: \(group.createBy)")
+                                .font(.footnote)
+                                .fontWeight(.light)
+                                .foregroundColor(.gray)
+                                .multilineTextAlignment(.leading)
+                            Spacer()
+                            Text(dateFormatter.string(from: group.createDate))
+                                .font(.footnote)
+                                .fontWeight(.light)
+                                .foregroundColor(.gray)
+                                .multilineTextAlignment(.trailing)
+                        }
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    }
+                }
+                
+                HStack {
+                    Text("Members")
+                    Spacer()
+                    Button("Add Member") {
+
+                    }.foregroundColor(.blue)
+                    
+                }
+                
+                VStack{
+                    ForEach(group.members, id: \.self) { member in
+                        Text(member)
+                            .font(.subheadline)
+                            .padding(.bottom, 1.0)
+                        
+                    }
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    Spacer()
+                }
+                
+                HStack {
+                    Text("Task")
+                    Spacer()
+                    Button("Add Task") {
+                        
+                    }.foregroundColor(.blue)
+                    
+                }
+                
+                
+                
+                
+                
+            }
+            .listStyle(PlainListStyle())
+            
+            
+            Button("Permanently Delete Group") {
+                viewModel.deleteGroup2(group.id!)
+            }
+            .buttonStyle(.plain)
+            .foregroundColor(.white)
+            .padding()
+            .background(Color.red)
+            .cornerRadius(50)
+            
+        }
+
+    }
+
+    
+}
+
+//struct GroupDetail: View {
+//    let group: Groups
+//
+//    var body: some View {
+//        VStack {
+//            VStack(alignment: .leading){
+//                HStack{
+//                    Text(group.name)
+//                        .font(.largeTitle)
                     
 //                    if group.isFavorite {
 //                        Image(systemName: "star.fill")
@@ -27,7 +130,7 @@ struct GroupDetail: View {
 //                            .foregroundColor(.gray)
 //                            .font(.headline)
 //                    }
-                }}
+//                }}
 //                    Divider()
 //                    HStack {
 //                        Text("Phone")
@@ -79,13 +182,17 @@ struct GroupDetail: View {
 //                    .padding(.trailing, 5)
 //                    
 //                    Divider()
-                }
-            }
-        }
+//                }
+//            }
+//        }
 
 
 struct GroupDetail_Previews: PreviewProvider {
     static var previews: some View {
-        GroupDetail(group: GroupStore.testStore.groups[0])
+        if GroupStore.testStore.groups.count > 0 {
+            return GroupDetail(group: GroupStore.testStore.groups[0])
+        } else {
+            return GroupDetail(group: Groups(name: "Default Group", description: "This is a default group.", members: ["Nischal", "Charles", "Harneet", "Manpreet","Sangam"], createDate: Date(), createBy: "System"))
+        }
     }
 }

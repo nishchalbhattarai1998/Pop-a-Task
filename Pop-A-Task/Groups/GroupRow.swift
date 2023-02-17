@@ -9,9 +9,10 @@ import SwiftUI
 
 struct GroupRow: View {
     let group: Groups
-    var dateFormatter: DateFormatter = {
+    private let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
-        formatter.dateFormat = "MMM d, yyyy"
+        formatter.dateStyle = .medium
+        formatter.timeStyle = .short
         return formatter
     }()
 
@@ -22,10 +23,19 @@ struct GroupRow: View {
                     .font(.headline)
                     .multilineTextAlignment(.leading)
                     .padding(.leading)
+                    .padding(.bottom, 0.1)
                     .frame(maxWidth: .infinity, alignment: .leading)
 
                 Text(group.description)
                     .font(.subheadline)
+                    .foregroundColor(.gray)
+                    .multilineTextAlignment(.leading)
+                    .padding(.leading)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                
+                Text("\(group.members.count) members")
+                    .font(.subheadline)
+                    .fontWeight(.light)
                     .foregroundColor(.gray)
                     .multilineTextAlignment(.leading)
                     .padding(.leading)
@@ -38,13 +48,13 @@ struct GroupRow: View {
                         .foregroundColor(.gray)
                         .multilineTextAlignment(.leading)
                         .padding(.leading)
-
-                    Text("Added: \(dateFormatter.string(from: group.createDate))")
+                    Spacer()
+                    Text(dateFormatter.string(from: group.createDate))
                         .font(.caption2)
                         .fontWeight(.light)
                         .foregroundColor(.gray)
                         .multilineTextAlignment(.leading)
-                        .padding(.leading, 50)
+                        .padding(.trailing)
                 }
                 .frame(maxWidth: .infinity, alignment: .leading) // align HStack to the left
             }

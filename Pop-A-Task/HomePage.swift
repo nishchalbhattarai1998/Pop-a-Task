@@ -34,7 +34,7 @@ struct HomeView: View {
 
 
 struct Home: View {
-    
+    @StateObject var viewModel = GroupViewModel()
     @State private var showMenu = false
     let menu = ["Home", "Profile", "Groups", "Tasks", "Help", "Logout"]
     @ObservedObject var userData = UserData()
@@ -53,7 +53,11 @@ struct Home: View {
                 VStack {
                     if userData.userName != nil {
                         Text("Welcome, \(userData.userName!)")
-                        Text("No group no task.")
+                        if GroupStore.testStore.groups.count > 0 {
+                            Text("You have \(GroupStore.testStore.groups.count) groups and 0 Tasks")
+                        } else {
+                            Text("No group no task.")
+                        }
                         
                     } else {
                         Text("Edit or update user details!!")

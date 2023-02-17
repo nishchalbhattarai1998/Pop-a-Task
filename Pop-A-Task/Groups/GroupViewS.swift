@@ -30,29 +30,33 @@ struct GroupView: View {
     var body: some View {
         NavigationView {
             List {
-                ForEach(viewModel.listData) { group in
+                ForEach(viewModel.filteredData) { group in
                     GroupRow(group: group)
                 }
                 .onMove(perform: moveGroup)
                 .onDelete(perform: deletGroup)
-                
+//                .frame(width: 350.0)
+
                 HStack {
                     Spacer()
                     Text(viewModel.displayCount)
-                        .foregroundColor(.gray)
+                        .foregroundColor(.green)
                     
                     Spacer()
                 }
             }
-            .id(viewModel.listData) // <<-- observe the viewModel's listData property
+            .id(viewModel.listData) // observe the viewModel's listData property
             .navigationTitle(viewModel.navTitle)
-            // To Add search capability
+            .backgroundStyle(.green)
+            .cornerRadius(15)
             .searchable(text: $viewModel.searchTerm,
                         placement: .navigationBarDrawer(displayMode: .automatic),
                         prompt: "Search for groups")
-            .onChange(of: viewModel.searchTerm, perform: { newValue in viewModel.filterSearchResults()
-            })
-            .animation(.default, value: viewModel.searchTerm)
+            .onChange(of: viewModel.searchTerm) { newValue in
+                viewModel.filterSearchResults()
+            }
+            .animation(.easeInOut, value: viewModel.searchTerm)
+
             // Toolbar: Add and Edit
             .toolbar {
                 HStack {
@@ -68,16 +72,16 @@ struct GroupView: View {
                     }
                         Spacer()
                         EditButton()
-                        Button("Reset", action: resetData)
+//                        Button("Reset", action: resetData)
                     
                 }
             }
         }
     }
     
-    func resetData() {
-        viewModel.resetData()
-    }
+//    func resetData() {
+//        viewModel.resetData()
+//    }
     
     func moveGroup(from: IndexSet, to: Int) {
         withAnimation {
