@@ -24,60 +24,73 @@ struct ModalView: View {
                 //                Text("This is Group modal view")
                 //                    .font(.largeTitle)
                 //                    .padding()
-                Text("Add Task").font(.headline)
-                    .font(.headline)
-                    .padding()
+                Text("Add Group").font(.largeTitle)
+                    
+                    .padding(.leading, 35)
                 Spacer()
                 Button(action: {
+                    
                     isShowingModal = false
                 }) {
-                    Image(systemName: "xmark.circle.fill")
-                        .font(.title)
-                        .foregroundColor(.gray)
-                        .padding()
+//                    Image(systemName: "xmark.circle.fill")
+//                        .font(.title)
+//                        .foregroundColor(.gray)
+//                        .padding()
                 }
             }
             Divider()
             
             
             TextField("Name of the group", text: $groupName)
-                .padding()
                 .background(Color(hue: 0.345, saturation: 0.095, brightness: 0.952))
                 .cornerRadius(15.0)
+                .padding()
+                .frame(width: 350.0, height: 50.0)
+                .background(Color(hue: 0.345, saturation: 0.095, brightness: 0.952))
+                .cornerRadius(15.0)
+                .padding(10)
             //                        Spacer()
-            Divider()
-            TextField("Description of the group", text: $description).frame( width: 400, height: 50)
-                .padding()
+//            Divider()
+            TextField(" Description ", text: $description)
                 .background(Color(hue: 0.345, saturation: 0.095, brightness: 0.952))
                 .cornerRadius(15.0)
+                .padding()
+                .frame(width: 350.0, height: 50.0)
+                .background(Color(hue: 0.345, saturation: 0.095, brightness: 0.952))
+                .cornerRadius(15.0)
+                .padding(10)
             Divider()
             //            VStack{
-            Picker("Select an option", selection: $selectedOption) {
-                ForEach(0 ..< options.count) {i in
-                    Text(options[i]).onTapGesture {
-                        selectedOption = i
-                    }
-                }
-            }.pickerStyle(MenuPickerStyle())
+//            Picker("Select an option", selection: $selectedOption) {
+//                ForEach(0 ..< options.count) {i in
+//                    Text(options[i]).onTapGesture {
+//                        selectedOption = i
+//                    }
+//                }
+//            }.pickerStyle(MenuPickerStyle())
             
-            Text("You selected: \(options[selectedOption])")
+//            Text("You selected: \(options[selectedOption])")
             HStack{
                 Button("Dismiss") {
                     isShowingModal = false
                 }
                 .padding()
-                .foregroundColor(.white)
-                .background(Color.blue)
-                .cornerRadius(10)
+                .frame(width: 150, height: 50.0, alignment: .center)
+                .background(Color.green)
+                .foregroundColor(Color.white)
+                .cornerRadius(15.0)
+                .padding()
                 
                 Button("Create") {
                     addGroup()
                     isShowingModal = false
                 }
                 .padding()
-                .foregroundColor(.white)
-                .background(Color.blue)
-                .cornerRadius(10)
+                .frame(width: 150.0, height: 50.0, alignment: .center)
+                .background(Color.green)
+                .foregroundColor(Color.white)
+                .cornerRadius(15.0)
+                .padding()
             }
             //            }
             //            .padding()
