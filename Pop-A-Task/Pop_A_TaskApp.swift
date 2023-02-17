@@ -13,7 +13,7 @@ struct Pop_A_TaskApp: App {
     init(){
         FirebaseApp.configure()
     }
-//    @StateObject private var store = GroupStore.testStore
+    @StateObject private var store = GroupStore.testStore
     var body: some Scene {
         WindowGroup {
             ContentView()

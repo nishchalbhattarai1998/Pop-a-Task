@@ -14,9 +14,9 @@ struct ModalView: View {
     @Binding var isShowingModal: Bool
     @State var groupName = ""
     @State var description = ""
-    @State  var selectedOption: Int
+//    @State  var selectedOption: Int
     @ObservedObject var userData = UserData()
-    let options = ["Option 1", "Option 2", "Option 3"]
+//    let options = ["Option 1", "Option 2", "Option 3"]
     let db = Firestore.firestore()
     var body: some View {
         VStack {
@@ -113,7 +113,7 @@ struct ModalView: View {
 }
     struct ModalView_Previews: PreviewProvider {
         static var previews: some View {
-            ModalView(isShowingModal: .constant(true), selectedOption: 0)
+            ModalView(isShowingModal: .constant(true))
         }
     }
 

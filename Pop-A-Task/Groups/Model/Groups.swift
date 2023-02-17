@@ -16,7 +16,7 @@
 import Foundation
 import FirebaseFirestoreSwift
 
-struct Groups: Codable, Identifiable {
+struct Groups: Codable, Identifiable, Hashable {
     @DocumentID var id = UUID().uuidString
     var name: String
     var description: String
@@ -24,6 +24,9 @@ struct Groups: Codable, Identifiable {
     var createDate: Date
     var createBy: String
 //    let isFavorite: Bool
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
     
     enum CodingKeys: String, CodingKey {
         case id

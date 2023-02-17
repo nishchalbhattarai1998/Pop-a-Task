@@ -18,6 +18,15 @@ struct GroupDetail: View {
                     Text(group.name)
                         .font(.largeTitle)
                     
+//                    if group.isFavorite {
+//                        Image(systemName: "star.fill")
+//                            .foregroundColor(.yellow)
+//                            .font(.largeTitle)
+//                    } else {
+//                        Image(systemName: "star")
+//                            .foregroundColor(.gray)
+//                            .font(.headline)
+//                    }
                 }}
 //                    Divider()
 //                    HStack {

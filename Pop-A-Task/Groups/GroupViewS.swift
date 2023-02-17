@@ -21,24 +21,20 @@ struct GroupViews: View {
             }
         }
 }
-/// Contact list view
+
 struct GroupView: View {
     @ObservedObject var viewModel: GroupViewModel
     @State private var isShowingModal = false
     let db = Firestore.firestore()
     
     var body: some View {
-        
         NavigationView {
-            
             List {
                 ForEach(viewModel.listData) { group in
-                    
                     GroupRow(group: group)
                 }
-                
-                .onMove(perform: moveContacts)
-                .onDelete(perform: deleteContacts)
+                .onMove(perform: moveGroup)
+                .onDelete(perform: deletGroup)
                 
                 HStack {
                     Spacer()
@@ -48,14 +44,14 @@ struct GroupView: View {
                     Spacer()
                 }
             }
+            .id(viewModel.listData) // <<-- observe the viewModel's listData property
             .navigationTitle(viewModel.navTitle)
             // To Add search capability
             .searchable(text: $viewModel.searchTerm,
                         placement: .navigationBarDrawer(displayMode: .automatic),
                         prompt: "Search for groups")
             .onChange(of: viewModel.searchTerm, perform: { newValue in viewModel.filterSearchResults()
-            }
-            )
+            })
             .animation(.default, value: viewModel.searchTerm)
             // Toolbar: Add and Edit
             .toolbar {
@@ -64,7 +60,7 @@ struct GroupView: View {
                         isShowingModal = true
                         
                     }.sheet(isPresented: $isShowingModal) {
-                        ModalView(isShowingModal: $isShowingModal, selectedOption: 0)
+                        ModalView(isShowingModal: $isShowingModal)
                             .cornerRadius(20)
 //                            .padding(50)
 //                            .shadow(radius: 20)
@@ -76,48 +72,113 @@ struct GroupView: View {
                     
                 }
             }
-        }}
+        }
+    }
     
     func resetData() {
         viewModel.resetData()
     }
     
-   
-    func makeContact() {
+    func moveGroup(from: IndexSet, to: Int) {
         withAnimation {
-            guard let randomContact = viewModel.store.groups.randomElement() else {
-                return
-            }
-            viewModel.makeContact(contact: randomContact)
+            viewModel.moveGroup(from: from, to: to)
         }
     }
     
-//    func addGroup() {
-//        let group = Groups(name: "New Group", description: "", members: [], createDate: Date())
-//        do {
-//            let _ = try db.collection("groups").addDocument(from: group)
-//            print("Group added successfully to Firestore")
-//        } catch let error {
-//            print("Error adding group to Firestore: \(error.localizedDescription)")
-//        }
-//    }
-    
-    
-    func moveContacts(from: IndexSet, to: Int) {
+    func deletGroup(offsets: IndexSet) {
         withAnimation {
-            viewModel.moveContacts(from: from, to: to)
+            viewModel.deleteGroup(at: offsets)
         }
     }
-    
-    
-    func deleteContacts(offsets: IndexSet) {
-        withAnimation {
-            viewModel.deleteContact(offsets: offsets)
-        }
-    }
+
 }
 
-struct ContactsListView_Previews: PreviewProvider {
+/// Contact list view
+//struct GroupView: View {
+//    @ObservedObject var viewModel: GroupViewModel
+//    @State private var isShowingModal = false
+//    let db = Firestore.firestore()
+//
+//    var body: some View {
+//
+//        NavigationView {
+//
+//            List {
+//                ForEach(viewModel.listData) { group in
+//                    GroupRow(group: group)
+//                }
+//                .onMove(perform: moveGroup)
+//                .onDelete(perform: deletGroup)
+//
+//                HStack {
+//                    Spacer()
+//                    Text(viewModel.displayCount)
+//                        .foregroundColor(.gray)
+//
+//                    Spacer()
+//                }
+//            }
+//            .navigationTitle(viewModel.navTitle)
+//            // To Add search capability
+//            .searchable(text: $viewModel.searchTerm,
+//                        placement: .navigationBarDrawer(displayMode: .automatic),
+//                        prompt: "Search for groups")
+//            .onChange(of: viewModel.searchTerm, perform: { newValue in viewModel.filterSearchResults()
+//            }
+//            )
+//            .animation(.default, value: viewModel.searchTerm)
+//            // Toolbar: Add and Edit
+//            .toolbar {
+//                HStack {
+//                    Button("Add"){
+//                        isShowingModal = true
+//
+//                    }.sheet(isPresented: $isShowingModal) {
+//                        ModalView(isShowingModal: $isShowingModal)
+//                            .cornerRadius(20)
+////                            .padding(50)
+////                            .shadow(radius: 20)
+////                            .background(Color.gray)
+//                    }
+//                        Spacer()
+//                        EditButton()
+//                        Button("Reset", action: resetData)
+//
+//                }
+//            }
+//        }}
+//
+//    func resetData() {
+//        viewModel.resetData()
+//    }
+//
+////
+////    func addGroups() {
+////        withAnimation {
+////            guard let randomContact = viewModel.store.groups.randomElement() else {
+////                return
+////            }
+////            viewModel.addGroup(contact: randomContact)
+////        }
+////    }
+//
+//
+//
+//    func moveGroup(from: IndexSet, to: Int) {
+//        withAnimation {
+//            viewModel.moveGroup(from: from, to: to)
+//        }
+//    }
+//
+//
+//    func deletGroup(offsets: IndexSet) {
+//        withAnimation {
+//            viewModel.deleteGroup(offsets: offsets)
+//        }
+//    }
+//}
+
+struct GroupView_Previews: PreviewProvider {
     static var previews: some View {
         GroupView(viewModel: GroupViewModel())
     }
