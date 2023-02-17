@@ -22,6 +22,7 @@ struct Groups: Codable, Identifiable {
     var description: String
     var members: [String]
     var createDate: Date
+    var createBy: String
 //    let isFavorite: Bool
     
     enum CodingKeys: String, CodingKey {
@@ -30,5 +31,6 @@ struct Groups: Codable, Identifiable {
         case description
         case members
         case createDate
+        case createBy
     }
 }

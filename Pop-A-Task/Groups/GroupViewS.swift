@@ -1,4 +1,5 @@
 import SwiftUI
+import FirebaseFirestore
 
 struct GroupViews: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
@@ -24,6 +25,7 @@ struct GroupViews: View {
 struct GroupView: View {
     @ObservedObject var viewModel: GroupViewModel
     @State private var isShowingModal = false
+    let db = Firestore.firestore()
     
     var body: some View {
         
@@ -90,11 +92,15 @@ struct GroupView: View {
         }
     }
     
-    func addGroup(){
-        
-        
-        
-    }
+//    func addGroup() {
+//        let group = Groups(name: "New Group", description: "", members: [], createDate: Date())
+//        do {
+//            let _ = try db.collection("groups").addDocument(from: group)
+//            print("Group added successfully to Firestore")
+//        } catch let error {
+//            print("Error adding group to Firestore: \(error.localizedDescription)")
+//        }
+//    }
     
     
     func moveContacts(from: IndexSet, to: Int) {

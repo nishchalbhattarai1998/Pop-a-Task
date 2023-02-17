@@ -89,7 +89,8 @@ extension GroupStore {
         Groups(name: "Home Group",
                 description: "Household tasks",
                members: ["String"],
-               createDate: Date())
+               createDate: Date(),
+               createBy: "Roy")
     ]
 
     static var testStore: GroupStore = GroupStore()
