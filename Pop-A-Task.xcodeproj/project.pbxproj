@@ -11,7 +11,7 @@
 		A40F6A172975E69B00F82F50 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A40F6A162975E69B00F82F50 /* ContentView.swift */; };
 		A40F6A192975E69D00F82F50 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A40F6A182975E69D00F82F50 /* Assets.xcassets */; };
 		A40F6A1C2975E69D00F82F50 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A40F6A1B2975E69D00F82F50 /* Preview Assets.xcassets */; };
-		A47859BE299F4E5000B9D07A /* GroupModelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A47859BD299F4E5000B9D07A /* GroupModelView.swift */; };
+		A47859BE299F4E5000B9D07A /* AddGroupModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A47859BD299F4E5000B9D07A /* AddGroupModalView.swift */; };
 		A4E4756C298E64C100763BEE /* HomePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4E4756B298E64C100763BEE /* HomePage.swift */; };
 		A4EAFEEC2991B04100F8E84E /* taskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4EAFEEB2991B04100F8E84E /* taskView.swift */; };
 		B8D1690F2991F5E800CE612E /* AddgroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8D1690E2991F5E800CE612E /* AddgroupView.swift */; };
@@ -64,7 +64,7 @@
 		A40F6A162975E69B00F82F50 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		A40F6A182975E69D00F82F50 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A40F6A1B2975E69D00F82F50 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		A47859BD299F4E5000B9D07A /* GroupModelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupModelView.swift; sourceTree = "<group>"; };
+		A47859BD299F4E5000B9D07A /* AddGroupModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddGroupModalView.swift; sourceTree = "<group>"; };
 		A4E4756B298E64C100763BEE /* HomePage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePage.swift; sourceTree = "<group>"; };
 		A4EAFEEB2991B04100F8E84E /* taskView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = taskView.swift; sourceTree = "<group>"; };
 		B8D1690E2991F5E800CE612E /* AddgroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddgroupView.swift; sourceTree = "<group>"; };
@@ -142,17 +142,11 @@
 			isa = PBXGroup;
 			children = (
 				A40F6A142975E69B00F82F50 /* Pop_A_TaskApp.swift */,
-				A4EAFEEB2991B04100F8E84E /* taskView.swift */,
-				D394C9842991D7ED00DBE04B /* HelpView.swift */,
-				A47859BD299F4E5000B9D07A /* GroupModelView.swift */,
+				D33A0C67299FE8350021C392 /* Views */,
 				D34595C4299C8F5000771E57 /* Groups */,
-				B8E372982991321100EC240E /* UserData.swift */,
-				EDDAC73E298E25260009A250 /* profileView.swift */,
-				D37E7A3C298790D000F7ADCD /* registerUser.swift */,
-				A40F6A162975E69B00F82F50 /* ContentView.swift */,
+				D33A0C68299FE86E0021C392 /* UserProfile */,
+				D33A0C66299FE7EC0021C392 /* Authentication */,
 				B8D1690E2991F5E800CE612E /* AddgroupView.swift */,
-				EDDAC74729905F140009A250 /* userDetails.swift */,
-				A4E4756B298E64C100763BEE /* HomePage.swift */,
 				A40F6A182975E69D00F82F50 /* Assets.xcassets */,
 				D37E7A75298874B300F7ADCD /* GoogleService-Info.plist */,
 				A40F6A1A2975E69D00F82F50 /* Preview Content */,
@@ -177,9 +171,39 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		D33A0C66299FE7EC0021C392 /* Authentication */ = {
+			isa = PBXGroup;
+			children = (
+				D37E7A3C298790D000F7ADCD /* registerUser.swift */,
+				A40F6A162975E69B00F82F50 /* ContentView.swift */,
+			);
+			path = Authentication;
+			sourceTree = "<group>";
+		};
+		D33A0C67299FE8350021C392 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				A4EAFEEB2991B04100F8E84E /* taskView.swift */,
+				D394C9842991D7ED00DBE04B /* HelpView.swift */,
+				EDDAC74729905F140009A250 /* userDetails.swift */,
+				A4E4756B298E64C100763BEE /* HomePage.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		D33A0C68299FE86E0021C392 /* UserProfile */ = {
+			isa = PBXGroup;
+			children = (
+				B8E372982991321100EC240E /* UserData.swift */,
+				EDDAC73E298E25260009A250 /* profileView.swift */,
+			);
+			path = UserProfile;
+			sourceTree = "<group>";
+		};
 		D34595C4299C8F5000771E57 /* Groups */ = {
 			isa = PBXGroup;
 			children = (
+				A47859BD299F4E5000B9D07A /* AddGroupModalView.swift */,
 				D394C9822991D7DC00DBE04B /* GroupViewS.swift */,
 				B8D8A09F299C917F00906A8C /* GroupViewModel.swift */,
 				B8D8A0A2299C91E900906A8C /* GroupRow.swift */,
@@ -311,7 +335,7 @@
 				A40F6A152975E69B00F82F50 /* Pop_A_TaskApp.swift in Sources */,
 				EDDAC74829905F140009A250 /* userDetails.swift in Sources */,
 				A4EAFEEC2991B04100F8E84E /* taskView.swift in Sources */,
-				A47859BE299F4E5000B9D07A /* GroupModelView.swift in Sources */,
+				A47859BE299F4E5000B9D07A /* AddGroupModalView.swift in Sources */,
 				B8D8A0A3299C91E900906A8C /* GroupRow.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
