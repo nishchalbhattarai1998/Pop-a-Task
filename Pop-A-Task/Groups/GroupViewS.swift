@@ -1,5 +1,5 @@
 import SwiftUI
-
+import FirebaseFirestore
 struct GroupViews: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @Binding var isLoggedIn: Bool
@@ -23,7 +23,7 @@ struct GroupViews: View {
 /// Contact list view
 struct GroupView: View {
     @ObservedObject var viewModel: GroupViewModel
-    
+    let db = Firestore.firestore()
     var body: some View {
         
         NavigationView {
@@ -57,7 +57,7 @@ struct GroupView: View {
             // Toolbar: Add and Edit
             .toolbar {
                 HStack {
-                    Button("Add", action: makeContact)
+                    Button("Add", action: addGroup)
                     Spacer()
                     EditButton()
                     Button("Reset", action: resetData)
@@ -71,14 +71,16 @@ struct GroupView: View {
     }
     
    
-    func makeContact() {
-        withAnimation {
-            guard let randomContact = viewModel.store.groups.randomElement() else {
-                return
-            }
-            viewModel.makeContact(contact: randomContact)
+    func addGroup() {
+        let group = Groups(name: "New Group", description: "", members: [], createDate: Date())
+        do {
+            let _ = try db.collection("groups").addDocument(from: group)
+            print("Group added successfully to Firestore")
+        } catch let error {
+            print("Error adding group to Firestore: \(error.localizedDescription)")
         }
     }
+
     
     
     func moveContacts(from: IndexSet, to: Int) {

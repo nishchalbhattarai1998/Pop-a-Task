@@ -13,15 +13,15 @@ struct GroupRow: View {
         NavigationLink( destination: GroupDetail(group: group)) {
             
             HStack {
-                Text(group.groupName)
+                Text(group.name)
                 Spacer()
            
-            if group.isFavorite{
-                Image(systemName: "star.fill")
-                    .font(.headline)
-                    .foregroundColor(.yellow)
-                
-            }
+//            if group.isFavorite{
+//                Image(systemName: "star.fill")
+//                    .font(.headline)
+//                    .foregroundColor(.yellow)
+//                
+//            }
             }
         }
     }
