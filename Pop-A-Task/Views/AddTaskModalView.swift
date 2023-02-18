@@ -5,7 +5,7 @@ struct AddTaskModalView: View {
     @Binding var isShowingModal: Bool
     @State private var selectedTaskLevel = "In Progress"
     @State private var selectedAssignee = "Person 1"
-    @State private var selectedTaskCategory = ""
+    @State private var selectedTaskCategory = "High"
     @State var taskName = ""
     @State var description = ""
     
@@ -18,13 +18,14 @@ struct AddTaskModalView: View {
             Text("Add Task").font(.largeTitle).padding(.top, 30)
             Divider()
             TextField("Name of the task", text: $taskName)
-                .textFieldStyle(RoundedBorderTextFieldStyle())
-                .padding(.horizontal, 30)
-                .padding(.top, 30)
-            TextField("Description", text: $description)
-                .textFieldStyle(RoundedBorderTextFieldStyle())
-                .padding(.horizontal, 30)
-                .padding(.top, 10)
+                .background(Color(hue: 0.345, saturation: 0.095, brightness: 0.952))
+                .cornerRadius(15.0)
+                .padding()
+                .frame(width: 350.0, height: 50.0)
+                .background(Color(hue: 0.345, saturation: 0.095, brightness: 0.952))
+                .cornerRadius(15.0)
+                .padding(10)
+            
             Divider()
             HStack {
                 Text("Task level:").padding(.leading, 30)
@@ -63,6 +64,18 @@ struct AddTaskModalView: View {
             .padding(.vertical, 10)
             .background(Color.gray.opacity(0.1))
             Divider()
+            
+            VStack{
+                Text(" Enter Description about the task below:")
+                TextEditor(text: $description)
+                                .background(Color(hue: 0.345, saturation: 0.095, brightness: 0.952))
+                                .cornerRadius(15.0)
+                                .padding()
+                                .frame(width: 350.0, height: 100.0)
+                                .background(Color(hue: 0.345, saturation: 0.095, brightness: 0.952))
+                                .cornerRadius(15.0)
+                                .padding(10)
+            }.background(Color.gray.opacity(0.1))
             HStack {
                 Button("Cancel") {
                     isShowingModal = false
