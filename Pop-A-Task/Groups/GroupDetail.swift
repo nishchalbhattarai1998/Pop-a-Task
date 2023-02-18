@@ -4,14 +4,23 @@
 //
 //  Created by Sangam Gurung on 2023-02-14.
 //
+//
+//  GroupDetail.swift
+//  Pop-A-Task
+//
+//  Created by Sangam Gurung on 2023-02-14.
+//
 
 import Foundation
 import SwiftUI
 
 
 struct GroupDetail: View {
+    @State private var isShowingModal = false
     let group: Groups
     @StateObject var viewModel = GroupViewModel()
+    @EnvironmentObject var groupViewModel: GroupViewModel
+    @State var showAddMemberView = false
     
     
     private let dateFormatter: DateFormatter = {
@@ -28,8 +37,8 @@ struct GroupDetail: View {
                 .fontWeight(.semibold)
                 .padding(.vertical, 15)
                 .frame(height:25.0)
-
-
+            
+            
             
             List {
                 Section(header: Text("Group Details")) {
@@ -62,53 +71,53 @@ struct GroupDetail: View {
                     Text("Members")
                     Spacer()
                     Button("Add Member") {
-
+                        isShowingModal = true
                     }.foregroundColor(.blue)
-                    
+                        .sheet(isPresented: $isShowingModal) {
+                            MemberModalView(isShowingModal: $isShowingModal)
+                            .cornerRadius(20)
+                    }
                 }
-                
-                VStack{
-                    ForEach(group.members, id: \.self) { member in
-                        Text(member)
-                            .font(.subheadline)
-                            .padding(.bottom, 1.0)
+                    VStack{
+                        ForEach(group.members, id: \.self) { member in
+                            Text(member)
+                                .font(.subheadline)
+                                .padding(.bottom, 1.0)
+                            
+                        }
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        Spacer()
+                    }
+                    
+                    HStack {
+                        Text("Task")
+                        Spacer()
+                        Button("Add Task") {
+                            
+                        }.foregroundColor(.blue)
                         
                     }
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    Spacer()
-                }
-                
-                HStack {
-                    Text("Task")
-                    Spacer()
-                    Button("Add Task") {
-                        
-                    }.foregroundColor(.blue)
+                    
+                    
+                    
+                    
                     
                 }
+                .listStyle(PlainListStyle())
                 
                 
-                
-                
+                Button("Permanently Delete Group") {
+                    viewModel.deleteGroup2(group.id!)
+                }
+                .buttonStyle(.plain)
+                .foregroundColor(.white)
+                .padding()
+                .background(Color.red)
+                .cornerRadius(50)
                 
             }
-            .listStyle(PlainListStyle())
-            
-            
-            Button("Permanently Delete Group") {
-                viewModel.deleteGroup2(group.id!)
-            }
-            .buttonStyle(.plain)
-            .foregroundColor(.white)
-            .padding()
-            .background(Color.red)
-            .cornerRadius(50)
             
         }
-
-    }
-
-    
 }
 
 struct GroupDetail_Previews: PreviewProvider {
