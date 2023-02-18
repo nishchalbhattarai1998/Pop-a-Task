@@ -2,7 +2,7 @@ import Foundation
 import SwiftUI
 
 struct AddTaskModalView: View {
-    @Binding var isShowModal: Bool
+    @Binding var isTaskModal: Bool
     @State private var selectedTaskLevel = "In Progress"
     @State private var selectedAssignee = "Person 1"
     @State private var selectedTaskCategory = "High"
@@ -78,7 +78,7 @@ struct AddTaskModalView: View {
             }.background(Color.gray.opacity(0.1))
             HStack {
                 Button("Cancel") {
-                    isShowModal = false
+                    isTaskModal = false
                 }
                 .padding()
                 .frame(width: 150.0, height: 50.0)
@@ -96,6 +96,6 @@ struct AddTaskModalView: View {
             }}}}
 struct AddTaskModalView_Preview: PreviewProvider{
     static var previews: some View{
-        AddTaskModalView(isShowModal: .constant(true))
+        AddTaskModalView(isTaskModal: .constant(true))
     }
 }

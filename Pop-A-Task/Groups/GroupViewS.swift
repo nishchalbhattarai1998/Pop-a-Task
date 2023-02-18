@@ -102,4 +102,3 @@ struct GroupView_Previews: PreviewProvider {
         GroupView(viewModel: GroupViewModel())
     }
 }
-

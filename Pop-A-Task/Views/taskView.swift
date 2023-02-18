@@ -12,7 +12,7 @@ import FirebaseAuth
 import FirebaseFirestore
 
 struct taskView: View {
-    @State private var isShowModal = false
+    @State private var isTaskModal = false
     @State private var showMenu = false
     let menu = ["Home", "Profile", "Groups", "Tasks", "Help", "Logout"]
     @ObservedObject var userData = UserData()
@@ -30,9 +30,9 @@ struct taskView: View {
                     Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
                     Text("Welcome to task view")
                     Button("Add Task"){
-                        isShowModal = true
-                    }.sheet(isPresented: $isShowModal){
-                        AddTaskModalView(isShowModal: $isShowModal)
+                        isTaskModal = true
+                    }.sheet(isPresented: $isTaskModal){
+                        AddTaskModalView(isTaskModal: $isTaskModal)
                     }
                 }
             }

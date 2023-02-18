@@ -16,7 +16,9 @@ import SwiftUI
 
 
 struct GroupDetail: View {
-    @State private var isShowingModal = false
+    @State private var isGroupModal = false
+    @State private var isMemberModal = false
+    @State private var isTaskModal = false
     let group: Groups
     @StateObject var viewModel = GroupViewModel()
     @EnvironmentObject var groupViewModel: GroupViewModel
@@ -71,10 +73,10 @@ struct GroupDetail: View {
                     Text("Members")
                     Spacer()
                     Button("Add Member") {
-                        isShowingModal = true
+                        isMemberModal = true
                     }.foregroundColor(.blue)
-                        .sheet(isPresented: $isShowingModal) {
-                            MemberModalView(isShowingModal: $isShowingModal)
+                        .sheet(isPresented: $isMemberModal) {
+                            MemberModalView(isShowingModal: $isMemberModal)
                             .cornerRadius(20)
                     }
                 }
@@ -93,7 +95,9 @@ struct GroupDetail: View {
                         Text("Task")
                         Spacer()
                         Button("Add Task") {
-                            
+                            isTaskModal = true
+                        }.sheet(isPresented: $isTaskModal){
+                            AddTaskModalView(isTaskModal: $isTaskModal)
                         }.foregroundColor(.blue)
                         
                     }
