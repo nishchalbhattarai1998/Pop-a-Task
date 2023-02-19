@@ -21,6 +21,7 @@
 		B8D8A0A5299C920500906A8C /* GroupDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8D8A0A4299C920500906A8C /* GroupDetail.swift */; };
 		B8D8A0A7299C921800906A8C /* Groups.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8D8A0A6299C921800906A8C /* Groups.swift */; };
 		B8D8A0A9299C922500906A8C /* GroupStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8D8A0A8299C922500906A8C /* GroupStore.swift */; };
+		B8D8A0FD29A285D000906A8C /* TaskSettingsModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8D8A0FC29A285D000906A8C /* TaskSettingsModal.swift */; };
 		B8E372992991321100EC240E /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E372982991321100EC240E /* UserData.swift */; };
 		D2AFEFB129A0D0D900F37448 /* AddMemberModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2AFEFB029A0D0D900F37448 /* AddMemberModal.swift */; };
 		D37E7A3D298790D000F7ADCD /* registerUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = D37E7A3C298790D000F7ADCD /* registerUser.swift */; };
@@ -75,6 +76,7 @@
 		B8D8A0A4299C920500906A8C /* GroupDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupDetail.swift; sourceTree = "<group>"; };
 		B8D8A0A6299C921800906A8C /* Groups.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Groups.swift; sourceTree = "<group>"; };
 		B8D8A0A8299C922500906A8C /* GroupStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupStore.swift; sourceTree = "<group>"; };
+		B8D8A0FC29A285D000906A8C /* TaskSettingsModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskSettingsModal.swift; sourceTree = "<group>"; };
 		B8E372982991321100EC240E /* UserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
 		D2AFEFB029A0D0D900F37448 /* AddMemberModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMemberModal.swift; sourceTree = "<group>"; };
 		D37E7A3C298790D000F7ADCD /* registerUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = registerUser.swift; sourceTree = "<group>"; };
@@ -190,6 +192,7 @@
 				EDDAC74729905F140009A250 /* userDetails.swift */,
 				A4E4756B298E64C100763BEE /* HomePage.swift */,
 				A401561D29A095500037CCF2 /* AddTaskModalView.swift */,
+				B8D8A0FC29A285D000906A8C /* TaskSettingsModal.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -329,6 +332,7 @@
 				D394C9832991D7DC00DBE04B /* GroupViewS.swift in Sources */,
 				D2AFEFB129A0D0D900F37448 /* AddMemberModal.swift in Sources */,
 				B8D8A0A9299C922500906A8C /* GroupStore.swift in Sources */,
+				B8D8A0FD29A285D000906A8C /* TaskSettingsModal.swift in Sources */,
 				D394C9852991D7ED00DBE04B /* HelpView.swift in Sources */,
 				B8E372992991321100EC240E /* UserData.swift in Sources */,
 				A40F6A172975E69B00F82F50 /* ContentView.swift in Sources */,
