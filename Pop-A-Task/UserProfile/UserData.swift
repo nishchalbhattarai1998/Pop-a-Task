@@ -34,6 +34,9 @@ class UserData: ObservableObject {
                 print(self.cell ?? "")
             }
         } else {
+            self.userName = ["Charles", "Nischal"] as? String
+            self.email = ["Charles@mail.com", "Nischal@mail.com"] as? String
+            self.cell = ["cell"] as? String
             print("User not found in UserData")
         }
     }
