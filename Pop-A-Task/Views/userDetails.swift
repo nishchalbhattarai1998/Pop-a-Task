@@ -14,20 +14,35 @@ import FirebaseAuth
 struct userDetails: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @Binding var isLoggedIn: Bool
+    @Binding var categories: [String]
+    @Binding var status: [String]
+    @Binding var priority: [String]
 
-        var body: some View {
-            Group {
-                if isLoggedIn {
-                    user(userData: UserData())
-                } else {
-                    LoginView(isLoggedIn: $isLoggedIn)
-                }
+    var body: some View {
+        VStack {
+            if isLoggedIn {
+                HelpV(categories: $categories, status: $status, priority: $priority)
+                    .onAppear {
+                        print("isLoggedIn if state home: \(self.isLoggedIn)")
+                        
+                    }
+            } else {
+                LoginView(isLoggedIn: $isLoggedIn)
+                    .onAppear {
+                        print("isLoggedIn else state home: \(self.isLoggedIn)")
+                    }
             }
         }
+    }
 }
+                    
+                
 
 struct user: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+    @Binding var categories: [String]
+    @Binding var status: [String]
+    @Binding var priority: [String]
     @State private var showMenu = false
     let menu = ["Home", "Profile", "Groups", "Tasks", "Help", "Logout"]
     @State private var name: String = ""
@@ -46,7 +61,13 @@ struct user: View {
     var body: some View {
         ZStack {
             if showMenu {
-                DrawerView(menu: menu, username: userData.userName ?? "no name ud", isLoggedIn: .constant(true), userData: UserData())
+                DrawerView(
+                           categories: $categories,
+                           status: $status,
+                           priority: $priority,
+                           menu: menu,
+                           username: userData.userName ?? "Loading",
+                           isLoggedIn: .constant(true), userData: UserData())
                     .transition(.slide)
                     .zIndex(1)
             }
@@ -103,7 +124,7 @@ struct user: View {
 
 struct userDetails_Previews: PreviewProvider {
     static var previews: some View {
-        userDetails(isLoggedIn: .constant(true))
+        userDetails(isLoggedIn: .constant(true), categories: .constant(["Household", "Sports", "Grocery", "Utility"]), status: .constant(["To Do", "In Progress", "Done", "Cancelled"]), priority: .constant(["High", "Medium", "Low"]))
        
     }
 }

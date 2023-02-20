@@ -13,24 +13,26 @@ import FirebaseAuth
 
 struct ContentView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-    @State var isLoggedIn: Bool = false
+    @State var isLoggedIn:Bool =  false
+    @Binding var categories: [String]
+    @Binding var status: [String]
+    @Binding var priority: [String]
 
-        var body: some View {
-            Group {
-                if isLoggedIn {
-                    HomeView(isLoggedIn: $isLoggedIn)
-                        .onAppear {
-                            print("isLoggedIn if state: \(self.isLoggedIn)")
-                        }
-                    
-                } else {
-                    LoginView(isLoggedIn: $isLoggedIn)
-                        .onAppear {
-                            print("isLoggedIn else state: \(self.isLoggedIn)")
-                        }
-                }
+    var body: some View {
+        VStack {
+            if isLoggedIn {
+                HomeView(isLoggedIn: $isLoggedIn, categories: $categories, status: $status, priority: $priority)
+                    .onAppear {
+                        print("isLoggedIn if state home: \(self.isLoggedIn)")
+                    }
+            } else {
+                LoginView(isLoggedIn: $isLoggedIn)
+                    .onAppear {
+                        print("isLoggedIn else state home: \(self.isLoggedIn)")
+                    }
             }
         }
+    }
 }
     
     struct LoginView: View {
@@ -162,7 +164,7 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        ContentView(categories: .constant(["Household", "Sports", "Grocery", "Utility"]), status: .constant(["To Do", "In Progress", "Done", "Cancelled"]), priority: .constant(["High", "Medium", "Low"]))
     }
 }
 

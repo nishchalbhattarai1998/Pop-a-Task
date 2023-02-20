@@ -11,9 +11,9 @@ import SwiftUI
 struct TaskSettingsModal: View {
     @Binding var isTaskSetting: Bool
 
-    @State private var categories: [String] = ["Household", "Sports", "Grocery", "Utility"]
-    @State private var  status = ["To Do", "In Progress", "Done", "Cancelled"]
-    @State private var  priority = ["High", "Medium", "Low"]
+    @State  var categories: [String] = ["Household", "Sports", "Grocery", "Utility"]
+    @State  var  status = ["To Do", "In Progress", "Done", "Cancelled"]
+    @State  var  priority = ["High", "Medium", "Low"]
     
     // State variables to track whether to show the Add Item views
     @State private var isAddingCategory = false

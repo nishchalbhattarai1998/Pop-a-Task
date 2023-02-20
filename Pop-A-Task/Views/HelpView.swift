@@ -14,27 +14,32 @@ import FirebaseFirestore
 struct HelpView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @Binding var isLoggedIn: Bool
+    @Binding var categories: [String]
+    @Binding var status: [String]
+    @Binding var priority: [String]
 
-        var body: some View {
-            Group {
-                if isLoggedIn {
-                    HelpV()
-                        .onAppear {
-                            print("isLoggedIn if state group: \(self.isLoggedIn)")
-                        }
-                } else {
-                    LoginView(isLoggedIn: $isLoggedIn)
-                        .onAppear {
-                            print("isLoggedIn else state group: \(self.isLoggedIn)")
-                        }
-                }
+    var body: some View {
+        VStack {
+            if isLoggedIn {
+                HelpV(categories: $categories, status: $status, priority: $priority)
+                    .onAppear {
+                        print("isLoggedIn if state home: \(self.isLoggedIn)")
+                    }
+            } else {
+                LoginView(isLoggedIn: $isLoggedIn)
+                    .onAppear {
+                        print("isLoggedIn else state home: \(self.isLoggedIn)")
+                    }
             }
         }
+    }
 }
 
 
 struct HelpV: View {
-    
+    @Binding var categories: [String]
+    @Binding var status: [String]
+    @Binding var priority: [String]
     @State private var showMenu = false
     let menu = ["Home", "Profile", "Groups", "Tasks", "Help", "Logout"]
     @ObservedObject var userData = UserData()
@@ -45,7 +50,13 @@ struct HelpV: View {
             ZStack {
                 HStack{
                     if showMenu {
-                        DrawerView(menu: menu, username: userData.userName ?? "Loading", isLoggedIn: .constant(true), userData: UserData())
+                        DrawerView(
+                                   categories: $categories,
+                                   status: $status,
+                                   priority: $priority,
+                                   menu: menu,
+                                   username: userData.userName ?? "Loading",
+                                   isLoggedIn: .constant(true), userData: UserData())
                             .transition(.slide)
                             .zIndex(1)
                     }
@@ -80,6 +91,6 @@ struct HelpV: View {
 
 struct HelpView_Previews: PreviewProvider{
     static var previews: some View{
-        HelpView(isLoggedIn: .constant(true))
+        HelpView(isLoggedIn: .constant(true), categories: .constant(["Household", "Sports", "Grocery", "Utility"]), status: .constant(["To Do", "In Progress", "Done", "Cancelled"]), priority: .constant(["High", "Medium", "Low"]))
     }
 }

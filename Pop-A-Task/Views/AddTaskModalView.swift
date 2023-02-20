@@ -1,78 +1,96 @@
-import Foundation
 import SwiftUI
 
 struct AddTaskModalView: View {
     @Binding var isTaskModal: Bool
-    @State private var selectedTaskLevel = "In Progress"
-    @State private var selectedAssignee = "Person 1"
-    @State private var selectedTaskCategory = "High"
+    @Binding var categories: [String]
+    @Binding var status: [String]
+    @Binding var priority: [String]
+    @State private var selectedCategory = "Household"
+    @State private var selectedStatus = "To Do"
+    @State private var selectedPriority = "Medium"
     @State var taskName = ""
     @State var description = ""
-    
-    let taskLevels = ["In Progress", "Done", "Cancel"]
-    let assignees = ["Person 1", "Person 2", "Person 3"]
-    let categories = ["High", "Medium", "Low"]
+
     
     var body: some View {
         VStack {
             Text("Add Task").font(.largeTitle).padding(.top, 30)
-            Divider()
             TextField("Name of the task", text: $taskName)
+                .padding(20)
                 .background(Color(hue: 0.345, saturation: 0.095, brightness: 0.952))
                 .cornerRadius(15.0)
-                .padding()
-                .frame(width: 350.0, height: 50.0)
-                .background(Color(hue: 0.345, saturation: 0.095, brightness: 0.952))
-                .cornerRadius(15.0)
-                .padding(10)
-            
-            Divider()
-            HStack {
-                Text("Task level:").padding(.leading, 30)
-                Picker("", selection: $selectedTaskLevel) {
-                    ForEach(taskLevels, id: \.self) {
-                        Text($0)
-                    }
-                }
-                .pickerStyle(SegmentedPickerStyle())
-                .padding(.trailing, 30)
-            }
-            .padding(.vertical, 10)
-            .background(Color.gray.opacity(0.1))
-            HStack {
-                Text("Assignee:").padding(.leading, 30)
-                Picker("", selection: $selectedAssignee) {
-                    ForEach(assignees, id: \.self) {
-                        Text($0)
-                    }
-                }
-                .pickerStyle(SegmentedPickerStyle())
-                .padding(.trailing, 30)
-            }
-            .padding(.vertical, 10)
-            .background(Color.gray.opacity(0.1))
             HStack {
                 Text("Category:").padding(.leading, 30)
-                Picker("", selection: $selectedTaskCategory) {
-                    ForEach(categories, id: \.self) {
-                        Text($0)
+                Menu {
+                    ForEach(categories, id: \.self) { category in
+                        Button(action: { self.selectedCategory = category }) {
+                            Text(category)
+                        }
+                        
+                    }
+                } label: {
+                    HStack {
+                        Text(selectedCategory)
+                        Spacer()
+                        Image(systemName: "chevron.down")
+                            .foregroundColor(.blue)
                     }
                 }
-                .pickerStyle(SegmentedPickerStyle())
-                .padding(.trailing, 30)
+                .padding()
+                .menuStyle(DefaultMenuStyle()) // Set the menu style to DefaultMenuStyle()
             }
-            .padding(.vertical, 10)
-            .background(Color.gray.opacity(0.1))
-            Divider()
+            .padding()
+            
+            HStack {
+                Text("Status:").padding(.leading, 30)
+                Menu {
+                    ForEach(status, id: \.self) { status in
+                        Button(action: { self.selectedStatus = status }) {
+                            Text(status)
+                        }
+                        
+                    }
+                } label: {
+                    HStack {
+                        Text(selectedStatus)
+                        Spacer()
+                        Image(systemName: "chevron.down")
+                            .foregroundColor(.blue)
+                    }
+                }
+                .padding()
+                .menuStyle(DefaultMenuStyle()) // Set the menu style to DefaultMenuStyle()
+            }
+            .padding()
+            
+            HStack {
+                Text("priority:").padding(.leading, 30)
+                Menu {
+                    ForEach(priority, id: \.self) { priority in
+                        Button(action: { self.selectedPriority = priority }) {
+                            Text(priority)
+                        }
+                        
+                    }
+                } label: {
+                    HStack {
+                        Text(selectedPriority)
+                        Spacer()
+                        Image(systemName: "chevron.down")
+                            .foregroundColor(.blue)
+                    }
+                }
+                .padding()
+                .menuStyle(DefaultMenuStyle()) // Set the menu style to DefaultMenuStyle()
+            }
+            .padding()
+
+
             
             VStack{
                 Text(" Enter Description about the task below:")
+                    .padding()
                 TextEditor(text: $description)
-                                .background(Color(hue: 0.345, saturation: 0.095, brightness: 0.952))
-                                .cornerRadius(15.0)
-                                .padding()
-                                .frame(width: 350.0, height: 100.0)
-                                .background(Color(hue: 0.345, saturation: 0.095, brightness: 0.952))
                                 .cornerRadius(15.0)
                                 .padding(10)
             }.background(Color.gray.opacity(0.1))
@@ -82,10 +100,9 @@ struct AddTaskModalView: View {
                 }
                 .padding()
                 .frame(width: 150.0, height: 50.0)
-                .background(Color.green)
+                .background(Color.red)
                 .foregroundColor(Color.white)
                 .cornerRadius(15.0)
-                Spacer()
                 Button("Create") {}
                     .padding()
                     .frame(width: 150.0, height: 50.0)
@@ -94,8 +111,9 @@ struct AddTaskModalView: View {
                     .cornerRadius(15.0)
                 
             }}}}
-struct AddTaskModalView_Preview: PreviewProvider{
-    static var previews: some View{
-        AddTaskModalView(isTaskModal: .constant(true))
+struct AddTaskModalView_Preview: PreviewProvider {
+    static var previews: some View {
+        AddTaskModalView(isTaskModal: .constant(true), categories: .constant(["Household", "Sports", "Grocery", "Utility"]), status: .constant(["To Do", "In Progress", "Done", "Cancelled"]), priority: .constant(["High", "Medium", "Low"]))
     }
 }
+

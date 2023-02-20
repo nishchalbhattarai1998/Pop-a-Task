@@ -16,7 +16,7 @@ struct Pop_A_TaskApp: App {
     @StateObject private var store = GroupStore.testStore
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ContentView(categories: .constant(["Household", "Sports", "Grocery", "Utility"]), status: .constant(["To Do", "In Progress", "Done", "Cancelled"]), priority: .constant(["High", "Medium", "Low"]))
         }
     }
 }

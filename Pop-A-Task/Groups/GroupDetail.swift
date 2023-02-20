@@ -97,7 +97,7 @@ struct GroupDetail: View {
                         Button("Add Task") {
                             isTaskModal = true
                         }.sheet(isPresented: $isTaskModal){
-                            AddTaskModalView(isTaskModal: $isTaskModal)
+//                            AddTaskModalView(isTaskModal: $isTaskModal)
                         }.foregroundColor(.blue)
                         
                     }

@@ -15,6 +15,9 @@ import UIKit
 
 struct DrawerView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+    @Binding var categories: [String]
+    @Binding var status: [String]
+    @Binding var priority: [String]
     let menu: [String]
     let username: String
     @Binding var isLoggedIn: Bool
@@ -43,26 +46,26 @@ struct DrawerView: View {
         switch item {
         case "Home":
             print("isLoggedIn state at m h t: \(self.isLoggedIn)")
-            return AnyView(HomeView(isLoggedIn: .constant(true)))
+            return AnyView(HomeView(isLoggedIn: .constant(true), categories: $categories, status: $status, priority: $priority))
         case "Profile":
             print("isLoggedIn state at m p t:  \(self.isLoggedIn)")
-            return AnyView(userDetails(isLoggedIn: .constant(true)))
+            return AnyView(userDetails(isLoggedIn: .constant(true), categories: $categories, status: $status, priority: $priority))
         case "Groups":
             print("isLoggedIn state at m g t: \(self.isLoggedIn)")
             return AnyView(GroupViews(isLoggedIn: .constant(true)))
         case "Tasks":
             print("isLoggedIn state at m t t: \(self.isLoggedIn)")
-            return AnyView(taskView(isLoggedIn: .constant(true)))
+            return AnyView(taskView(isLoggedIn: .constant(true), categories: $categories, status: $status, priority: $priority))
         case "Help":
             print("isLoggedIn state at m h t: \(self.isLoggedIn)")
-            return AnyView(HelpView(isLoggedIn: .constant(true)))
+            return AnyView(HelpView(isLoggedIn: .constant(true), categories: $categories, status: $status, priority: $priority))
         case "Logout":
             onTapGesture {
                 logout()
                 print("isLoggedIn state at logout tap: \(self.isLoggedIn)")
             }
             
-            return AnyView(ContentView())
+            return AnyView(ContentView(isLoggedIn: isLoggedIn, categories: $categories, status: $status, priority: $priority))
         default:
             return AnyView(EmptyView())
         }
@@ -97,7 +100,16 @@ struct Blur: UIViewRepresentable {
 }
 struct DrawerView_Previews: PreviewProvider {
     static var previews: some View {
-        DrawerView(menu: ["Home", "Profile", "Groups", "Tasks", "Help", "Logout"], username: "", isLoggedIn: .constant(false), userData: UserData())
+        DrawerView(
+            categories: .constant([]),
+            status: .constant([]),
+            priority: .constant([]),
+            menu: ["Home", "Profile", "Groups", "Tasks", "Help", "Logout"],
+            username: "",
+            isLoggedIn: .constant(false),
+            userData: UserData()
+        )
     }
 }
+
 

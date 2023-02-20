@@ -14,26 +14,33 @@ import FirebaseFirestore
 struct HomeView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @Binding var isLoggedIn: Bool
+    @Binding var categories: [String]
+    @Binding var status: [String]
+    @Binding var priority: [String]
 
-        var body: some View {
-            Group {
-                if isLoggedIn {
-                    Home()
-                        .onAppear {
-                            print("isLoggedIn if state home: \(self.isLoggedIn)")
-                        }
-                } else {
-                    LoginView(isLoggedIn: $isLoggedIn)
-                        .onAppear {
-                            print("isLoggedIn else state home: \(self.isLoggedIn)")
-                        }
-                }
+    var body: some View {
+        VStack {
+            if isLoggedIn {
+                Home(categories: $categories, status: $status, priority: $priority)
+                    .onAppear {
+                        print("isLoggedIn if state home: \(self.isLoggedIn)")
+                    }
+            } else {
+                LoginView(isLoggedIn: $isLoggedIn)
+                    .onAppear {
+                        print("isLoggedIn else state home: \(self.isLoggedIn)")
+                    }
             }
         }
+    }
 }
 
 
+
 struct Home: View {
+    @Binding var categories: [String]
+    @Binding var status: [String]
+    @Binding var priority: [String]
     @StateObject var viewModel = GroupViewModel()
     @State private var showMenu = false
     let menu = ["Home", "Profile", "Groups", "Tasks", "Help", "Logout"]
@@ -44,7 +51,13 @@ struct Home: View {
         NavigationView {
             ZStack {
                 if showMenu {
-                    DrawerView(menu: menu, username: userData.userName ?? "Loading", isLoggedIn: .constant(true), userData: UserData())
+                    DrawerView(
+                               categories: $categories,
+                               status: $status,
+                               priority: $priority,
+                               menu: menu,
+                               username: userData.userName ?? "Loading",
+                               isLoggedIn: .constant(true), userData: UserData())
                         .transition(.slide)
                         .zIndex(1)
                     //                            .overlay(Color.black.opacity(0.5))
@@ -77,6 +90,6 @@ struct Home: View {
 
 struct HomeView_Previews: PreviewProvider{
     static var previews: some View{
-        HomeView(isLoggedIn: .constant(true))
+        HomeView(isLoggedIn: .constant(true), categories: .constant(["Household", "Sports", "Grocery", "Utility"]), status: .constant(["To Do", "In Progress", "Done", "Cancelled"]), priority: .constant(["High", "Medium", "Low"]))
     }
 }
