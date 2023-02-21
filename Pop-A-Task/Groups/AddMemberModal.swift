@@ -17,7 +17,7 @@ struct MemberModalView: View {
             List {
                 ForEach(self.groupViewModel.filteredUsers, id: \.id) { user in
                     Button(user.name) {
-                        groupViewModel.addMembersToGroup(id: id, members: [user.name])
+                        groupViewModel.addMembersToGroup(id: id, members: [user.id])
                         isShowingModal = false
                     }
                 }

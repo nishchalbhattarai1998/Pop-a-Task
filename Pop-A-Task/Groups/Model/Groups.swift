@@ -16,6 +16,7 @@ struct Groups: Codable, Identifiable, Hashable {
     var members: [String]
     var createDate: Date
     var createBy: String
+    var groupID: String
 //    let isFavorite: Bool
     func hash(into hasher: inout Hasher) {
         hasher.combine(id)
@@ -28,5 +29,6 @@ struct Groups: Codable, Identifiable, Hashable {
         case members
         case createDate
         case createBy
+        case groupID
     }
 }

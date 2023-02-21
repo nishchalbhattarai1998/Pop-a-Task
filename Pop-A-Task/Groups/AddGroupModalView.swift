@@ -102,14 +102,22 @@ struct ModalView: View {
     }
     
     func addGroup() {
-        let group = Groups(name: groupName, description: description, members: [userData.userName!], createDate: Date(), createBy: userData.userName!)
+        var group = Groups(name: groupName, description: description, members: [userData.userID!], createDate: Date(), createBy: userData.userName ?? "", groupID: "")
         do {
-            let _ = try db.collection("groups").addDocument(from: group)
+            let groupRef = try db.collection("groups").addDocument(from: group)
+            let groupID = groupRef.documentID
+            group.groupID = groupID
+            let _ = try groupRef.setData(from: group)
+            let userRef = db.collection("users").document(userData.userID ?? "")
+            userRef.updateData([
+                "groupID": FieldValue.arrayUnion([groupID])
+            ])
             print("Group added successfully to Firestore")
         } catch let error {
             print("Error adding group to Firestore: \(error.localizedDescription)")
         }
     }
+
 }
     struct ModalView_Previews: PreviewProvider {
         static var previews: some View {

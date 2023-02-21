@@ -2,12 +2,13 @@
 import Foundation
 import FirebaseFirestore
 import FirebaseFirestoreSwift
+import SwiftUI
 
 class GroupViewModel: ObservableObject {
-
+    @ObservedObject var userData = UserData()
     private let db = Firestore.firestore()
     private var listenerRegistration: ListenerRegistration?
-    @Published var group = Groups(id:"",name: "", description: "", members: [], createDate: Date(), createBy: "")
+    @Published var group = Groups(id:"",name: "", description: "", members: [], createDate: Date(), createBy: "", groupID: "")
     @Published var listData = [Groups]()
     @Published var filteredData = [Groups]()
     @Published var searchTerm = ""
@@ -19,9 +20,33 @@ class GroupViewModel: ObservableObject {
         
     }
 
+//    func fetchGroups() {
+//        listenerRegistration = db.collection("groups")
+//            .order(by: "name")
+//            .addSnapshotListener { (querySnapshot, error) in
+//                if let querySnapshot = querySnapshot {
+//                    self.listData = querySnapshot.documents.compactMap { document in
+//                        do {
+//                            let group = try document.data(as: Groups.self)
+//                            return group
+//                        } catch {
+//                            print(error)
+//                        }
+//                        return nil
+//                    }
+//                    self.filterSearchResults()
+//                }
+//            }
+//
+//    }
+
     func fetchGroups() {
+        guard let userID = userData.userID else {
+            return
+        }
         listenerRegistration = db.collection("groups")
             .order(by: "name")
+            .whereField("members", arrayContains: userID)
             .addSnapshotListener { (querySnapshot, error) in
                 if let querySnapshot = querySnapshot {
                     self.listData = querySnapshot.documents.compactMap { document in
@@ -36,7 +61,6 @@ class GroupViewModel: ObservableObject {
                     self.filterSearchResults()
                 }
             }
-        
     }
 
     func addGroup(_ group: Groups) {
@@ -77,17 +101,32 @@ class GroupViewModel: ObservableObject {
         }
     }
 
+//    func addMembersToGroup(id: String, members: [String]) {
+//        print("waycj here")
+//        print(id + " " + members[0])
+//        if let groupIndex = listData.firstIndex(where: { $0.id == id }) {
+//            var updatedGroup = listData[groupIndex]
+//            updatedGroup.members.append(contentsOf: members)
+//            updateGroup(updatedGroup)
+//        }
+//    }
+
     func addMembersToGroup(id: String, members: [String]) {
         print("waycj here")
         print(id + " " + members[0])
         if let groupIndex = listData.firstIndex(where: { $0.id == id }) {
             var updatedGroup = listData[groupIndex]
-            updatedGroup.members.append(contentsOf: members)
+            for member in members {
+                if updatedGroup.members.contains(member) {
+                    print("User \(member) is already a member of this group")
+                } else {
+                    updatedGroup.members.append(member)
+                }
+            }
             updateGroup(updatedGroup)
         }
     }
-
-
+    
     func moveGroup(from: IndexSet, to: Int) {
         listData.move(fromOffsets: from, toOffset: to)
         for i in 0..<listData.count {

@@ -125,7 +125,7 @@ struct GroupDetail_Previews: PreviewProvider {
         if GroupStore.testStore.groups.count > 0 {
             return GroupDetail(group: GroupStore.testStore.groups[0])
         } else {
-            return GroupDetail(group: Groups(name: "Default Group", description: "This is a default group.", members: ["Nischal", "Charles", "Harneet", "Manpreet","Sangam"], createDate: Date(), createBy: "System"))
+            return GroupDetail(group: Groups(name: "Default Group", description: "This is a default group.", members: ["Nischal", "Charles", "Harneet", "Manpreet","Sangam"], createDate: Date(), createBy: "System", groupID: ""))
         }
     }
 }

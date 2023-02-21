@@ -144,6 +144,7 @@
 			isa = PBXGroup;
 			children = (
 				A40F6A142975E69B00F82F50 /* Pop_A_TaskApp.swift */,
+				D3E78E5D29A5184500C48081 /* Tasks */,
 				D33A0C67299FE8350021C392 /* Views */,
 				D34595C4299C8F5000771E57 /* Groups */,
 				D33A0C68299FE86E0021C392 /* UserProfile */,
@@ -184,12 +185,9 @@
 		D33A0C67299FE8350021C392 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				A4EAFEEB2991B04100F8E84E /* taskView.swift */,
 				D394C9842991D7ED00DBE04B /* HelpView.swift */,
 				EDDAC74729905F140009A250 /* userDetails.swift */,
 				A4E4756B298E64C100763BEE /* HomePage.swift */,
-				A401561D29A095500037CCF2 /* AddTaskModalView.swift */,
-				B8D8A0FC29A285D000906A8C /* TaskSettingsModal.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -215,6 +213,16 @@
 				B8D8A0A1299C91C000906A8C /* Model */,
 			);
 			path = Groups;
+			sourceTree = "<group>";
+		};
+		D3E78E5D29A5184500C48081 /* Tasks */ = {
+			isa = PBXGroup;
+			children = (
+				A4EAFEEB2991B04100F8E84E /* taskView.swift */,
+				A401561D29A095500037CCF2 /* AddTaskModalView.swift */,
+				B8D8A0FC29A285D000906A8C /* TaskSettingsModal.swift */,
+			);
+			path = Tasks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

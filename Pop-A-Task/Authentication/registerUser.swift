@@ -144,7 +144,8 @@ struct RegisterView: View {
                     "email": self.email,
                     "name": self.name,
                     "cell": self.cell,
-                    "password": self.password
+                    "password": self.password,
+                    "groupID": []
                 ]) { (error) in
                     if let error = error {
                         print("Error writing document: \(error)")

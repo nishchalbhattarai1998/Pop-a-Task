@@ -69,7 +69,7 @@ struct GroupRow_Previews: PreviewProvider {
         if GroupStore.testStore.groups.count > 0 {
             return GroupRow(group: GroupStore.testStore.groups[0])
         } else {
-            return GroupRow(group: Groups(name: "Default Group", description: "This is a default group.", members: [], createDate: Date(), createBy: "System"))
+            return GroupRow(group: Groups(name: "Default Group", description: "This is a default group.", members: [], createDate: Date(), createBy: "System", groupID: ""))
         }
     }
 }
