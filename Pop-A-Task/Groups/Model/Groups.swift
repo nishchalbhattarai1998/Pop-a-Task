@@ -10,7 +10,7 @@ import Foundation
 import FirebaseFirestoreSwift
 
 struct Groups: Codable, Identifiable, Hashable {
-    @DocumentID var id = UUID().uuidString
+    @DocumentID var id: String?
     var name: String
     var description: String
     var members: [String]
