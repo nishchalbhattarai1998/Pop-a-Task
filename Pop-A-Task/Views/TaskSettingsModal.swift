@@ -5,6 +5,7 @@
 //  Created by Sangam Gurung on 2023-02-19.
 //
 // add category completed
+//we need to store everything to the db
 import Foundation
 import SwiftUI
 
