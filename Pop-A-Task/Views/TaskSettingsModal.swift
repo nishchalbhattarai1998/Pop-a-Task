@@ -10,7 +10,8 @@ import SwiftUI
 
 struct TaskSettingsModal: View {
     @Binding var isTaskSetting: Bool
-
+//
+//
     @State  var categories: [String] = ["Household", "Sports", "Grocery", "Utility"]
     @State  var  status = ["To Do", "In Progress", "Done", "Cancelled"]
     @State  var  priority = ["High", "Medium", "Low"]
