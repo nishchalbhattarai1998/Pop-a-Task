@@ -24,19 +24,22 @@ struct GroupViews: View {
 
 struct GroupView: View {
     @ObservedObject var viewModel: GroupViewModel
+    @ObservedObject var userData = UserData()
     @State private var isShowingModal = false
     let db = Firestore.firestore()
+//    let group = Groups
+
     
     var body: some View {
         NavigationView {
             List {
-                ForEach(viewModel.filteredData) { group in
-                    GroupRow(group: group)
-                }
-                .onMove(perform: moveGroup)
-                .onDelete(perform: deletGroup)
-//                .frame(width: 350.0)
-
+//                let userID = userData.userID
+                    ForEach(viewModel.filteredData) { group in
+                        GroupRow(group: group)
+                    }
+                    .onMove(perform: moveGroup)
+                    .onDelete(perform: deletGroup)
+                    //                .frame(width: 350.0)
                 HStack {
                     Spacer()
                     Text(viewModel.displayCount)

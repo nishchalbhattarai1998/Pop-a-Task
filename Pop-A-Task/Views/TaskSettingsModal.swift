@@ -4,13 +4,14 @@
 //
 //  Created by Sangam Gurung on 2023-02-19.
 //
-
+// add category completed
 import Foundation
 import SwiftUI
 
 struct TaskSettingsModal: View {
     @Binding var isTaskSetting: Bool
-
+//
+//
     @State  var categories: [String] = ["Household", "Sports", "Grocery", "Utility"]
     @State  var  status = ["To Do", "In Progress", "Done", "Cancelled"]
     @State  var  priority = ["High", "Medium", "Low"]

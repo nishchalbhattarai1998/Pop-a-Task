@@ -13,7 +13,14 @@ struct AddTaskModalView: View {
     @State private var selectedPriority = "Medium"
     @State var taskName = ""
     @State var description = ""
-
+    
+    @State var selectedDate = Date()
+    @State private var isDatePickerVisible = false
+    private let dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .medium
+        return formatter
+    }()
     
     var body: some View {
         VStack {
@@ -87,7 +94,106 @@ struct AddTaskModalView: View {
                 .menuStyle(DefaultMenuStyle()) // Set the menu style to DefaultMenuStyle()
             }
             .padding()
+//
+//            HStack {
+//                Text("Deadline:").padding(.leading, 30)
+//                Menu {
+////                    ForEach(priority, id: \.self) { priority in
+////                        Button(action: { self.selectedPriority = priority }) {
+////                            Text(priority)
+////                        }
+////
+////                    }
+//
+//                    Button(action: { self.isDatePickerVisible.toggle() }) {
+//                        Text("\(selectedDate, formatter: dateFormatter)")
+//                    }
+//
+//                } label: {
+//                    HStack {
+////                        Text(selectedDate)
+//                        Spacer()
+//                        Image(systemName: "chevron.down")
+//                            .foregroundColor(.blue)
+//                    }
+//                }
+//                .padding()
+//                .menuStyle(DefaultMenuStyle()) // Set the menu style to DefaultMenuStyle()
+//            }
+//            .padding()
+            
+            
+            //date testing
+            
+            VStack {
+                HStack {
+                    Text("Status:").padding(.leading, 30)
+                    Menu {
+                        ForEach(status, id: \.self) { status in
+                            Button(action: { self.selectedStatus = status }) {
+                                Text(status)
+                            }
+                        }
+                    } label: {
+                        HStack {
+                            Text(selectedStatus)
+                            Spacer()
+                            Image(systemName: "chevron.down")
+                                .foregroundColor(.blue)
+                        }
+                    }
+                    .padding()
+                    .menuStyle(DefaultMenuStyle()) // Set the menu style to DefaultMenuStyle()
+                }
+                .padding()
+                
+                DatePicker(selection: $selectedDate, displayedComponents: .date) {
+                    Text("Deadline:")
+                }
+                .padding(.horizontal,42)
+            }
 
+//            VStack {
+//                HStack{
+//                    Text("Deadline: ")
+////                    Spacer()
+//                    Button(action: { self.isDatePickerVisible.toggle() }) {
+//                        Text("\(selectedDate, formatter: dateFormatter)")
+//                    }
+//
+//                }
+//
+//                    if isDatePickerVisible {
+//                        DatePicker("", selection: $selectedDate, displayedComponents: [.date])
+//                            .datePickerStyle(WheelDatePickerStyle())
+//                            .labelsHidden()
+//                            .accentColor(.purple)
+//                            .frame(width: 300)
+//                        Text("Selected Date: \(selectedDate, formatter: dateFormatter)")
+//                            .padding()
+//                    }
+                
+                //                    .background(Color.gray.opacity(0.1))
+//                HStack {
+//                    Button("Cancel") {
+//                        isTaskModal = false
+//                    }
+//                    .padding()
+//                    .frame(width: 150.0, height: 50.0)
+//                    .background(Color.green)
+//                    .foregroundColor(Color.white)
+//                    .cornerRadius(15.0)
+//                    Spacer()
+//                    Button("Create") {}
+//                        .padding()
+//                        .frame(width: 150.0, height: 50.0)
+//                        .background(Color.green)
+//                        .foregroundColor(Color.white)
+//                        .cornerRadius(15.0)
+//
+//                }
+                
+//            }
 
             
             VStack{
