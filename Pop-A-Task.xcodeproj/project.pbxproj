@@ -210,11 +210,11 @@
 			isa = PBXGroup;
 			children = (
 				A47859BD299F4E5000B9D07A /* AddGroupModalView.swift */,
-				D2AFEFB029A0D0D900F37448 /* AddMemberModal.swift */,
 				D394C9822991D7DC00DBE04B /* GroupViewS.swift */,
 				B8D8A09F299C917F00906A8C /* GroupViewModel.swift */,
 				B8D8A0A2299C91E900906A8C /* GroupRow.swift */,
 				B8D8A0A4299C920500906A8C /* GroupDetail.swift */,
+				D2AFEFB029A0D0D900F37448 /* AddMemberModal.swift */,
 				B8D8A0A1299C91C000906A8C /* Model */,
 			);
 			path = Groups;

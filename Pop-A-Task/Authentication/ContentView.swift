@@ -37,8 +37,8 @@ struct ContentView: View {
     
     struct LoginView: View {
     @Binding var isLoggedIn: Bool
-    @State var email = "";
-    @State var password = "";
+    @State var email = "A@a.com";
+    @State var password = "aaaaaa";
 //    @State private var error = false
     @State private var errorMessage: String = ""
     var body: some View {

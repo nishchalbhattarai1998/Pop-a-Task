@@ -1,10 +1,3 @@
-//
-//  GroupDetail.swift
-//  Pop-A-Task
-//
-//  Created by Sangam Gurung on 2023-02-14.
-//
-//
 //  GroupDetail.swift
 //  Pop-A-Task
 //
@@ -13,7 +6,6 @@
 
 import Foundation
 import SwiftUI
-
 
 struct GroupDetail: View {
     @State private var isGroupModal = false
@@ -76,7 +68,7 @@ struct GroupDetail: View {
                         isMemberModal = true
                     }.foregroundColor(.blue)
                         .sheet(isPresented: $isMemberModal) {
-                            MemberModalView(isShowingModal: $isMemberModal)
+                            MemberModalView(isShowingModal: $isMemberModal, id: group.id ?? "not found")
                             .cornerRadius(20)
                     }
                 }
@@ -120,9 +112,13 @@ struct GroupDetail: View {
                 .cornerRadius(50)
                 
             }
-            
+            .environmentObject(viewModel)
+//            .onAppear {
+//                viewModel.group = group
+//                viewModel.fetchUsers()
+            }
         }
-}
+
 
 struct GroupDetail_Previews: PreviewProvider {
     static var previews: some View {

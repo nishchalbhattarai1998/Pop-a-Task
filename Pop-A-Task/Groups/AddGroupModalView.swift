@@ -102,7 +102,7 @@ struct ModalView: View {
     }
     
     func addGroup() {
-        let group = Groups(name: groupName, description: description, members: [], createDate: Date(), createBy: userData.userName!)
+        let group = Groups(name: groupName, description: description, members: [userData.userName!], createDate: Date(), createBy: userData.userName!)
         do {
             let _ = try db.collection("groups").addDocument(from: group)
             print("Group added successfully to Firestore")
