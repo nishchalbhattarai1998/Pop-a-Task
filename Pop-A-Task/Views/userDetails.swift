@@ -13,33 +13,6 @@ import FirebaseAuth
 
 struct userDetails: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-    @Binding var isLoggedIn: Bool
-    @Binding var categories: [String]
-    @Binding var status: [String]
-    @Binding var priority: [String]
-
-    var body: some View {
-        VStack {
-            if isLoggedIn {
-                HelpV(categories: $categories, status: $status, priority: $priority)
-                    .onAppear {
-                        print("isLoggedIn if state home: \(self.isLoggedIn)")
-                        
-                    }
-            } else {
-                LoginView(isLoggedIn: $isLoggedIn)
-                    .onAppear {
-                        print("isLoggedIn else state home: \(self.isLoggedIn)")
-                    }
-            }
-        }
-    }
-}
-                    
-                
-
-struct user: View {
-    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @Binding var categories: [String]
     @Binding var status: [String]
     @Binding var priority: [String]
@@ -50,13 +23,8 @@ struct user: View {
     @State private var cell: String = ""
     @ObservedObject var userData: UserData
     @State private var isEditing = false
-//    @Binding var isLoggedIn: Bool
-
     var db = Firestore.firestore()
-//    let userID = Auth.auth().currentUser!.uid
-//    init(){ self._name = State(initialValue: userData.userName ?? "Your Name")
-//        self._email = State(initialValue: $userData.email ?? "Your Mail")}
-    
+
 
     var body: some View {
         ZStack {
@@ -78,8 +46,40 @@ struct user: View {
                     Form {
                         Section {
                             TextField("Name", text: $name)
+                                .textContentType(.name)
+                                .autocapitalization(.words)
+                                .disableAutocorrection(true)
+                                .padding(.horizontal)
+                                .textCase(.none)
+                                .foregroundColor(.primary)
+                                .font(.body)
+                                .backgroundStyle(.green)
+//                                .multilineTextAlignment(.center)
+                            
                             TextField("Email", text: $email)
+                                .textContentType(.emailAddress)
+                                .keyboardType(.emailAddress)
+                                .autocapitalization(.none)
+                                .disableAutocorrection(true)
+                                .padding(.horizontal)
+                                .textCase(.none)
+                                .foregroundColor(.primary)
+                                .font(.body)
+                                .backgroundStyle(.green)
+//                                .multilineTextAlignment(.center)
+
+                            
                             TextField("Mobile", text: $cell)
+                                .textContentType(.telephoneNumber)
+                                .keyboardType(.phonePad)
+                                .disableAutocorrection(true)
+                                .padding(.horizontal)
+                                .textCase(.none)
+                                .foregroundColor(.primary)
+                                .font(.body)
+                                .backgroundStyle(.green)
+//                                .multilineTextAlignment(.center)
+
                         }
                     }
                 } else {
@@ -91,20 +91,28 @@ struct user: View {
                         }
                     }
                 }
+                
                 HStack {
                     if isEditing {
                         Button("Save") {
                             self.isEditing = false
-                            self.updateUserProfile()
+                            if !name.isEmpty && !email.isEmpty && !cell.isEmpty {
+                                self.updateUserProfile()
+                            }
                         }
                     } else {
                         Button("Edit") {
+                            // Populate text fields with current data
+                            self.name = userData.userName ?? ""
+                            self.email = userData.email ?? ""
+                            self.cell = userData.cell ?? ""
                             self.isEditing = true
                         }
                     }
                 }
             }
         }
+        
 //        .edgesIgnoringSafeArea(.bottom)
             .navigationBarItems(leading:
                 Button(action: { self.showMenu.toggle() }) {
@@ -124,7 +132,7 @@ struct user: View {
 
 struct userDetails_Previews: PreviewProvider {
     static var previews: some View {
-        userDetails(isLoggedIn: .constant(true), categories: .constant(["Household", "Sports", "Grocery", "Utility"]), status: .constant(["To Do", "In Progress", "Done", "Cancelled"]), priority: .constant(["High", "Medium", "Low"]))
+        userDetails(categories: .constant(["Household", "Sports", "Grocery", "Utility"]), status: .constant(["To Do", "In Progress", "Done", "Cancelled"]), priority: .constant(["High", "Medium", "Low"]), userData: UserData())
        
     }
 }

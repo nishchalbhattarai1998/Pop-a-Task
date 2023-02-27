@@ -11,33 +11,33 @@ import Firebase
 import FirebaseAuth
 import FirebaseFirestore
 
+//struct HomeView: View {
+//    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+//    @Binding var isLoggedIn: Bool
+//    @Binding var categories: [String]
+//    @Binding var status: [String]
+//    @Binding var priority: [String]
+//
+//    var body: some View {
+//        VStack {
+//            if isLoggedIn {
+//                Home(categories: $categories, status: $status, priority: $priority)
+//                    .onAppear {
+//                        print("isLoggedIn if state home: \(self.isLoggedIn)")
+//                    }
+//            } else {
+//                LoginView(isLoggedIn: $isLoggedIn)
+//                    .onAppear {
+//                        print("isLoggedIn else state home: \(self.isLoggedIn)")
+//                    }
+//            }
+//        }
+//    }
+//}
+
+
+
 struct HomeView: View {
-    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-    @Binding var isLoggedIn: Bool
-    @Binding var categories: [String]
-    @Binding var status: [String]
-    @Binding var priority: [String]
-
-    var body: some View {
-        VStack {
-            if isLoggedIn {
-                Home(categories: $categories, status: $status, priority: $priority)
-                    .onAppear {
-                        print("isLoggedIn if state home: \(self.isLoggedIn)")
-                    }
-            } else {
-                LoginView(isLoggedIn: $isLoggedIn)
-                    .onAppear {
-                        print("isLoggedIn else state home: \(self.isLoggedIn)")
-                    }
-            }
-        }
-    }
-}
-
-
-
-struct Home: View {
     @Binding var categories: [String]
     @Binding var status: [String]
     @Binding var priority: [String]
@@ -67,7 +67,7 @@ struct Home: View {
                     if userData.userName != nil {
                         Text("Welcome, \(userData.userName!)")
                         if GroupStore.testStore.groups.count > 0 {
-                            Text("You have \(GroupStore.testStore.groups.count) groups and 0 Tasks")
+                            Text("You have \(viewModel.filteredData.count) groups and 0 Tasks")
                         } else {
                             Text("No group no task.")
                         }
@@ -90,6 +90,6 @@ struct Home: View {
 
 struct HomeView_Previews: PreviewProvider{
     static var previews: some View{
-        HomeView(isLoggedIn: .constant(true), categories: .constant(["Household", "Sports", "Grocery", "Utility"]), status: .constant(["To Do", "In Progress", "Done", "Cancelled"]), priority: .constant(["High", "Medium", "Low"]))
+        HomeView(categories: .constant(["Household", "Sports", "Grocery", "Utility"]), status: .constant(["To Do", "In Progress", "Done", "Cancelled"]), priority: .constant(["High", "Medium", "Low"]))
     }
 }

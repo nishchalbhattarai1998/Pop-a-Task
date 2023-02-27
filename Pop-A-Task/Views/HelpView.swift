@@ -11,32 +11,32 @@ import Firebase
 import FirebaseAuth
 import FirebaseFirestore
 
+//struct HelpView: View {
+//    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+//    @Binding var isLoggedIn: Bool
+//    @Binding var categories: [String]
+//    @Binding var status: [String]
+//    @Binding var priority: [String]
+//
+//    var body: some View {
+//        VStack {
+//            if isLoggedIn {
+//                HelpV(categories: $categories, status: $status, priority: $priority)
+//                    .onAppear {
+//                        print("isLoggedIn if state home: \(self.isLoggedIn)")
+//                    }
+//            } else {
+//                LoginView(isLoggedIn: $isLoggedIn)
+//                    .onAppear {
+//                        print("isLoggedIn else state home: \(self.isLoggedIn)")
+//                    }
+//            }
+//        }
+//    }
+//}
+
+
 struct HelpView: View {
-    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-    @Binding var isLoggedIn: Bool
-    @Binding var categories: [String]
-    @Binding var status: [String]
-    @Binding var priority: [String]
-
-    var body: some View {
-        VStack {
-            if isLoggedIn {
-                HelpV(categories: $categories, status: $status, priority: $priority)
-                    .onAppear {
-                        print("isLoggedIn if state home: \(self.isLoggedIn)")
-                    }
-            } else {
-                LoginView(isLoggedIn: $isLoggedIn)
-                    .onAppear {
-                        print("isLoggedIn else state home: \(self.isLoggedIn)")
-                    }
-            }
-        }
-    }
-}
-
-
-struct HelpV: View {
     @Binding var categories: [String]
     @Binding var status: [String]
     @Binding var priority: [String]
@@ -91,6 +91,6 @@ struct HelpV: View {
 
 struct HelpView_Previews: PreviewProvider{
     static var previews: some View{
-        HelpView(isLoggedIn: .constant(true), categories: .constant(["Household", "Sports", "Grocery", "Utility"]), status: .constant(["To Do", "In Progress", "Done", "Cancelled"]), priority: .constant(["High", "Medium", "Low"]))
+        HelpView(categories: .constant(["Household", "Sports", "Grocery", "Utility"]), status: .constant(["To Do", "In Progress", "Done", "Cancelled"]), priority: .constant(["High", "Medium", "Low"]))
     }
 }

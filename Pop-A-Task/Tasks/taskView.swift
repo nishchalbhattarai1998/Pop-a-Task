@@ -17,7 +17,6 @@ struct taskView: View {
     @State private var showMenu = false
     let menu = ["Home", "Profile", "Groups", "Tasks", "Help", "Logout"]
     @ObservedObject var userData = UserData()
-    @Binding var isLoggedIn: Bool
     @Binding var categories: [String]
     @Binding var status: [String]
     @Binding var priority: [String]
@@ -71,8 +70,7 @@ struct taskView: View {
 
 struct taskView_Previews: PreviewProvider {
     static var previews: some View {
-        taskView(isLoggedIn: .constant(true),
-                 categories: .constant(["Category1", "Category2", "Category3"]),
+        taskView(categories: .constant(["Category1", "Category2", "Category3"]),
                  status: .constant(["Status1", "Status2", "Status3"]),
                  priority: .constant(["Priority1", "Priority2", "Priority3"]))
     }

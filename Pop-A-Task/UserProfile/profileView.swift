@@ -46,19 +46,19 @@ struct DrawerView: View {
         switch item {
         case "Home":
             print("isLoggedIn state at m h t: \(self.isLoggedIn)")
-            return AnyView(HomeView(isLoggedIn: .constant(true), categories: $categories, status: $status, priority: $priority))
+            return AnyView(HomeView(categories: $categories, status: $status, priority: $priority))
         case "Profile":
             print("isLoggedIn state at m p t:  \(self.isLoggedIn)")
-            return AnyView(userDetails(isLoggedIn: .constant(true), categories: $categories, status: $status, priority: $priority))
+            return AnyView(userDetails(categories: $categories, status: $status, priority: $priority, userData: UserData()))
         case "Groups":
             print("isLoggedIn state at m g t: \(self.isLoggedIn)")
-            return AnyView(GroupViews(isLoggedIn: .constant(true)))
+            return AnyView(GroupView(viewModel: GroupViewModel()))
         case "Tasks":
             print("isLoggedIn state at m t t: \(self.isLoggedIn)")
-            return AnyView(taskView(isLoggedIn: .constant(true), categories: $categories, status: $status, priority: $priority))
+            return AnyView(taskView(categories: $categories, status: $status, priority: $priority))
         case "Help":
             print("isLoggedIn state at m h t: \(self.isLoggedIn)")
-            return AnyView(HelpView(isLoggedIn: .constant(true), categories: $categories, status: $status, priority: $priority))
+            return AnyView(HelpView(categories: $categories, status: $status, priority: $priority))
         case "Logout":
             onTapGesture {
                 logout()

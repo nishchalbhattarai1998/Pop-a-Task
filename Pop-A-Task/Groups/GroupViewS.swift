@@ -1,26 +1,27 @@
 import SwiftUI
 import FirebaseFirestore
+import Firebase
 
-struct GroupViews: View {
-    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-    @Binding var isLoggedIn: Bool
-
-        var body: some View {
-            Group {
-                if isLoggedIn {
-                    GroupView(viewModel: GroupViewModel())
-                        .onAppear {
-                            print("isLoggedIn if state group: \(self.isLoggedIn)")
-                        }
-                } else {
-                    LoginView(isLoggedIn: $isLoggedIn)
-                        .onAppear {
-                            print("isLoggedIn else state group: \(self.isLoggedIn)")
-                        }
-                }
-            }
-        }
-}
+//struct GroupViews: View {
+//    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+//    @Binding var isLoggedIn: Bool
+//
+//        var body: some View {
+//            Group {
+//                if isLoggedIn {
+//                    GroupView(viewModel: GroupViewModel())
+//                        .onAppear {
+//                            print("isLoggedIn if state group: \(self.isLoggedIn)")
+//                        }
+//                } else {
+//                    LoginView(isLoggedIn: $isLoggedIn)
+//                        .onAppear {
+//                            print("isLoggedIn else state group: \(self.isLoggedIn)")
+//                        }
+//                }
+//            }
+//        }
+//}
 
 struct GroupView: View {
     @ObservedObject var viewModel: GroupViewModel

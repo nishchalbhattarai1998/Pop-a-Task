@@ -21,7 +21,7 @@ struct ContentView: View {
     var body: some View {
         VStack {
             if isLoggedIn {
-                HomeView(isLoggedIn: $isLoggedIn, categories: $categories, status: $status, priority: $priority)
+                HomeView(categories: $categories, status: $status, priority: $priority)
                     .onAppear {
                         print("isLoggedIn if state home: \(self.isLoggedIn)")
                     }
