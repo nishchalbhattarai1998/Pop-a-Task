@@ -65,7 +65,7 @@ struct DrawerView: View {
                 print("isLoggedIn state at logout tap: \(self.isLoggedIn)")
             }
             
-            return AnyView(ContentView(isLoggedIn: self.isLoggedIn, categories: $categories, status: $status, priority: $priority))
+            return AnyView(ContentView(categories: $categories, status: $status, priority: $priority))
         default:
             return AnyView(EmptyView())
         }
