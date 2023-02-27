@@ -9,6 +9,10 @@
 import Foundation
 import FirebaseFirestoreSwift
 
+struct Member: Identifiable {
+    let id: String
+    let name: String
+}
 struct Groups: Codable, Identifiable, Hashable {
     @DocumentID var id: String?
     var name: String
