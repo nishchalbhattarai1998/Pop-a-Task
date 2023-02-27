@@ -119,11 +119,17 @@ class GroupViewModel: ObservableObject {
     
     func moveGroup(from: IndexSet, to: Int) {
         listData.move(fromOffsets: from, toOffset: to)
+
+        // Update the order field of the Firestore documents
         for i in 0..<listData.count {
-            let id = listData[i].id!
-            db.collection("groups").document(id).updateData(["order": i])
+            let groupID = listData[i].groupID
+            db.collection("groups").document(groupID).updateData(["order": i])
         }
+
+        // Update the filteredData array, if applicable
+        filterSearchResults()
     }
+
 
     func resetData() {
         let batch = db.batch()
