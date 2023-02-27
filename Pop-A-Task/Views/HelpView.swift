@@ -11,31 +11,6 @@ import Firebase
 import FirebaseAuth
 import FirebaseFirestore
 
-//struct HelpView: View {
-//    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-//    @Binding var isLoggedIn: Bool
-//    @Binding var categories: [String]
-//    @Binding var status: [String]
-//    @Binding var priority: [String]
-//
-//    var body: some View {
-//        VStack {
-//            if isLoggedIn {
-//                HelpV(categories: $categories, status: $status, priority: $priority)
-//                    .onAppear {
-//                        print("isLoggedIn if state home: \(self.isLoggedIn)")
-//                    }
-//            } else {
-//                LoginView(isLoggedIn: $isLoggedIn)
-//                    .onAppear {
-//                        print("isLoggedIn else state home: \(self.isLoggedIn)")
-//                    }
-//            }
-//        }
-//    }
-//}
-
-
 struct HelpView: View {
     @Binding var categories: [String]
     @Binding var status: [String]
@@ -47,20 +22,20 @@ struct HelpView: View {
     
     var body: some View {
         NavigationView {
-            ZStack {
-                HStack{
-                    if showMenu {
-                        DrawerView(
-                                   categories: $categories,
-                                   status: $status,
-                                   priority: $priority,
-                                   menu: menu,
-                                   username: userData.userName ?? "Loading",
-                                   isLoggedIn: .constant(true), userData: UserData())
-                            .transition(.slide)
-                            .zIndex(1)
-                    }
-                }
+//            ZStack {
+//                HStack{
+//                    if showMenu {
+//                        DrawerView(
+//                                   categories: $categories,
+//                                   status: $status,
+//                                   priority: $priority,
+//                                   menu: menu,
+//                                   username: userData.userName ?? "Loading",
+//                                   isLoggedIn: .constant(true), userData: UserData())
+//                            .transition(.slide)
+//                            .zIndex(1)
+//                    }
+//                }
                 
             VStack {
                 Image(systemName: "lines.measurement.horizontal")
@@ -78,14 +53,14 @@ struct HelpView: View {
 
                 }
             }
-            .edgesIgnoringSafeArea(.bottom)
-            .navigationBarItems(leading:
-            Button(action: { self.showMenu.toggle() }) {
-            Image(systemName: "person.circle")
-            .imageScale(.large)
-            }
-            )
-        }
+//            .edgesIgnoringSafeArea(.bottom)
+//            .navigationBarItems(leading:
+//            Button(action: { self.showMenu.toggle() }) {
+//            Image(systemName: "person.circle")
+//            .imageScale(.large)
+//            }
+//            )
+//        }
     }
 }
 

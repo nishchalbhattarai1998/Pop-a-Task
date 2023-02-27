@@ -24,29 +24,29 @@ struct DrawerView: View {
     @ObservedObject var userData: UserData
 
     var body: some View {
-        ZStack {
-            VStack {
-                Text(username)
-                    .padding()
-                    .font(.title)
+            ZStack {
+                VStack {
+                    Text(username)
+                        .padding()
+                        .font(.title)
 
-                List(menu, id: \.self) { item in
-                    NavigationLink(destination: (self.destination(for: item).navigationBarBackButtonHidden(true ))) {
-                        Text(item)
+                    List(menu, id: \.self) { item in
+                        NavigationLink(destination: (self.destination(for: item))) {
+                            Text(item)
+                        }
                     }
+                    .listStyle(SidebarListStyle())
+                    .padding()
                 }
-                .listStyle(SidebarListStyle())
-                .padding()
+                .background(Blur(style: .systemMaterial).edgesIgnoringSafeArea(.all))
             }
-            .background(Blur(style: .systemMaterial).edgesIgnoringSafeArea(.all))
         }
-    }
 
     private func destination(for item: String) -> some View {
         switch item {
         case "Home":
             print("isLoggedIn state at m h t: \(self.isLoggedIn)")
-            return AnyView(HomeView(categories: $categories, status: $status, priority: $priority))
+            return AnyView(HomeView(categories: $categories, status: $status, priority: $priority).navigationBarBackButtonHidden(true))
         case "Profile":
             print("isLoggedIn state at m p t:  \(self.isLoggedIn)")
             return AnyView(userDetails(categories: $categories, status: $status, priority: $priority, userData: UserData()))
@@ -64,12 +64,13 @@ struct DrawerView: View {
                 logout()
                 print("isLoggedIn state at logout tap: \(self.isLoggedIn)")
             }
-            
-            return AnyView(ContentView(categories: $categories, status: $status, priority: $priority))
+            return AnyView(ContentView(categories: $categories, status: $status, priority: $priority)
+                            .navigationBarBackButtonHidden(true))
         default:
             return AnyView(EmptyView())
         }
     }
+
 
     private func logout() {
         do {
@@ -111,5 +112,3 @@ struct DrawerView_Previews: PreviewProvider {
         )
     }
 }
-
-

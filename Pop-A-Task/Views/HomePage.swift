@@ -11,32 +11,6 @@ import Firebase
 import FirebaseAuth
 import FirebaseFirestore
 
-//struct HomeView: View {
-//    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-//    @Binding var isLoggedIn: Bool
-//    @Binding var categories: [String]
-//    @Binding var status: [String]
-//    @Binding var priority: [String]
-//
-//    var body: some View {
-//        VStack {
-//            if isLoggedIn {
-//                Home(categories: $categories, status: $status, priority: $priority)
-//                    .onAppear {
-//                        print("isLoggedIn if state home: \(self.isLoggedIn)")
-//                    }
-//            } else {
-//                LoginView(isLoggedIn: $isLoggedIn)
-//                    .onAppear {
-//                        print("isLoggedIn else state home: \(self.isLoggedIn)")
-//                    }
-//            }
-//        }
-//    }
-//}
-
-
-
 struct HomeView: View {
     @Binding var categories: [String]
     @Binding var status: [String]
