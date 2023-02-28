@@ -17,7 +17,7 @@ struct GroupRow: View {
     }()
 
     var body: some View {
-        NavigationLink(destination: GroupDetail(group: group)) {
+        NavigationLink(destination: GroupDetail(userData: UserData(), group: group)) {
             VStack {
                 Text(group.name)
                     .font(.headline)

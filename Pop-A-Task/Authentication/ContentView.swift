@@ -12,8 +12,9 @@ import FirebaseAuth
 
 
 struct ContentView: View {
-    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+//    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @State var isLoggedIn:Bool =  false
+    @State private var selectedTab = 0
     @Binding var categories: [String]
     @Binding var status: [String]
     @Binding var priority: [String]
@@ -21,15 +22,21 @@ struct ContentView: View {
     var body: some View {
         VStack {
             if isLoggedIn {
-                HomeView(categories: $categories, status: $status, priority: $priority)
-                    .onAppear {
-                        print("isLoggedIn if state home: \(self.isLoggedIn)")
-                    }
+                tabView(categories: $categories,
+                        status: $status,
+                        priority: $priority,
+                        isLoggedIn: $isLoggedIn,
+                        userData: UserData(),
+                        selectedTab: $selectedTab)
+//                HomeView(categories: $categories, status: $status, priority: $priority)
+//                    .onAppear {
+//                        print("isLoggedIn if state home: \(self.isLoggedIn)")
+//                    }
             } else {
                 LoginView(isLoggedIn: $isLoggedIn)
-                    .onAppear {
-                        print("isLoggedIn else state home: \(self.isLoggedIn)")
-                    }
+//                    .onAppear {
+//                        print("isLoggedIn else state home: \(self.isLoggedIn)")
+//                    }
             }
         }
     }
@@ -75,37 +82,31 @@ struct ContentView: View {
                 })
                 //
                 
-                    .padding()
-                    .frame(width: 300.0, height: 50.0)
-                    .background(Color(hue: 0.345, saturation: 0.095, brightness: 0.952))
-                    .cornerRadius(15.0)
-                    .padding(5)
-                    .padding(.bottom, 10.0)
-                   
-                Button("Login") {
-                    if isLoggedIn{
-                        self.isLoggedIn = false
-                        login()
-                    }else{
-                        login()
-                    }
-                    
-//                    self.isLoggedIn = false
-                }.onTapGesture {
-                    if isLoggedIn{
-                        self.isLoggedIn = false
-                        login()
-                    }else{
-                        login()
-                    }
-                }
-                .fontWeight(.bold)
-                .padding(0.0)
-                .frame(width: 300.0, height: 50.0, alignment: .center)
-                .background(Color.green)
-                .foregroundColor(Color.white)
-                .cornerRadius(15)
+                .padding()
+                .frame(width: 300.0, height: 50.0)
+                .background(Color(hue: 0.345, saturation: 0.095, brightness: 0.952))
+                .cornerRadius(15.0)
+                .padding(5)
+                .padding(.bottom, 10.0)
                 
+                Button(action: {
+                    // Handle "New Task" action here
+                    if isLoggedIn{
+                        self.isLoggedIn = false
+                        login()
+                    }else{
+                        login()
+                    }
+                }, label: {
+                    
+                    Text("Login")
+                        .fontWeight(.bold)
+                                .padding(0.0)
+                                .frame(width: 300.0, height: 50.0, alignment: .center)
+                                .background(Color.green)
+                                .foregroundColor(Color.white)
+                                .cornerRadius(15)
+                })
                 
                 NavigationLink(destination: RegisterView().navigationBarBackButtonHidden(true)) {
                     HStack{

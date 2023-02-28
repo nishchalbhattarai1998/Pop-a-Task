@@ -15,7 +15,6 @@ struct taskView: View {
     @State private var isTaskModal = false
     @State private var isTaskSetting = false
     @State private var showMenu = false
-    let menu = ["Home", "Profile", "Groups", "Tasks", "Help", "Logout"]
     @ObservedObject var userData = UserData()
     @Binding var categories: [String]
     @Binding var status: [String]

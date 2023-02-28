@@ -12,11 +12,7 @@ import FirebaseAuth
 import FirebaseFirestore
 
 struct HelpView: View {
-    @Binding var categories: [String]
-    @Binding var status: [String]
-    @Binding var priority: [String]
     @State private var showMenu = false
-    let menu = ["Home", "Profile", "Groups", "Tasks", "Help", "Logout"]
     @ObservedObject var userData = UserData()
    
     
@@ -66,6 +62,6 @@ struct HelpView: View {
 
 struct HelpView_Previews: PreviewProvider{
     static var previews: some View{
-        HelpView(categories: .constant(["Household", "Sports", "Grocery", "Utility"]), status: .constant(["To Do", "In Progress", "Done", "Cancelled"]), priority: .constant(["High", "Medium", "Low"]))
+        HelpView()
     }
 }

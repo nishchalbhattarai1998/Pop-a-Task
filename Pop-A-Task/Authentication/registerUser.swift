@@ -46,9 +46,20 @@ struct RegisterView: View {
                 .background(Color(hue: 0.345, saturation: 0.095, brightness: 0.952))
                 .cornerRadius(15.0)
                 .padding(10)
+                .keyboardType(.phonePad)
+                .onReceive(cell.publisher.collect()) { newValue in
+                    let filtered = newValue.filter { $0.isNumber }
+                    if filtered.count > 11 {
+                        self.cell = String(filtered.prefix(11))
+                    } else {
+                        self.cell = String(filtered)
+                    }
+                }
+
             
             TextField("Email", text: $email)
                 .autocapitalization(.none)
+                .keyboardType(.emailAddress)
                 .padding()
                 .frame(width: 350.0, height: 50.0)
                 .background(Color(hue: 0.345, saturation: 0.095, brightness: 0.952))
@@ -69,7 +80,9 @@ struct RegisterView: View {
                 .background(Color(hue: 0.345, saturation: 0.095, brightness: 0.952))
                 .cornerRadius(15.0)
                 .padding(10)
-            Button("Sign Up") {
+            
+            Button(action: {
+                // Handle "New Task" action here
                 if(email == "" && name == "" || cell == "" && password == ""){
                     errorMessage = "Information missing "
                 }
@@ -77,15 +90,16 @@ struct RegisterView: View {
                     register()
                     
                 }
+            }, label: {
                 
-                
-            }
-            .padding()
-            .frame(width: 350.0, height: 50.0, alignment: .center)
-            .background(Color.green)
-            .foregroundColor(Color.white)
-            .cornerRadius(15.0)
-            .padding()
+                Text("Sign Up")
+                    .fontWeight(.bold)
+                            .padding(0.0)
+                            .frame(width: 300.0, height: 50.0, alignment: .center)
+                            .background(Color.green)
+                            .foregroundColor(Color.white)
+                            .cornerRadius(15)
+            })
             
                 NavigationLink(destination: EmptyView(),isActive: .constant(false)) {
                     Button(action: {

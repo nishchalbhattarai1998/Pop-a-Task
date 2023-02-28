@@ -12,12 +12,7 @@ import FirebaseFirestore
 import FirebaseAuth
 
 struct userDetails: View {
-    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-    @Binding var categories: [String]
-    @Binding var status: [String]
-    @Binding var priority: [String]
     @State private var showMenu = false
-    let menu = ["Home", "Profile", "Groups", "Tasks", "Help", "Logout"]
     @State private var name: String = ""
     @State private var email: String = ""
     @State private var cell: String = ""
@@ -132,7 +127,7 @@ struct userDetails: View {
 
 struct userDetails_Previews: PreviewProvider {
     static var previews: some View {
-        userDetails(categories: .constant(["Household", "Sports", "Grocery", "Utility"]), status: .constant(["To Do", "In Progress", "Done", "Cancelled"]), priority: .constant(["High", "Medium", "Low"]), userData: UserData())
+        userDetails(userData: UserData())
        
     }
 }

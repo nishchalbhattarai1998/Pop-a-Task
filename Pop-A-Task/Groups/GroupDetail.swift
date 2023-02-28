@@ -6,15 +6,19 @@
 
 import Foundation
 import SwiftUI
+import FirebaseAuth
 
 struct GroupDetail: View {
     @State private var isGroupModal = false
     @State private var isMemberModal = false
     @State private var isTaskModal = false
+    @ObservedObject var userData: UserData
     let group: Groups
     @StateObject var viewModel = GroupViewModel()
     @EnvironmentObject var groupViewModel: GroupViewModel
     @State var showAddMemberView = false
+    @State private var showAlert = false
+    @State private var showNoPermissionAlert = false
     
     
     private let dateFormatter: DateFormatter = {
@@ -102,15 +106,43 @@ struct GroupDetail: View {
                 .listStyle(PlainListStyle())
                 
                 
-                Button("Permanently Delete Group") {
-                    viewModel.deleteGroup2(group.id!)
+            Button("Permanently Delete Group") {
+
+                if
+                   userData.userName! == group.createBy {
+                    // Show confirmation message and delete on user confirm
+                    showAlert = true
+                    print("showAlert: \(showAlert)")
+                    print(userData.userName!)
+                    print(group.createBy)
                 }
-                .buttonStyle(.plain)
-                .foregroundColor(.white)
-                .padding()
-                .background(Color.red)
-                .cornerRadius(50)
-                
+//                else {
+//                    // Show message that user does not have permission
+//                    print("showAlert: \(showNoPermissionAlert)")
+//                    showNoPermissionAlert = true
+//
+//                    print(userData.userName!)
+//                    print(group.createBy)
+//                }
+            }
+
+//            .alert(isPresented: $showNoPermissionAlert) {
+//                Alert(title: Text("Permission Denied"), message: Text("You do not have permission to delete this group."), dismissButton: .default(Text("OK")))
+//            }
+            
+            .alert(isPresented: $showAlert) {
+                Alert(title: Text("Are you sure you want to delete this group?"), message: Text("This action cannot be undone."), primaryButton: .destructive(Text("Delete")) {
+//                    viewModel.deleteGroup2(group.id!)
+                }, secondaryButton: .cancel())
+            }
+            .buttonStyle(.plain)
+            .foregroundColor(.white)
+            .padding()
+            .background(Color.red)
+            .cornerRadius(50)
+            .opacity(userData.userName != group.createBy ? 0.5 : 1.0) // Change opacity based on condition
+            .disabled(userData.userName != group.createBy)
+            
             }
             .environmentObject(viewModel)
 //            .onAppear {
@@ -123,9 +155,9 @@ struct GroupDetail: View {
 struct GroupDetail_Previews: PreviewProvider {
     static var previews: some View {
         if GroupStore.testStore.groups.count > 0 {
-            return GroupDetail(group: GroupStore.testStore.groups[0])
+            return GroupDetail(userData: UserData(), group: GroupStore.testStore.groups[0])
         } else {
-            return GroupDetail(group: Groups(name: "Default Group", description: "This is a default group.", members: ["Nischal", "Charles", "Harneet", "Manpreet","Sangam"], createDate: Date(), createBy: "System", groupID: ""))
+            return GroupDetail(userData: UserData(), group: Groups(name: "Default Group", description: "This is a default group.", members: ["Nischal", "Charles", "Harneet", "Manpreet","Sangam"], createDate: Date(), createBy: "System", groupID: ""))
         }
     }
 }
