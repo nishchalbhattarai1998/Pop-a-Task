@@ -31,7 +31,7 @@ struct GroupView: View {
             .id(viewModel.listData) // observe the viewModel's listData property
             .navigationTitle(viewModel.navTitle)
             .backgroundStyle(.green)
-            .cornerRadius(15)
+//            .cornerRadius(15)
             .searchable(text: $viewModel.searchTerm,
                         placement: .navigationBarDrawer(displayMode: .automatic),
                         prompt: "Search for groups")
