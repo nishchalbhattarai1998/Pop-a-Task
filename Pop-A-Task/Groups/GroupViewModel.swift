@@ -83,14 +83,14 @@ class GroupViewModel: ObservableObject {
         }
     }
 
-    func deleteGroup(at offsets: IndexSet) {
-        let groupIDs = offsets.map { listData[$0].id! }
-        for id in groupIDs {
-            db.collection("groups").document(id).delete()
-        }
-    }
+//    func deleteGroup2(at offsets: IndexSet) {
+//        let groupIDs = offsets.map { listData[$0].id! }
+//        for id in groupIDs {
+//            db.collection("groups").document(id).delete()
+//        }
+//    }
 
-    func deleteGroup2(_ documentID: String) {
+    func deleteGroup(_ documentID: String) {
         let docRef = db.collection("groups").document(documentID)
         docRef.delete { error in
             if let error = error {

@@ -131,8 +131,9 @@ struct GroupDetail: View {
 //            }
             
             .alert(isPresented: $showAlert) {
-                Alert(title: Text("Are you sure you want to delete this group?"), message: Text("This action cannot be undone."), primaryButton: .destructive(Text("Delete")) {
-//                    viewModel.deleteGroup2(group.id!)
+                Alert(title: Text("Are you sure you want to delete this group?"), message: Text("All the tasks and activities conneced to this group will be also deleted. This action cannot be undone."), primaryButton: .destructive(Text("Delete")) {
+                    print("Deleted")
+                    viewModel.deleteGroup(group.id!)
                 }, secondaryButton: .cancel())
             }
             .buttonStyle(.plain)

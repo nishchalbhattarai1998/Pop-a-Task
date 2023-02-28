@@ -18,7 +18,7 @@ struct GroupView: View {
                         GroupRow(group: group)
                     }
                     .onMove(perform: moveGroup)
-                    .onDelete(perform: deletGroup)
+//                    .onDelete(perform: deletGroup)
                     //                .frame(width: 350.0)
                 HStack {
                     Spacer()
@@ -30,7 +30,7 @@ struct GroupView: View {
             }
             .id(viewModel.listData) // observe the viewModel's listData property
             .navigationTitle(viewModel.navTitle)
-            .backgroundStyle(.green)
+            .backgroundStyle(.gray)
 //            .cornerRadius(15)
             .searchable(text: $viewModel.searchTerm,
                         placement: .navigationBarDrawer(displayMode: .automatic),
@@ -72,11 +72,11 @@ struct GroupView: View {
         }
     }
     
-    func deletGroup(offsets: IndexSet) {
-        withAnimation {
-            viewModel.deleteGroup(at: offsets)
-        }
-    }
+//    func deletGroup(offsets: IndexSet) {
+//        withAnimation {
+//            viewModel.deleteGroup(at: offsets)
+//        }
+//    }
 
 }
 
