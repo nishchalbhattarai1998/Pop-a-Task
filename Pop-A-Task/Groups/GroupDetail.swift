@@ -34,21 +34,21 @@ struct GroupDetail: View {
                 List {
                     Section(header: Text("Group Details")) {
                         VStack(alignment: .leading) {
-                            VStack{
+//                            VStack{
                                 Text(group.description)
                                     .font(.system(size: 15))
                                     .font(.title)
                                     .multilineTextAlignment(.leading)
                                     .padding(.bottom)
                                     .frame(maxWidth: .infinity, alignment: .leading)
-                            }
+//                            }
                             .padding()
-                            .cornerRadius(20)
-                            .background(.gray)
-                            .opacity(0.1)
+//                            .cornerRadius(20)
+//                            .background(.gray)
+//                            .opacity(0.1)
+                            Divider()
                             
                             HStack {
-                                
                                     Text("Created By: \(group.createBy)")
                                         .font(.footnote)
                                         .fontWeight(.light)
