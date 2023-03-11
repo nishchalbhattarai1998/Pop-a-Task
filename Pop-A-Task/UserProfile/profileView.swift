@@ -14,30 +14,44 @@ import UIKit
 
 
 struct profileView: View {
+    @State private var isShowingLogoutConfirmation = false
     @Binding var isLoggedIn: Bool
     @Binding var selectedTab: Int
     @ObservedObject var userData: UserData
     let username: String
 
     var body: some View {
-        VStack {
-            Text(username)
-                .padding()
-                .font(.title)
-
-            List {
-                NavigationLink(destination: userDetails(userData: UserData())) {
-                    Text("Profile")
+        NavigationView{
+            VStack {
+                Text(username)
+                    .padding()
+                    .font(.title)
+                
+                List {
+                    NavigationLink(destination: userDetails(userData: UserData()))  {
+                        Label("Profile", systemImage: "person")
+                    }
+                    NavigationLink(destination: HelpView()) {
+                        Label("Help", systemImage: "questionmark.circle")
+                    }
+                    Button(action: {
+                        self.isShowingLogoutConfirmation = true
+                    }) {
+                        Label("Logout", systemImage: "power")
+                    }
+                    .alert(isPresented: $isShowingLogoutConfirmation) {
+                                Alert(
+                                    title: Text("Logout"),
+                                    message: Text("Are you sure you want to log out?"),
+                                    primaryButton: .default(Text("Log out"), action: {
+                                        logout()
+                                    }),
+                                    secondaryButton: .cancel()
+                                )
+                            }
                 }
-                NavigationLink(destination: HelpView()) {
-                    Text("Help")
-                }
-                Button(action: {
-                    logout()
-                    print("isLoggedIn state at logout tap: \(self.isLoggedIn)")
-                }, label: {
-                    Text("Logout")
-                })
+                .navigationTitle("Settings")
+                .navigationBarTitleDisplayMode(.inline)
             }
         }
     }

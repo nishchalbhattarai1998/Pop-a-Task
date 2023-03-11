@@ -95,6 +95,7 @@ struct userDetails: View {
                                 self.updateUserProfile()
                             }
                         }
+                        .frame(height: 50.0)
                     } else {
                         Button("Edit") {
                             // Populate text fields with current data
@@ -103,6 +104,8 @@ struct userDetails: View {
                             self.cell = userData.cell ?? ""
                             self.isEditing = true
                         }
+                        .frame(height: 50.0)
+                        
                     }
                 }
             }
