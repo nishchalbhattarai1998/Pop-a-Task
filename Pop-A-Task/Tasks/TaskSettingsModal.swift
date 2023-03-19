@@ -11,12 +11,9 @@ import SwiftUI
 
 struct TaskSettingsModal: View {
     @Binding var isTaskSetting: Bool
-//
-//
-    @State  var categories: [String] = ["Household", "Sports", "Grocery", "Utility"]
-    @State  var  status = ["To Do", "In Progress", "Done", "Cancelled"]
-    @State  var  priority = ["High", "Medium", "Low"]
-    
+
+    @ObservedObject private var taskSettingsModel = TaskSettingsModel()
+
     // State variables to track whether to show the Add Item views
     @State private var isAddingCategory = false
     @State private var isAddingStatus = false
@@ -28,56 +25,66 @@ struct TaskSettingsModal: View {
                 Section(header: HStack {
                     Text("Category")
                     Spacer()
-                    NavigationLink(destination: AddCategoryView(isAddingCategory: $isAddingCategory, categories: $categories)) {
+                    NavigationLink(destination: AddCategoryView(isAddingCategory: $isAddingCategory, taskSettingsModel: taskSettingsModel)) {
                         Text("Add")
                     }
                 }) {
-                    ForEach(categories, id: \.self) { category in
+                    ForEach(taskSettingsModel.taskSettings.categories) { category in
                         HStack {
-                            Text(category)
+                            Text(category.name)
                             Spacer()
                         }.padding()
                     }
                     .onDelete { indexSet in
-                        categories.remove(atOffsets: indexSet)
+                        indexSet.forEach { index in
+                            let item = taskSettingsModel.taskSettings.categories[index]
+                            taskSettingsModel.deleteItem(item: item, itemType: "categories", completion: {_ in })
+                        }
                     }
+
                 }
                 .listRowInsets(EdgeInsets())
-                
+
                 Section(header: HStack {
                     Text("Status")
                     Spacer()
-                    NavigationLink(destination: AddStatusView(isAddingStatus: $isAddingStatus, status: $status)) {
+                    NavigationLink(destination: AddStatusView(isAddingStatus: $isAddingStatus, taskSettingsModel: taskSettingsModel)) {
                         Text("Add")
                     }
                 }) {
-                    ForEach(status, id: \.self) { status in
+                    ForEach(taskSettingsModel.taskSettings.status) { status in
                         HStack {
-                            Text(status)
+                            Text(status.name)
                             Spacer()
                         }.padding()
                     }
                     .onDelete { indexSet in
-                        status.remove(atOffsets: indexSet)
+                        indexSet.forEach { index in
+                            let item = taskSettingsModel.taskSettings.status[index]
+                            taskSettingsModel.deleteItem(item: item, itemType: "status", completion: {_ in })
+                        }
                     }
                 }
                 .listRowInsets(EdgeInsets())
-                
+
                 Section(header: HStack {
                     Text("Priority")
                     Spacer()
-                    NavigationLink(destination: AddPriorityView(isAddingPriority: $isAddingPriority, priority: $priority)) {
+                    NavigationLink(destination: AddPriorityView(isAddingPriority: $isAddingPriority, taskSettingsModel: taskSettingsModel)) {
                         Text("Add")
                     }
                 }) {
-                    ForEach(priority, id: \.self) { priority in
+                    ForEach(taskSettingsModel.taskSettings.priority) { priority in
                         HStack {
-                            Text(priority)
+                            Text(priority.name)
                             Spacer()
                         }.padding()
                     }
                     .onDelete { indexSet in
-                        priority.remove(atOffsets: indexSet)
+                        indexSet.forEach { index in
+                            let item = taskSettingsModel.taskSettings.priority[index]
+                            taskSettingsModel.deleteItem(item: item, itemType: "priority", completion: {_ in })
+                        }
                     }
                 }
                 .listRowInsets(EdgeInsets())
@@ -97,9 +104,12 @@ struct TaskSettingsModal_Preview: PreviewProvider {
     }
 }
 
+
+
 struct AddCategoryView: View {
     @Binding var isAddingCategory: Bool
-    @Binding var categories: [String]
+    @ObservedObject var taskSettingsModel: TaskSettingsModel
+
     @State private var newCategory: String = ""
     @State private var showMessage = false
 
@@ -121,7 +131,8 @@ struct AddCategoryView: View {
         Group {
             if !newCategory.isEmpty {
                 Button("Save") {
-                    categories.append(newCategory)
+                    let category = Category(taskId: "", name: newCategory)
+                    taskSettingsModel.addItem(item: category, itemType: "categories", completion: {_ in })
                     isAddingCategory = false
                     newCategory = ""
                     showMessage = true
@@ -137,8 +148,6 @@ struct AddCategoryView: View {
         }
     }
 
-
-    
     private var messageView: some View {
         Group {
             if showMessage {
@@ -155,14 +164,15 @@ struct AddCategoryView: View {
 
 struct AddPriorityView: View {
     @Binding var isAddingPriority: Bool
-    @Binding var priority: [String]
-    @State private var newpriority: String = ""
+    @ObservedObject var taskSettingsModel: TaskSettingsModel
+
+    @State private var newPriority: String = ""
     @State private var showMessage = false
 
     var body: some View {
         NavigationView {
             VStack {
-                TextField("New Priority", text: $newpriority)
+                TextField("New Priority", text: $newPriority)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .padding()
                 Spacer()
@@ -175,11 +185,12 @@ struct AddPriorityView: View {
     
     private var saveButton: some View {
         Group {
-            if !newpriority.isEmpty {
+            if !newPriority.isEmpty {
                 Button("Save") {
-                    priority.append(newpriority)
+                    let priority = Priority(taskId: "", name: newPriority)
+                    taskSettingsModel.addItem(item: priority, itemType: "priority", completion: {_ in })
                     isAddingPriority = false
-                    newpriority = ""
+                    newPriority = ""
                     showMessage = true
                     
                     // Hide the message after 1 second
@@ -193,8 +204,6 @@ struct AddPriorityView: View {
         }
     }
 
-
-    
     private var messageView: some View {
         Group {
             if showMessage {
@@ -208,11 +217,10 @@ struct AddPriorityView: View {
         }
     }
 }
-
-
 struct AddStatusView: View {
     @Binding var isAddingStatus: Bool
-    @Binding var status: [String]
+    @ObservedObject var taskSettingsModel: TaskSettingsModel
+
     @State private var newStatus: String = ""
     @State private var showMessage = false
 
@@ -234,7 +242,8 @@ struct AddStatusView: View {
         Group {
             if !newStatus.isEmpty {
                 Button("Save") {
-                    status.append(newStatus)
+                    let status = Status(taskId: "", name: newStatus)
+                    taskSettingsModel.addItem(item: status, itemType: "status", completion: {_ in })
                     isAddingStatus = false
                     newStatus = ""
                     showMessage = true
@@ -250,8 +259,6 @@ struct AddStatusView: View {
         }
     }
 
-
-    
     private var messageView: some View {
         Group {
             if showMessage {
@@ -265,5 +272,3 @@ struct AddStatusView: View {
         }
     }
 }
-
-
