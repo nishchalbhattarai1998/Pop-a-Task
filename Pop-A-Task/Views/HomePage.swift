@@ -11,11 +11,11 @@ struct HomeView: View {
     
     
     var body: some View {
-        var percentageGroup = viewModel.filteredData.count
-        var percentageTask = tasks
-        var percentageInprogress = inProgress/tasks
-        var percentageComplete = complete/tasks
-        var percentageOverdue = overdue/tasks
+        let percentageGroup = viewModel.filteredData.count
+        let percentageTask = tasks
+        let percentageInprogress = inProgress/tasks
+        let percentageComplete = complete/tasks
+        let percentageOverdue = overdue/tasks
         if(percentageOverdue+percentageComplete+percentageOverdue == 1){
             
         }

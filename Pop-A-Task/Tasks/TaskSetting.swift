@@ -8,33 +8,99 @@
 import Foundation
 import SwiftUI
 import FirebaseFirestoreSwift
+import Firebase
+import FirebaseFirestore
 
-protocol TaskSettingItem: Codable, Identifiable {
-    var id: String? { get }
-    var taskId: String { get }
-    var name: String { get }
-}
 
-struct Category: TaskSettingItem {
+struct Category: Codable, Identifiable, Hashable {
     @DocumentID var id: String?
-    var taskId: String
     var name: String
+    var tasks: [String]?
+    var createDate: Date?
+    var createBy: String?
+    var categoryID: String?
+
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
+
+    init(id: String? = nil, name: String, tasks: [String] = [], createDate: Date = Date(), createBy: String, categoryID: String) {
+        self.id = id
+        self.name = name
+        self.tasks = tasks
+        self.createDate = createDate
+        self.createBy = createBy
+        self.categoryID = categoryID
+    }
+
+    enum CodingKeys: String, CodingKey {
+        case id
+        case name
+        case tasks
+        case createDate
+        case createBy
+        case categoryID
+    }
 }
 
-struct Status: TaskSettingItem {
+struct Priority: Codable, Identifiable, Hashable {
     @DocumentID var id: String?
-    var taskId: String
     var name: String
+    var tasks: [String]?
+    var createDate: Date?
+    var createBy: String?
+    var priorityID: String?
+
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
+
+    init(id: String? = nil, name: String, tasks: [String] = [], createDate: Date = Date(), createBy: String, priorityID: String) {
+        self.id = id
+        self.name = name
+        self.tasks = tasks
+        self.createDate = createDate
+        self.createBy = createBy
+        self.priorityID = priorityID
+    }
+
+    enum CodingKeys: String, CodingKey {
+        case id
+        case name
+        case tasks
+        case createDate
+        case createBy
+        case priorityID
+    }
 }
 
-struct Priority: TaskSettingItem {
+struct Status: Codable, Identifiable, Hashable {
     @DocumentID var id: String?
-    var taskId: String
     var name: String
-}
+    var tasks: [String]?
+    var createDate: Date?
+    var createBy: String?
+    var statusID: String?
 
-struct TaskSettings: Codable {
-    var categories: [Category]
-    var status: [Status]
-    var priority: [Priority]
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
+
+    init(id: String? = nil, name: String, tasks: [String] = [], createDate: Date = Date(), createBy: String, statusID: String) {
+        self.id = id
+        self.name = name
+        self.tasks = tasks
+        self.createDate = createDate
+        self.createBy = createBy
+        self.statusID = statusID
+    }
+
+    enum CodingKeys: String, CodingKey {
+        case id
+        case name
+        case tasks
+        case createDate
+        case createBy
+        case statusID
+    }
 }

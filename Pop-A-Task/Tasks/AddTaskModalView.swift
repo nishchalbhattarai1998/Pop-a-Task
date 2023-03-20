@@ -4,17 +4,25 @@
 import SwiftUI
 
 struct AddTaskModalView: View {
+    @ObservedObject private var categoryViewModel = CategoryViewModel()
+    @ObservedObject private var priorityViewModel = PriorityViewModel()
+    @ObservedObject private var statusViewModel = StatusViewModel()
+    @ObservedObject var groupViewModel = GroupViewModel()
     @Binding var isTaskModal: Bool
-    @Binding var categories: [String]
-    @Binding var status: [String]
-    @Binding var priority: [String]
-    @State private var selectedCategory = "Household"
-    @State private var selectedStatus = "To Do"
-    @State private var selectedPriority = "Medium"
     @State var taskName = ""
     @State var description = ""
-    @State private var selectedAssignee = "None"
-    var assignees: [String] = ["Nishchal", "Charles", "Sangam"]
+    @State private var selectedAssignee: String
+    @State private var selectedCategory: String
+    @State private var selectedStatus: String
+    @State private var selectedPriority: String
+
+    init(isTaskModal: Binding<Bool>) {
+        self._isTaskModal = isTaskModal
+        _selectedCategory = State(initialValue: CategoryViewModel().cListData.first?.name ?? "No Category")
+        _selectedStatus = State(initialValue: StatusViewModel().sListData.first?.name ?? "No Status")
+        _selectedPriority = State(initialValue: PriorityViewModel().pListData.first?.name ?? "No Priority")
+        _selectedAssignee = State(initialValue: GroupViewModel().filteredUsers.first?.name ?? "None")
+    }
     
     @State var selectedDate = Date()
     @State private var isDatePickerVisible = false
@@ -36,9 +44,9 @@ struct AddTaskModalView: View {
                 HStack {
                     Text("Category:")
                     Menu {
-                        ForEach(categories, id: \.self) { category in
-                            Button(action: { self.selectedCategory = category }) {
-                                Text(category)
+                        ForEach(categoryViewModel.cListData, id: \.id) { category in
+                            Button(action: { self.selectedCategory = category.name }) {
+                                Text(category.name)
                             }
                             
                         }
@@ -57,9 +65,9 @@ struct AddTaskModalView: View {
                 HStack {
                     Text("Status:")
                     Menu {
-                        ForEach(status, id: \.self) { status in
-                            Button(action: { self.selectedStatus = status }) {
-                                Text(status)
+                        ForEach(statusViewModel.sListData, id: \.id) { status in
+                            Button(action: { self.selectedStatus = status.name }) {
+                                Text(status.name)
                             }
                             
                         }
@@ -78,9 +86,9 @@ struct AddTaskModalView: View {
                 HStack {
                     Text("priority:")
                     Menu {
-                        ForEach(priority, id: \.self) { priority in
-                            Button(action: { self.selectedPriority = priority }) {
-                                Text(priority)
+                        ForEach(priorityViewModel.pListData, id: \.id) { priority in
+                            Button(action: { self.selectedPriority = priority.name }) {
+                                Text(priority.name)
                             }
                             
                         }
@@ -107,9 +115,9 @@ struct AddTaskModalView: View {
                 HStack {
                     Text("Assignee:")
                     Menu {
-                        ForEach(assignees, id: \.self) { assignee in
-                            Button(action: { self.selectedAssignee = assignee }) {
-                                Text(assignee)
+                        ForEach(groupViewModel.filteredUsers, id: \.id) { user in
+                            Button(action: { self.selectedAssignee = user.name }) {
+                                Text(user.name)
                             }
                         }
                     } label: {
@@ -161,7 +169,8 @@ struct AddTaskModalView: View {
 //}
 struct AddTaskModalView_Preview: PreviewProvider {
     static var previews: some View {
-        AddTaskModalView(isTaskModal: .constant(true), categories: .constant(["Household", "Sports", "Grocery", "Utility"]), status: .constant(["To Do", "In Progress", "Done", "Cancelled"]), priority: .constant(["High", "Medium", "Low"]), assignees: ["Nishchal", "Charles", "Sangam"])
+        AddTaskModalView(isTaskModal: .constant(true))
     }
 }
+
 

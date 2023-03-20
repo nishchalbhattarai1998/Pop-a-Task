@@ -6,18 +6,36 @@
 //
 // add category completed
 //we need to store everything to the db
-import Foundation
 import SwiftUI
+import FirebaseFirestore
+import FirebaseFirestoreSwift
+
+enum ActiveSheet: Identifiable {
+    case addCategory, addPriority, addStatus
+
+    var id: Int {
+        switch self {
+        case .addCategory:
+            return 1
+        case .addPriority:
+            return 2
+        case .addStatus:
+            return 3
+        }
+    }
+}
 
 struct TaskSettingsModal: View {
     @Binding var isTaskSetting: Bool
-
-    @ObservedObject private var taskSettingsModel = TaskSettingsModel()
+    @ObservedObject private var categoryViewModel = CategoryViewModel()
+    @ObservedObject private var priorityViewModel = PriorityViewModel()
+    @ObservedObject private var statusViewModel = StatusViewModel()
 
     // State variables to track whether to show the Add Item views
+    @State var activeSheet: ActiveSheet?
     @State private var isAddingCategory = false
-    @State private var isAddingStatus = false
     @State private var isAddingPriority = false
+    @State private var isAddingStatus = false
 
     var body: some View {
         NavigationView {
@@ -25,77 +43,72 @@ struct TaskSettingsModal: View {
                 Section(header: HStack {
                     Text("Category")
                     Spacer()
-                    NavigationLink(destination: AddCategoryView(isAddingCategory: $isAddingCategory, taskSettingsModel: taskSettingsModel)) {
-                        Text("Add")
+                    Button("Add") {
+                        isAddingCategory.toggle()
+                        activeSheet = .addCategory
                     }
                 }) {
-                    ForEach(taskSettingsModel.taskSettings.categories) { category in
+                    ForEach(categoryViewModel.cListData) { category in
                         HStack {
                             Text(category.name)
                             Spacer()
                         }.padding()
                     }
-                    .onDelete { indexSet in
-                        indexSet.forEach { index in
-                            let item = taskSettingsModel.taskSettings.categories[index]
-                            taskSettingsModel.deleteItem(item: item, itemType: "categories", completion: {_ in })
-                        }
-                    }
-
                 }
                 .listRowInsets(EdgeInsets())
-
-                Section(header: HStack {
-                    Text("Status")
-                    Spacer()
-                    NavigationLink(destination: AddStatusView(isAddingStatus: $isAddingStatus, taskSettingsModel: taskSettingsModel)) {
-                        Text("Add")
-                    }
-                }) {
-                    ForEach(taskSettingsModel.taskSettings.status) { status in
-                        HStack {
-                            Text(status.name)
-                            Spacer()
-                        }.padding()
-                    }
-                    .onDelete { indexSet in
-                        indexSet.forEach { index in
-                            let item = taskSettingsModel.taskSettings.status[index]
-                            taskSettingsModel.deleteItem(item: item, itemType: "status", completion: {_ in })
-                        }
-                    }
-                }
-                .listRowInsets(EdgeInsets())
-
+                
                 Section(header: HStack {
                     Text("Priority")
                     Spacer()
-                    NavigationLink(destination: AddPriorityView(isAddingPriority: $isAddingPriority, taskSettingsModel: taskSettingsModel)) {
-                        Text("Add")
+                    Button("Add") {
+                        isAddingPriority.toggle()
+                        activeSheet = .addPriority
                     }
                 }) {
-                    ForEach(taskSettingsModel.taskSettings.priority) { priority in
+                    ForEach(priorityViewModel.pListData) { priority in
                         HStack {
                             Text(priority.name)
                             Spacer()
                         }.padding()
                     }
-                    .onDelete { indexSet in
-                        indexSet.forEach { index in
-                            let item = taskSettingsModel.taskSettings.priority[index]
-                            taskSettingsModel.deleteItem(item: item, itemType: "priority", completion: {_ in })
-                        }
+                }
+                .listRowInsets(EdgeInsets())
+                
+                Section(header: HStack {
+                    Text("Status")
+                    Spacer()
+                    Button("Add") {
+                        isAddingStatus.toggle()
+                        activeSheet = .addStatus
+                    }
+                }) {
+                    ForEach(statusViewModel.sListData) { status in
+                        HStack {
+                            Text(status.name)
+                            Spacer()
+                        }.padding()
                     }
                 }
                 .listRowInsets(EdgeInsets())
-
             }
             .listStyle(InsetGroupedListStyle())
             .navigationTitle("Task Settings")
             .padding(.vertical, 10)
             .background(Color.gray.opacity(0.1))
+            .sheet(item: $activeSheet) { item in
+                switch item {
+                case .addCategory:
+                    AddCategoryView(isAddingCategory: $isAddingCategory, categoryViewModel: categoryViewModel, activeSheet: $activeSheet)
+                case .addPriority:
+                    AddPriorityView(isAddingPriority: $isAddingPriority, priorityViewModel: priorityViewModel, activeSheet: $activeSheet)
+                case .addStatus:
+                    AddStatusView(isAddingStatus: $isAddingStatus, statusViewModel: statusViewModel, activeSheet: $activeSheet)
+                }
+
+            }
         }
     }
+
 }
 
 struct TaskSettingsModal_Preview: PreviewProvider {
@@ -104,12 +117,10 @@ struct TaskSettingsModal_Preview: PreviewProvider {
     }
 }
 
-
-
 struct AddCategoryView: View {
     @Binding var isAddingCategory: Bool
-    @ObservedObject var taskSettingsModel: TaskSettingsModel
-
+    @ObservedObject var categoryViewModel: CategoryViewModel
+    @Binding var activeSheet: ActiveSheet?
     @State private var newCategory: String = ""
     @State private var showMessage = false
 
@@ -122,21 +133,27 @@ struct AddCategoryView: View {
                 Spacer()
             }
             .navigationBarTitle("Add Category", displayMode: .inline)
+            .navigationBarItems(leading: backButton)
             .navigationBarItems(trailing: saveButton)
             .overlay(messageView)
         }
     }
-    
+    private var backButton: some View {
+        Button("Back") {
+            activeSheet = nil
+        }
+    }
+
     private var saveButton: some View {
         Group {
             if !newCategory.isEmpty {
                 Button("Save") {
-                    let category = Category(taskId: "", name: newCategory)
-                    taskSettingsModel.addItem(item: category, itemType: "categories", completion: {_ in })
+                    let categories = Category(id: nil, name: newCategory, tasks: [], createBy: "", categoryID: "")
+                    categoryViewModel.addCategory(categories)
                     isAddingCategory = false
                     newCategory = ""
                     showMessage = true
-                    
+
                     // Hide the message after 1 second
                     Timer.scheduledTimer(withTimeInterval: 1, repeats: false) { _ in
                         showMessage = false
@@ -164,35 +181,41 @@ struct AddCategoryView: View {
 
 struct AddPriorityView: View {
     @Binding var isAddingPriority: Bool
-    @ObservedObject var taskSettingsModel: TaskSettingsModel
-
+    @ObservedObject var priorityViewModel: PriorityViewModel
+    @Binding var activeSheet: ActiveSheet?
     @State private var newPriority: String = ""
     @State private var showMessage = false
 
     var body: some View {
         NavigationView {
             VStack {
-                TextField("New Priority", text: $newPriority)
+                TextField("New priority", text: $newPriority)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .padding()
                 Spacer()
             }
             .navigationBarTitle("Add Priority", displayMode: .inline)
+            .navigationBarItems(leading: backButton)
             .navigationBarItems(trailing: saveButton)
             .overlay(messageView)
         }
     }
-    
+    private var backButton: some View {
+        Button("Back") {
+            activeSheet = nil
+        }
+    }
+
     private var saveButton: some View {
         Group {
             if !newPriority.isEmpty {
                 Button("Save") {
-                    let priority = Priority(taskId: "", name: newPriority)
-                    taskSettingsModel.addItem(item: priority, itemType: "priority", completion: {_ in })
+                    let priorities = Priority(id: nil, name: newPriority, tasks: [], createBy: "", priorityID: "")
+                    priorityViewModel.addPriority(priorities)
                     isAddingPriority = false
                     newPriority = ""
                     showMessage = true
-                    
+
                     // Hide the message after 1 second
                     Timer.scheduledTimer(withTimeInterval: 1, repeats: false) { _ in
                         showMessage = false
@@ -217,37 +240,44 @@ struct AddPriorityView: View {
         }
     }
 }
+
 struct AddStatusView: View {
     @Binding var isAddingStatus: Bool
-    @ObservedObject var taskSettingsModel: TaskSettingsModel
-
+    @ObservedObject var statusViewModel: StatusViewModel
+    @Binding var activeSheet: ActiveSheet?
     @State private var newStatus: String = ""
     @State private var showMessage = false
 
     var body: some View {
         NavigationView {
             VStack {
-                TextField("New status", text: $newStatus)
+                TextField("New Status", text: $newStatus)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .padding()
                 Spacer()
             }
             .navigationBarTitle("Add Status", displayMode: .inline)
+            .navigationBarItems(leading: backButton)
             .navigationBarItems(trailing: saveButton)
             .overlay(messageView)
         }
     }
-    
+    private var backButton: some View {
+        Button("Back") {
+            activeSheet = nil
+        }
+    }
+
     private var saveButton: some View {
         Group {
             if !newStatus.isEmpty {
                 Button("Save") {
-                    let status = Status(taskId: "", name: newStatus)
-                    taskSettingsModel.addItem(item: status, itemType: "status", completion: {_ in })
+                    let status = Status(id: nil, name: newStatus, tasks: [], createBy: "", statusID: "")
+                    statusViewModel.addStatus(status)
                     isAddingStatus = false
                     newStatus = ""
                     showMessage = true
-                    
+
                     // Hide the message after 1 second
                     Timer.scheduledTimer(withTimeInterval: 1, repeats: false) { _ in
                         showMessage = false

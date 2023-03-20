@@ -102,7 +102,6 @@ class GroupViewModel: ObservableObject {
     }
 
     func addMembersToGroup(id: String, members: [String]) {
-        print("waycj here")
         print(id + " " + members[0])
         if let groupIndex = listData.firstIndex(where: { $0.id == id }) {
             var updatedGroup = listData[groupIndex]

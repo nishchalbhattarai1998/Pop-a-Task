@@ -43,7 +43,7 @@ struct taskView: View {
                                     isTaskModal = true
                                 }
                                 .sheet(isPresented: $isTaskModal) {
-                                    AddTaskModalView(isTaskModal: $isTaskModal, categories: $categories, status: $status, priority: $priority)
+                                    AddTaskModalView(isTaskModal: $isTaskModal)
                                 }
                                 
                                 Button("Task Setting") {
