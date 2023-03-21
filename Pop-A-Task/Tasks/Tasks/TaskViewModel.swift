@@ -93,13 +93,13 @@ class TaskViewModel: ObservableObject {
     func moveTask(from: IndexSet, to: Int) {
         tasks.move(fromOffsets: from, toOffset: to)
         
-        // Update the order field of the Firestore documents
+       
         for i in 0..<tasks.count {
             let taskID = tasks[i].id
             db.collection("tasks").document(taskID!).updateData(["order": i])
         }
         
-        // Update the filteredData array, if applicable
+        
         filterTasks()
     }
     

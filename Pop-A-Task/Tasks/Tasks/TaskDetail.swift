@@ -149,10 +149,10 @@ struct TaskDetail: View {
                             .padding(.vertical)
                             
                             Button(action: {
-                                // Add the new comment to the store
+                                
                                 commentStore.addComment(comment: comment, commentedBy: userData.userName ?? "Unknown")
 
-                                // Clear the comment text editor
+                                
                                 comment = ""
                                 
                             }, label: {

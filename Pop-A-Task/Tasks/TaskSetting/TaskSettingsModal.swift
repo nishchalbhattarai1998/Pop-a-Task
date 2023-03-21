@@ -278,7 +278,7 @@ struct AddStatusView: View {
                     newStatus = ""
                     showMessage = true
 
-                    // Hide the message after 1 second
+                   
                     Timer.scheduledTimer(withTimeInterval: 1, repeats: false) { _ in
                         showMessage = false
                     }

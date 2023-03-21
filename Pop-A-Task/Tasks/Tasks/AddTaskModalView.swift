@@ -39,7 +39,7 @@ struct AddTaskModalView: View {
     
     var body: some View {
         ScrollView{
-            //            VStack {
+            
             Text("Add Task").font(.largeTitle).padding(.top, 30)
             TextField("Name of the task", text: $taskName)
                 .padding(20)
@@ -62,7 +62,7 @@ struct AddTaskModalView: View {
                             .foregroundColor(.blue)
                     }
                 }
-                .menuStyle(DefaultMenuStyle()) // Set the menu style to DefaultMenuStyle()
+                .menuStyle(DefaultMenuStyle())
             }
             .padding()
             
@@ -83,7 +83,7 @@ struct AddTaskModalView: View {
                             .foregroundColor(.blue)
                     }
                 }
-                .menuStyle(DefaultMenuStyle()) // Set the menu style to DefaultMenuStyle()
+                .menuStyle(DefaultMenuStyle())
             }
             .padding()
             
@@ -104,7 +104,7 @@ struct AddTaskModalView: View {
                             .foregroundColor(.blue)
                     }
                 }
-                .menuStyle(DefaultMenuStyle()) // Set the menu style to DefaultMenuStyle()
+                .menuStyle(DefaultMenuStyle())
             }
             .padding()
             
@@ -131,7 +131,7 @@ struct AddTaskModalView: View {
                             .foregroundColor(.blue)
                     }
                 }
-                .menuStyle(DefaultMenuStyle()) // Set the menu style to DefaultMenuStyle()
+                .menuStyle(DefaultMenuStyle())
             }
             .padding()
             
@@ -151,7 +151,7 @@ struct AddTaskModalView: View {
                             .foregroundColor(.blue)
                     }
                 }
-                .menuStyle(DefaultMenuStyle()) // Set the menu style to DefaultMenuStyle()
+                .menuStyle(DefaultMenuStyle())
             }
             .padding()
             
@@ -198,8 +198,8 @@ struct AddTaskModalView: View {
                             assignee: selectedAssignee,
                             group: selectedGroup,
                             deadline: selectedDate,
-                           createdBy: userData.userName, // you can set this value if needed
-                            createdAt: Date()) // you can set this value if needed
+                           createdBy: userData.userName,
+                            createdAt: Date()) 
         taskViewModel.createTask(newTask)
     }
 
@@ -208,7 +208,7 @@ struct AddTaskModalView: View {
     
 
 
-//}
+
 struct AddTaskModalView_Preview: PreviewProvider {
     static var previews: some View {
         AddTaskModalView(isTaskModal: .constant(true))

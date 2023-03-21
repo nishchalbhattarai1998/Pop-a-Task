@@ -74,7 +74,7 @@ struct TaskRow: View {
                         .padding(.leading)
                     Spacer()
                 }
-                .frame(maxWidth: .infinity, alignment: .leading) // align HStack to the left
+                .frame(maxWidth: .infinity, alignment: .leading) 
             }
 
         }

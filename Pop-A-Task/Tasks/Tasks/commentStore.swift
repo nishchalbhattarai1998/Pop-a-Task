@@ -51,7 +51,7 @@ class CommentStore: ObservableObject {
         }
     }
 
-    // Add a new comment to the store
+    
     func addComment(comment: String, commentedBy: String) {
         let newComment = Comment(comment: comment, commentedBy: commentedBy, taskID: taskID)
         comments.append(newComment)

@@ -19,7 +19,7 @@ class CategoryViewModel: ObservableObject {
             return
         }
         listenerRegistration = db.collection("categories")
-//            .whereField("createBy", isEqualTo: userID)
+
             .order(by: "name")
             .addSnapshotListener { (querySnapshot, error) in
                 if let querySnapshot = querySnapshot {
@@ -82,7 +82,7 @@ class PriorityViewModel: ObservableObject {
             return
         }
         listenerRegistration = db.collection("priorities")
-//            .whereField("createBy", isEqualTo: userID)
+
             .order(by: "name")
             .addSnapshotListener { (querySnapshot, error) in
                 if let querySnapshot = querySnapshot {
@@ -145,7 +145,7 @@ class StatusViewModel: ObservableObject {
             return
         }
         listenerRegistration = db.collection("status")
-//            .whereField("createBy", isEqualTo: userID)
+
             .order(by: "name")
             .addSnapshotListener { (querySnapshot, error) in
                 if let querySnapshot = querySnapshot {
