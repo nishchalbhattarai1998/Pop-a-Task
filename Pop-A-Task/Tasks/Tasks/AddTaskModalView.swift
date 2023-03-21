@@ -1,6 +1,6 @@
 
 //need update in the database. delaying for the next spring
-// cont..
+// Completed the delayed task
 import SwiftUI
 
 struct AddTaskModalView: View {
