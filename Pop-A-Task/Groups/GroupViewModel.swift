@@ -19,27 +19,6 @@ class GroupViewModel: ObservableObject {
         fetchGroups()
         
     }
-
-//    func fetchGroups() {
-//        listenerRegistration = db.collection("groups")
-//            .order(by: "name")
-//            .addSnapshotListener { (querySnapshot, error) in
-//                if let querySnapshot = querySnapshot {
-//                    self.listData = querySnapshot.documents.compactMap { document in
-//                        do {
-//                            let group = try document.data(as: Groups.self)
-//                            return group
-//                        } catch {
-//                            print(error)
-//                        }
-//                        return nil
-//                    }
-//                    self.filterSearchResults()
-//                }
-//            }
-//
-//    }
-
     func fetchGroups() {
         guard let userID = userData.userID else {
             return
@@ -62,6 +41,8 @@ class GroupViewModel: ObservableObject {
                 }
             }
     }
+    
+
 
     func addGroup(_ group: Groups) {
         do {
@@ -83,12 +64,6 @@ class GroupViewModel: ObservableObject {
         }
     }
 
-//    func deleteGroup2(at offsets: IndexSet) {
-//        let groupIDs = offsets.map { listData[$0].id! }
-//        for id in groupIDs {
-//            db.collection("groups").document(id).delete()
-//        }
-//    }
 
     func deleteGroup(_ documentID: String) {
         let docRef = db.collection("groups").document(documentID)
@@ -172,6 +147,8 @@ class GroupViewModel: ObservableObject {
                         self.filteredUsers = querySnapshot?.documents.map {
                             (id: $0.documentID, name: $0.data()["name"] as? String ?? "")
                         } ?? []
+                        
+                        print(self.filteredUsers)
                     }
                 }
         }

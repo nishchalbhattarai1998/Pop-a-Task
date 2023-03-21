@@ -59,6 +59,10 @@
 		D394C9852991D7ED00DBE04B /* HelpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D394C9842991D7ED00DBE04B /* HelpView.swift */; };
 		D3C7804629AD94A400789412 /* tabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3C7804529AD94A400789412 /* tabView.swift */; };
 		D3E78E5F29A53F2800C48081 /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E78E5E29A53F2800C48081 /* SplashView.swift */; };
+		ED6C8DCE29C8F3900080D8A4 /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED6C8DCD29C8F3900080D8A4 /* Task.swift */; };
+		ED6C8DD029C8F3DF0080D8A4 /* TaskViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED6C8DCF29C8F3DF0080D8A4 /* TaskViewModel.swift */; };
+		ED6C8DD229C913080080D8A4 /* TaskRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED6C8DD129C913080080D8A4 /* TaskRow.swift */; };
+		ED6C8DD529C916920080D8A4 /* TaskDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED6C8DD429C916920080D8A4 /* TaskDetail.swift */; };
 		EDDAC73F298E25260009A250 /* profileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDDAC73E298E25260009A250 /* profileView.swift */; };
 		EDDAC746298E9E790009A250 /* Drawer in Frameworks */ = {isa = PBXBuildFile; productRef = EDDAC745298E9E790009A250 /* Drawer */; };
 		EDDAC74829905F140009A250 /* userDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDDAC74729905F140009A250 /* userDetails.swift */; };
@@ -91,6 +95,10 @@
 		D394C9842991D7ED00DBE04B /* HelpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpView.swift; sourceTree = "<group>"; };
 		D3C7804529AD94A400789412 /* tabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = tabView.swift; sourceTree = "<group>"; };
 		D3E78E5E29A53F2800C48081 /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
+		ED6C8DCD29C8F3900080D8A4 /* Task.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = "<group>"; };
+		ED6C8DCF29C8F3DF0080D8A4 /* TaskViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskViewModel.swift; sourceTree = "<group>"; };
+		ED6C8DD129C913080080D8A4 /* TaskRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskRow.swift; sourceTree = "<group>"; };
+		ED6C8DD429C916920080D8A4 /* TaskDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskDetail.swift; sourceTree = "<group>"; };
 		EDDAC73E298E25260009A250 /* profileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = profileView.swift; sourceTree = "<group>"; };
 		EDDAC74729905F140009A250 /* userDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = userDetails.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -232,10 +240,30 @@
 			isa = PBXGroup;
 			children = (
 				A4EAFEEB2991B04100F8E84E /* taskView.swift */,
-				A401561D29A095500037CCF2 /* AddTaskModalView.swift */,
+				ED6C8DCC29C8F2840080D8A4 /* Tasks */,
+				ED6C8DCB29C8F2500080D8A4 /* TaskSetting */,
+			);
+			path = Tasks;
+			sourceTree = "<group>";
+		};
+		ED6C8DCB29C8F2500080D8A4 /* TaskSetting */ = {
+			isa = PBXGroup;
+			children = (
 				B8D8A0FC29A285D000906A8C /* TaskSettingsModal.swift */,
 				D3896C0929C6FBFE000F15BD /* TaskSetting.swift */,
 				D3896C0B29C6FF85000F15BD /* TaskSettingModel.swift */,
+			);
+			path = TaskSetting;
+			sourceTree = "<group>";
+		};
+		ED6C8DCC29C8F2840080D8A4 /* Tasks */ = {
+			isa = PBXGroup;
+			children = (
+				A401561D29A095500037CCF2 /* AddTaskModalView.swift */,
+				ED6C8DCD29C8F3900080D8A4 /* Task.swift */,
+				ED6C8DD129C913080080D8A4 /* TaskRow.swift */,
+				ED6C8DD429C916920080D8A4 /* TaskDetail.swift */,
+				ED6C8DCF29C8F3DF0080D8A4 /* TaskViewModel.swift */,
 			);
 			path = Tasks;
 			sourceTree = "<group>";
@@ -357,16 +385,20 @@
 				B8D8A0A9299C922500906A8C /* GroupStore.swift in Sources */,
 				B8D8A0FD29A285D000906A8C /* TaskSettingsModal.swift in Sources */,
 				D394C9852991D7ED00DBE04B /* HelpView.swift in Sources */,
+				ED6C8DCE29C8F3900080D8A4 /* Task.swift in Sources */,
+				ED6C8DD529C916920080D8A4 /* TaskDetail.swift in Sources */,
 				B8E372992991321100EC240E /* UserData.swift in Sources */,
 				A40F6A172975E69B00F82F50 /* ContentView.swift in Sources */,
 				D37E7A3D298790D000F7ADCD /* registerUser.swift in Sources */,
 				D3C7804629AD94A400789412 /* tabView.swift in Sources */,
 				B8D8A0A0299C917F00906A8C /* GroupViewModel.swift in Sources */,
 				A40F6A152975E69B00F82F50 /* Pop_A_TaskApp.swift in Sources */,
+				ED6C8DD029C8F3DF0080D8A4 /* TaskViewModel.swift in Sources */,
 				EDDAC74829905F140009A250 /* userDetails.swift in Sources */,
 				A4EAFEEC2991B04100F8E84E /* taskView.swift in Sources */,
 				A47859BE299F4E5000B9D07A /* AddGroupModalView.swift in Sources */,
 				D3E78E5F29A53F2800C48081 /* SplashView.swift in Sources */,
+				ED6C8DD229C913080080D8A4 /* TaskRow.swift in Sources */,
 				B8D8A0A3299C91E900906A8C /* GroupRow.swift in Sources */,
 				A401561E29A095500037CCF2 /* AddTaskModalView.swift in Sources */,
 			);

@@ -11,6 +11,7 @@ import Firebase
 import FirebaseAuth
 import FirebaseFirestore
 
+
 struct taskView: View {
     @State private var isTaskModal = false
     @State private var isTaskSetting = false
@@ -20,50 +21,44 @@ struct taskView: View {
     @Binding var status: [String]
     @Binding var priority: [String]
     
+    @State private var searchText = ""
+    @State private var tasks = [Task]()
+    private let taskViewModel = TaskViewModel()
+    
     var body: some View {
         NavigationView {
-//            ZStack {
-//                if showMenu {
-//                    DrawerView(
-//                               categories: $categories,
-//                               status: $status,
-//                               priority: $priority,
-//                               menu: menu,
-//                               username: userData.userName ?? "Loading",
-//                               isLoggedIn: .constant(true), userData: UserData())
-//                        .transition(.slide)
-//                        .zIndex(1)
-//                }
-                
-                VStack {
-                    Text("Welcome to task view")
-                        .toolbar {
-                            HStack {
-                                Button("Add Task") {
-                                    isTaskModal = true
-                                }
-                                .sheet(isPresented: $isTaskModal) {
-                                    AddTaskModalView(isTaskModal: $isTaskModal)
-                                }
-                                
-                                Button("Task Setting") {
-                                    isTaskSetting = true
-                                }
-                                .sheet(isPresented: $isTaskSetting) {
-                                    TaskSettingsModal(isTaskSetting: $isTaskSetting)
-                                }
-                            }
+            VStack {
+                List(tasks.filter {
+                    searchText.isEmpty ? true : $0.name.localizedCaseInsensitiveContains(searchText)
+                }) { task in
+                    TaskRow(task: task)
+                }
+                .searchable(text: $searchText)
+                .onAppear {
+                    taskViewModel.fetchTasks { fetchedTasks in
+                        self.tasks = fetchedTasks
+                    }
+                }
+                .toolbar {
+                    HStack {
+                        Button("Add Task") {
+                            isTaskModal = true
                         }
+                        .sheet(isPresented: $isTaskModal) {
+                            AddTaskModalView(isTaskModal: $isTaskModal)
+                        }
+                        
+                        Button("Task Setting") {
+                            isTaskSetting = true
+                        }
+                        .sheet(isPresented: $isTaskSetting) {
+                            TaskSettingsModal(isTaskSetting: $isTaskSetting)
+                        }
+                    }
                 }
             }
-//            .edgesIgnoringSafeArea(.bottom)
-//            .navigationBarItems(leading:
-//                Button(action: { self.showMenu.toggle() }) {
-//                    Image(systemName: "person.circle")
-//                        .imageScale(.large)
-//                }
-//            )
-//        }
+            .navigationTitle("Tasks")
+        }
     }
 }
 
@@ -74,3 +69,5 @@ struct taskView_Previews: PreviewProvider {
                  priority: .constant(["Priority1", "Priority2", "Priority3"]))
     }
 }
+
+
