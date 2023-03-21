@@ -17,6 +17,10 @@ class TaskViewModel: ObservableObject {
     @Published var filteredTasks = [Task]()
     @Published var searchTaskTerm = ""
     
+    var taskCount: Int {
+        tasks.count
+    }
+    
     func createTask(_ task: Task) {
         // Add a new document with a generated ID
         var ref: DocumentReference? = nil

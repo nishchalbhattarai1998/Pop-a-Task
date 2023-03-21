@@ -11,7 +11,6 @@ import Firebase
 import FirebaseAuth
 import FirebaseFirestore
 
-
 struct taskView: View {
     @State private var isTaskModal = false
     @State private var isTaskSetting = false
@@ -56,6 +55,9 @@ struct taskView: View {
                         }
                     }
                 }
+                
+                Text("Total tasks: \(tasks.count)")
+                    .padding(.top, 10)
             }
             .navigationTitle("Tasks")
         }
@@ -69,5 +71,3 @@ struct taskView_Previews: PreviewProvider {
                  priority: .constant(["Priority1", "Priority2", "Priority3"]))
     }
 }
-
-
