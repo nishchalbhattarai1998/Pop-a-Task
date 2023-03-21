@@ -12,51 +12,46 @@ import FirebaseFirestore
 
 class CommentStore: ObservableObject {
     @Published var comments: [Comment] = []
-    let taskID: String
-    let db = Firestore.firestore()
-
+    var taskID: String
+    var listener: ListenerRegistration?
+    
     init(taskID: String) {
         self.taskID = taskID
-        loadComments()
+        fetchComments()
     }
-
-    private func loadComments() {
-        db.collection("comments")
-            .whereField("taskID", isEqualTo: taskID)
-            .order(by: "createdAt", descending: false)
-            .addSnapshotListener { (querySnapshot, error) in
-                guard let documents = querySnapshot?.documents else {
-                    print("No comments found")
-                    return
-                }
-
-                self.comments = documents.compactMap { (queryDocumentSnapshot) -> Comment? in
-                    return try? queryDocumentSnapshot.data(as: Comment.self)
-                }
-            }
+    
+    deinit {
+        unsubscribe()
     }
-
-    func saveComment(_ comment: Comment) {
-        db.collection("comments").addDocument(data: [
-            "comment": comment.comment,
-            "commentedBy": comment.commentedBy,
-            "taskID": comment.taskID,
-            "createdAt": Date()
-        ]) { err in
-            if let err = err {
-                print("Error adding comment: \(err)")
-            } else {
-                print("Comment successfully added")
+    
+    private func fetchComments() {
+        let commentsRef = Firestore.firestore().collection("tasks/\(taskID)/comments")
+        listener = commentsRef.addSnapshotListener { querySnapshot, error in
+            if let error = error {
+                print("Error getting comments: \(error.localizedDescription)")
+                return
             }
+            
+            self.comments = querySnapshot?.documents.compactMap { document in
+                try? document.data(as: Comment.self)
+            } ?? []
+        }
+    }
+    
+    private func unsubscribe() {
+        listener?.remove()
+    }
+    
+    func addComment(comment: String, commentedBy: String, taskID: String) {
+        let commentsRef = Firestore.firestore().collection("tasks/\(taskID)/comments")
+        let newComment = Comment(comment: comment, commentedBy: commentedBy, commented: Date())
+        
+        do {
+            _ = try commentsRef.addDocument(from: newComment)
+        } catch {
+            print("Error adding comment: \(error.localizedDescription)")
         }
     }
 
-    
-    func addComment(comment: String, commentedBy: String) {
-        let newComment = Comment(comment: comment, commentedBy: commentedBy, taskID: taskID)
-        comments.append(newComment)
 
-        // Save the new comment to the database
-        saveComment(newComment)
-    }
 }
