@@ -13,6 +13,7 @@ struct AddTaskModalView: View {
     @Binding var isTaskModal: Bool
     @State var taskName = ""
     @State var description = ""
+    @State var Assignee = ["Charles Roy", "Nishchal", "Sangam", "Harneet", "Manpreet"]
     @State private var selectedAssignee: String
     @State private var selectedCategory: String
     @State private var selectedStatus: String
@@ -25,9 +26,10 @@ struct AddTaskModalView: View {
         _selectedCategory = State(initialValue: CategoryViewModel().cListData.first?.name ?? "No Category")
         _selectedStatus = State(initialValue: StatusViewModel().sListData.first?.name ?? "No Status")
         _selectedPriority = State(initialValue: PriorityViewModel().pListData.first?.name ?? "No Priority")
-        _selectedAssignee = State(initialValue: GroupViewModel().filteredUsers.first?.name ?? "None")
+        _selectedAssignee = State(initialValue: "None") // Initialize selectedAssignee to "None"
         _selectedGroup = State(initialValue: GroupViewModel().filteredData.first?.name ?? "None")
     }
+
     
     @State var selectedDate = Date()
     @State private var isDatePickerVisible = false
@@ -138,9 +140,9 @@ struct AddTaskModalView: View {
             HStack {
                 Text("Assignee:")
                 Menu {
-                    ForEach(groupViewModel.filteredUsers, id: \.id) { user in
-                        Button(action: { self.selectedAssignee = user.name }) {
-                            Text(user.name)
+                    ForEach(Assignee, id: \.self) { user in // Use the Assignee array instead of the filteredUsers array
+                        Button(action: { self.selectedAssignee = user }) {
+                            Text(user)
                         }
                     }
                 } label: {
@@ -151,7 +153,8 @@ struct AddTaskModalView: View {
                             .foregroundColor(.blue)
                     }
                 }
-                .menuStyle(DefaultMenuStyle())
+                .menuStyle(DefaultMenuStyle()) // Set the menu style to DefaultMenuStyle()
+
             }
             .padding()
             
