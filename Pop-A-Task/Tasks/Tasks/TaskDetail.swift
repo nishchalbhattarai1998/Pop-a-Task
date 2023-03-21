@@ -9,7 +9,15 @@ import Foundation
 import SwiftUI
 
 struct TaskDetail: View {
+    @ObservedObject var userData = UserData()
     let task: Task
+    @State private var comment: String = ""
+    @ObservedObject var commentStore: CommentStore
+
+    init(task: Task) {
+        self.task = task
+        self.commentStore = CommentStore(taskID: task.id ?? "")
+    }
     private let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateStyle = .medium
@@ -26,7 +34,7 @@ struct TaskDetail: View {
                         .multilineTextAlignment(.leading)
                         .frame(maxWidth: .infinity, alignment: .leading)
                 }
-
+                
                 VStack(alignment: .leading) {
                     Text("Description: \(task.description ?? "")")
                         .foregroundColor(.gray)
@@ -45,7 +53,7 @@ struct TaskDetail: View {
                         .frame(maxWidth: .infinity, alignment: .leading)
                 }
                 .padding()
-            
+                
                 VStack(alignment: .leading) {
                     Text("Status: \(task.status ?? "")")
                         .foregroundColor(.gray)
@@ -53,7 +61,7 @@ struct TaskDetail: View {
                         .frame(maxWidth: .infinity, alignment: .leading)
                 }
                 .padding()
-            
+                
                 VStack(alignment: .leading) {
                     Text("Priority: \(task.priority ?? "")")
                         .foregroundColor(.gray)
@@ -92,7 +100,7 @@ struct TaskDetail: View {
                 }
                 .padding()
             }
-
+            
             
             Section(header: Text("Created")) {
                 VStack(alignment: .leading) {
@@ -101,7 +109,7 @@ struct TaskDetail: View {
                         .multilineTextAlignment(.leading)
                 }
                 .padding()
-
+                
                 VStack(alignment: .leading) {
                     Text("At: \(dateFormatter.string(from: task.createdAt ?? Date()))")
                         .foregroundColor(.gray)
@@ -111,6 +119,49 @@ struct TaskDetail: View {
             }
             
             .frame(maxWidth: .infinity, alignment: .leading)
+            
+            
+            Section(header: Text("Comments")) {
+                            ForEach(commentStore.comments) { comment in
+                                VStack(alignment: .leading) {
+                                    Text(comment.comment)
+                                        .foregroundColor(.gray)
+                                        .multilineTextAlignment(.leading)
+                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                    Text("By: \(comment.commentedBy)")
+                                        .font(.caption2)
+                                        .foregroundColor(.gray)
+                                        .multilineTextAlignment(.leading)
+                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                }
+                                .padding()
+                            }
+                            
+                            VStack(alignment: .leading) {
+                                TextEditor(text: $comment)
+                                    .foregroundColor(.black)
+                                    .multilineTextAlignment(.leading)
+                                    .frame(maxWidth: .infinity, minHeight: 100, alignment: .leading)
+                                    .padding()
+                            }
+                            .background(Color.gray.opacity(0.1))
+                            .cornerRadius(15)
+                            .padding(.vertical)
+                            
+                            Button(action: {
+                                // Add the new comment to the store
+                                commentStore.addComment(comment: comment, commentedBy: userData.userName ?? "Unknown")
+
+                                // Clear the comment text editor
+                                comment = ""
+                                
+                            }, label: {
+                                Text("Add Comment")
+                            })
+                            .frame(maxWidth: .infinity, alignment: .trailing)
+                            .padding()
+                        }
+            
             
         }
         

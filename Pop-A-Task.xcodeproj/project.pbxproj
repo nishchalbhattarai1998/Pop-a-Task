@@ -13,8 +13,6 @@
 		A40F6A192975E69D00F82F50 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A40F6A182975E69D00F82F50 /* Assets.xcassets */; };
 		A40F6A1C2975E69D00F82F50 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A40F6A1B2975E69D00F82F50 /* Preview Assets.xcassets */; };
 		A47859BE299F4E5000B9D07A /* AddGroupModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A47859BD299F4E5000B9D07A /* AddGroupModalView.swift */; };
-		A4BEE20F29C93CF2003ECC13 /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4BEE20E29C93CF2003ECC13 /* Comment.swift */; };
-		A4BEE21129C94324003ECC13 /* commentStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4BEE21029C94324003ECC13 /* commentStore.swift */; };
 		A4E4756C298E64C100763BEE /* HomePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4E4756B298E64C100763BEE /* HomePage.swift */; };
 		A4EAFEEC2991B04100F8E84E /* taskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4EAFEEB2991B04100F8E84E /* taskView.swift */; };
 		A4FF544E29C7C56100DB3105 /* DemoGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4FF544D29C7C56100DB3105 /* DemoGraph.swift */; };
@@ -25,6 +23,8 @@
 		B8D8A0A9299C922500906A8C /* GroupStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8D8A0A8299C922500906A8C /* GroupStore.swift */; };
 		B8D8A0FD29A285D000906A8C /* TaskSettingsModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8D8A0FC29A285D000906A8C /* TaskSettingsModal.swift */; };
 		B8E372992991321100EC240E /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E372982991321100EC240E /* UserData.swift */; };
+		D27226B129C94CA300B922D5 /* comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = D27226B029C94CA300B922D5 /* comment.swift */; };
+		D27226B329C94CBC00B922D5 /* commentStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = D27226B229C94CBC00B922D5 /* commentStore.swift */; };
 		D2AFEFB129A0D0D900F37448 /* AddMemberModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2AFEFB029A0D0D900F37448 /* AddMemberModal.swift */; };
 		D37E7A3D298790D000F7ADCD /* registerUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = D37E7A3C298790D000F7ADCD /* registerUser.swift */; };
 		D37E7A402987917200F7ADCD /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = D37E7A3F2987917200F7ADCD /* FirebaseAnalytics */; };
@@ -78,8 +78,6 @@
 		A40F6A182975E69D00F82F50 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A40F6A1B2975E69D00F82F50 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		A47859BD299F4E5000B9D07A /* AddGroupModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddGroupModalView.swift; sourceTree = "<group>"; };
-		A4BEE20E29C93CF2003ECC13 /* Comment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Comment.swift; path = "Pop-a-Task/Tasks/Tasks/Comment.swift"; sourceTree = SOURCE_ROOT; };
-		A4BEE21029C94324003ECC13 /* commentStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = commentStore.swift; path = "Pop-a-Task/Tasks/Tasks/commentStore.swift"; sourceTree = SOURCE_ROOT; };
 		A4E4756B298E64C100763BEE /* HomePage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePage.swift; sourceTree = "<group>"; };
 		A4EAFEEB2991B04100F8E84E /* taskView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = taskView.swift; sourceTree = "<group>"; };
 		A4FF544D29C7C56100DB3105 /* DemoGraph.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoGraph.swift; sourceTree = "<group>"; };
@@ -90,6 +88,8 @@
 		B8D8A0A8299C922500906A8C /* GroupStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupStore.swift; sourceTree = "<group>"; };
 		B8D8A0FC29A285D000906A8C /* TaskSettingsModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskSettingsModal.swift; sourceTree = "<group>"; };
 		B8E372982991321100EC240E /* UserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
+		D27226B029C94CA300B922D5 /* comment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = comment.swift; sourceTree = "<group>"; };
+		D27226B229C94CBC00B922D5 /* commentStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = commentStore.swift; sourceTree = "<group>"; };
 		D2AFEFB029A0D0D900F37448 /* AddMemberModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMemberModal.swift; sourceTree = "<group>"; };
 		D37E7A3C298790D000F7ADCD /* registerUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = registerUser.swift; sourceTree = "<group>"; };
 		D37E7A75298874B300F7ADCD /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -266,8 +266,8 @@
 				A401561D29A095500037CCF2 /* AddTaskModalView.swift */,
 				ED6C8DCD29C8F3900080D8A4 /* Task.swift */,
 				ED6C8DD129C913080080D8A4 /* TaskRow.swift */,
-				A4BEE20E29C93CF2003ECC13 /* Comment.swift */,
-				A4BEE21029C94324003ECC13 /* commentStore.swift */,
+				D27226B029C94CA300B922D5 /* comment.swift */,
+				D27226B229C94CBC00B922D5 /* commentStore.swift */,
 				ED6C8DD429C916920080D8A4 /* TaskDetail.swift */,
 				ED6C8DCF29C8F3DF0080D8A4 /* TaskViewModel.swift */,
 			);
@@ -382,16 +382,16 @@
 				D3896C0C29C6FF85000F15BD /* TaskSettingModel.swift in Sources */,
 				A4FF544E29C7C56100DB3105 /* DemoGraph.swift in Sources */,
 				A4E4756C298E64C100763BEE /* HomePage.swift in Sources */,
-				A4BEE21129C94324003ECC13 /* commentStore.swift in Sources */,
+				D27226B329C94CBC00B922D5 /* commentStore.swift in Sources */,
 				EDDAC73F298E25260009A250 /* profileView.swift in Sources */,
 				B8D8A0A5299C920500906A8C /* GroupDetail.swift in Sources */,
 				B8D8A0A7299C921800906A8C /* Groups.swift in Sources */,
+				D27226B129C94CA300B922D5 /* comment.swift in Sources */,
 				D394C9832991D7DC00DBE04B /* GroupViewS.swift in Sources */,
 				D3896C0A29C6FBFE000F15BD /* TaskSetting.swift in Sources */,
 				D2AFEFB129A0D0D900F37448 /* AddMemberModal.swift in Sources */,
 				B8D8A0A9299C922500906A8C /* GroupStore.swift in Sources */,
 				B8D8A0FD29A285D000906A8C /* TaskSettingsModal.swift in Sources */,
-				A4BEE20F29C93CF2003ECC13 /* Comment.swift in Sources */,
 				D394C9852991D7ED00DBE04B /* HelpView.swift in Sources */,
 				ED6C8DCE29C8F3900080D8A4 /* Task.swift in Sources */,
 				ED6C8DD529C916920080D8A4 /* TaskDetail.swift in Sources */,
