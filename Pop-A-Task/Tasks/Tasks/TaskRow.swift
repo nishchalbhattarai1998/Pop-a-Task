@@ -14,6 +14,7 @@ struct TaskRow: View {
     @ObservedObject var  statusViewModel = StatusViewModel()
     @ObservedObject var priorityViewModel = PriorityViewModel()
     @ObservedObject var groupViewModel = GroupViewModel()
+    @ObservedObject var userViewModel = UserViewModel()
     let task: Task
     private let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -28,7 +29,8 @@ struct TaskRow: View {
                                                categoryViewModel: categoryViewModel,
                                                statusViewModel: statusViewModel,
                                                priorityViewModel: priorityViewModel,
-                                               groupViewModel: groupViewModel)) {
+                                               groupViewModel: groupViewModel,
+                                               userViewModel: userViewModel)) {
             VStack {
                 HStack {
                    
