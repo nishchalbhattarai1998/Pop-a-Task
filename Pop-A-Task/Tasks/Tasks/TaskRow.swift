@@ -91,8 +91,10 @@ struct TaskRow_Previews: PreviewProvider {
                                priority: "Test Priority",
                                assignee: "Test assignee",
                                group: "Test Group",
+                               groupID: "1",
                                deadline: Date(),
                               createdBy: "Charles Roy",
-                               createdAt: Date()))
+                               createdAt: Date(),
+                               taskID:"1"))
         }
     }

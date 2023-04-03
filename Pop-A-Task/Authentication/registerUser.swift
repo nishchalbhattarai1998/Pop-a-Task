@@ -159,7 +159,8 @@ struct RegisterView: View {
                     "name": self.name,
                     "cell": self.cell,
                     "password": self.password,
-                    "groupID": []
+                    "groupID": [],
+                    "taskID": []
                 ]) { (error) in
                     if let error = error {
                         print("Error writing document: \(error)")

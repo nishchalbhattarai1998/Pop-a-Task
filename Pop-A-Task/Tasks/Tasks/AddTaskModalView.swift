@@ -10,25 +10,32 @@ struct AddTaskModalView: View {
     @ObservedObject var groupViewModel = GroupViewModel()
     @ObservedObject var taskViewModel = TaskViewModel()
     @ObservedObject var userData = UserData()
+    @ObservedObject var userViewModel = UserViewModel()
     @Binding var isTaskModal: Bool
     @State var taskName = ""
     @State var description = ""
-    @State var Assignee = ["Charles Roy", "Nishchal", "Sangam", "Harneet", "Manpreet"]
-    @State private var selectedAssignee: String
-    @State private var selectedCategory: String
-    @State private var selectedStatus: String
-    @State private var selectedPriority: String
-    @State private var selectedGroup: String
+//    private var usersInSelectedGroup: [User] {
+//        guard let selectedGroupID = groupViewModel.getGroupID(groupName: selectedGroup) else { return [] }
+//        return userViewModel.users.filter { $0.groupID.keys.contains(selectedGroupID) }
+//    }
+    @State private var selectedAssignee: String = UserViewModel().users.first?.name ?? "None"
+    @State private var selectedCategory: String = CategoryViewModel().cListData.first?.name ?? "No Category"
+    @State private var selectedStatus: String = StatusViewModel().sListData.first?.name ?? "No Status"
+    @State private var selectedPriority: String = PriorityViewModel().pListData.first?.name ?? "No Priority"
+    @State private var selectedGroup: String = GroupViewModel().filteredData.first?.name ?? "None"
+
+
     
     
-    init(isTaskModal: Binding<Bool>) {
-        self._isTaskModal = isTaskModal
-        _selectedCategory = State(initialValue: CategoryViewModel().cListData.first?.name ?? "No Category")
-        _selectedStatus = State(initialValue: StatusViewModel().sListData.first?.name ?? "No Status")
-        _selectedPriority = State(initialValue: PriorityViewModel().pListData.first?.name ?? "No Priority")
-        _selectedAssignee = State(initialValue: "None") // Initialize selectedAssignee to "None"
-        _selectedGroup = State(initialValue: GroupViewModel().filteredData.first?.name ?? "None")
-    }
+//    init(isTaskModal: Binding<Bool>) {
+//        self._isTaskModal = isTaskModal
+//        _selectedCategory = State(initialValue: CategoryViewModel().cListData.first?.name ?? "No Category")
+//        _selectedStatus = State(initialValue: StatusViewModel().sListData.first?.name ?? "No Status")
+//        _selectedPriority = State(initialValue: PriorityViewModel().pListData.first?.name ?? "No Priority")
+//        _selectedAssignee = State(initialValue: "None") // Initialize selectedAssignee to the first user in the list
+//        _selectedGroup = State(initialValue: GroupViewModel().filteredData.first?.name ?? "None")
+//    }
+
 
     
     @State var selectedDate = Date()
@@ -40,6 +47,7 @@ struct AddTaskModalView: View {
     }()
     
     var body: some View {
+//        let usersInSpecificGroup = userViewModel.usersInGroup(groupID: "some_group_id")
         ScrollView{
             
             Text("Add Task").font(.largeTitle).padding(.top, 30)
@@ -140,9 +148,9 @@ struct AddTaskModalView: View {
             HStack {
                 Text("Assignee:")
                 Menu {
-                    ForEach(Assignee, id: \.self) { user in // Use the Assignee array instead of the filteredUsers array
-                        Button(action: { self.selectedAssignee = user }) {
-                            Text(user)
+                    ForEach(userViewModel.users) { user in
+                        Button(action: { self.selectedAssignee = user.name }) {
+                            Text(user.name)
                         }
                     }
                 } label: {
@@ -153,10 +161,14 @@ struct AddTaskModalView: View {
                             .foregroundColor(.blue)
                     }
                 }
-                .menuStyle(DefaultMenuStyle()) // Set the menu style to DefaultMenuStyle()
-
+                .menuStyle(DefaultMenuStyle())
             }
             .padding()
+
+
+
+
+
             
             
             VStack{
@@ -193,19 +205,31 @@ struct AddTaskModalView: View {
     }
     
     func createTask() {
-        let newTask = Task(id: "", name: taskName,
-                            description: description,
-                            category: selectedCategory,
-                            status: selectedStatus,
-                            priority: selectedPriority,
-                            assignee: selectedAssignee,
-                            group: selectedGroup,
-                            deadline: selectedDate,
-                           createdBy: userData.userName,
-                            createdAt: Date()) 
-        taskViewModel.createTask(newTask)
-    }
+        // Get the selected group's ID
+        let selectedGroupID = groupViewModel.getGroupID(groupName: selectedGroup)
 
+        var newTask = Task(id: nil, name: taskName,
+                           description: description,
+                           category: selectedCategory,
+                           status: selectedStatus,
+                           priority: selectedPriority,
+                           assignee: selectedAssignee,
+                           group: selectedGroup,
+                           groupID: selectedGroupID, // Pass the selected group's ID
+                           deadline: selectedDate,
+                           createdBy: userData.userName,
+                           createdAt: Date(),
+                           taskID: "")
+        do {
+            let taskRef = try taskViewModel.db.collection("tasks").addDocument(from: newTask)
+            let taskID = taskRef.documentID
+            newTask.id = taskID
+            let _ = try taskRef.setData(from: newTask)
+            print("Task added successfully to Firestore")
+        } catch let error {
+            print("Error adding task to Firestore: \(error.localizedDescription)")
+        }
+    }
 
 }
     

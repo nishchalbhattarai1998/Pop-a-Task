@@ -4,8 +4,9 @@ struct HomeView: View {
     
     @ObservedObject var viewModel = GroupViewModel()
     @ObservedObject var taskViewModel = TaskViewModel()
-    @State var group: Double = 0.2
-    @State var tasks: Double = 0.2
+    @State private var tasks = [Task]()
+//    @State var group: Double = 0.2
+//    @State var tasks: Double = 0.2
     @State var inProgress: Double = 0.2
     @State var complete: Double = 0.2
     @State var overdue: Double = 0.2
@@ -25,17 +26,10 @@ struct HomeView: View {
                 .padding(.top, 5)
                 
                 VStack{
-//                    ProgressCircleView1(progress: Int(taskViewModel.filteredTasks.count), color: .orange, title: "Tasks")
+                    ProgressCircleView1(progress: tasks.count, color: .orange, title: "Tasks")
                 }
                 .onAppear {
-                    taskViewModel.fetchTasks { fetchedTasks in
-                        self.taskViewModel.filteredTasks = fetchedTasks
-                        self.tasks = Double(fetchedTasks.count)
-                        
-                        // Calculate other progress values here
-                        // self.inProgress = ...
-                        // self.complete = ...
-                        // self.overdue = ...
+                    withAnimation(Animation.linear(duration: 100)) {
                     }
                 }
                 .padding(.top, 20)

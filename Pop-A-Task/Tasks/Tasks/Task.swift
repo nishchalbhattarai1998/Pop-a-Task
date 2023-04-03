@@ -10,9 +10,11 @@ struct Task: Identifiable, Codable {
     var priority: String?
     var assignee: String?
     var group: String?
+    var groupID: String?
     var deadline: Date?
     var createdBy: String?
     var createdAt: Date?
+    var taskID: String?
 
     enum CodingKeys: String, CodingKey {
         case id
@@ -23,12 +25,14 @@ struct Task: Identifiable, Codable {
         case priority
         case assignee
         case group
+        case groupID
         case deadline
         case createdBy
         case createdAt
+        case taskID
     }
     
-    init(id: String?, name: String, description: String?, category: String?, status: String?, priority: String?, assignee: String?, group: String?, deadline: Date?, createdBy: String?, createdAt: Date?) {
+    init(id: String?, name: String, description: String?, category: String?, status: String?, priority: String?, assignee: String?, group: String?, groupID: String?, deadline: Date?, createdBy: String?, createdAt: Date?, taskID: String?) {
         self.id = id
         self.name = name
         self.description = description
@@ -37,9 +41,11 @@ struct Task: Identifiable, Codable {
         self.priority = priority
         self.assignee = assignee
         self.group = group
+        self.groupID = groupID
         self.deadline = deadline
         self.createdBy = createdBy
         self.createdAt = createdAt
+        self.taskID = taskID
     }
     
     init() {
@@ -51,8 +57,10 @@ struct Task: Identifiable, Codable {
         self.priority = ""
         self.assignee = ""
         self.group = ""
+        self.groupID = ""
         self.deadline = Date()
         self.createdBy = ""
         self.createdAt = Date()
+        self.taskID = ""
     }
 }

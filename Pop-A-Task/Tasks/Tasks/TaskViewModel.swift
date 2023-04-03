@@ -6,8 +6,11 @@
 //
 
 import Foundation
+
+import Foundation
 import Firebase
 import FirebaseFirestore
+import FirebaseFirestoreSwift
 
 class TaskViewModel: ObservableObject {
     
@@ -22,25 +25,15 @@ class TaskViewModel: ObservableObject {
     }
     
     func createTask(_ task: Task) {
-        // Add a new document with a generated ID
-        var ref: DocumentReference? = nil
-        ref = db.collection("tasks").addDocument(data: [
-            "name": task.name,
-            "description": task.description ?? "",
-            "category": task.category ?? "",
-            "status": task.status ?? "",
-            "priority": task.priority ?? "",
-            "assignee": task.assignee ?? "",
-            "group": task.group ?? "",
-            "deadline": task.deadline ?? Date(),
-            "createdBy": task.createdBy ?? "",
-            "createdAt": task.createdAt ?? Date()
-        ]) { err in
-            if let err = err {
-                print("Error adding document: \(err)")
-            } else {
-                print("Document added with ID: \(ref!.documentID)")
-            }
+        do {
+            let taskRef = try db.collection("tasks").addDocument(from: task)
+            let taskID = taskRef.documentID
+            var updatedTask = task
+            updatedTask.id = taskID
+            try taskRef.setData(from: updatedTask)
+            print("Task added successfully to Firestore")
+        } catch let error {
+            print("Error adding task to Firestore: \(error.localizedDescription)")
         }
     }
     
@@ -54,25 +47,13 @@ class TaskViewModel: ObservableObject {
             var tasks = [Task]()
             
             for document in documents {
-                let data = document.data()
-                
-                let id = document.documentID
-                let name = data["name"] as? String ?? ""
-                let description = data["description"] as? String ?? ""
-                let category = data["category"] as? String ?? ""
-                let status = data["status"] as? String ?? ""
-                let priority = data["priority"] as? String ?? ""
-                let assignee = data["assignee"] as? String ?? ""
-                let group = data["group"] as? String ?? ""
-                let deadlineTimestamp = data["deadline"] as? Timestamp ?? Timestamp()
-                let deadline = deadlineTimestamp.dateValue()
-                let createdBy = data["createdBy"] as? String ?? ""
-                let createdAtTimestamp = data["createdAt"] as? Timestamp ?? Timestamp()
-                let createdAt = createdAtTimestamp.dateValue()
-                
-                let task = Task(id: id, name: name, description: description, category: category, status: status, priority: priority, assignee: assignee, group: group, deadline: deadline, createdBy: createdBy, createdAt: createdAt)
-                
-                tasks.append(task)
+                do {
+                    if let task = try document.data(as: Task.self, with: .estimate) as Task? {
+                        tasks.append(task)
+                    }
+                } catch let error {
+                    print("Error decoding task: \(error.localizedDescription)")
+                }
             }
             
             completion(tasks)
@@ -80,8 +61,6 @@ class TaskViewModel: ObservableObject {
     }
 
 
-
-    
     func deleteTask(_ task: Task) {
         if let taskID = task.id {
             db.collection("tasks").document(taskID).delete { error in
@@ -97,12 +76,10 @@ class TaskViewModel: ObservableObject {
     func moveTask(from: IndexSet, to: Int) {
         tasks.move(fromOffsets: from, toOffset: to)
         
-       
         for i in 0..<tasks.count {
             let taskID = tasks[i].id
             db.collection("tasks").document(taskID!).updateData(["order": i])
         }
-        
         
         filterTasks()
     }
@@ -152,4 +129,7 @@ class TaskViewModel: ObservableObject {
                 }
         }
     }
+    
+
+
 }

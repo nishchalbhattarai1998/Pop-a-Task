@@ -44,129 +44,6 @@ struct TaskDetail: View {
                 .padding()
             }
             
-            Section(header: Text("Setting")) {
-                VStack(alignment: .leading) {
-                    
-                    Text("Category: \(task.category ?? "")")
-                        .foregroundColor(.gray)
-                        .multilineTextAlignment(.leading)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                }
-                .padding()
-                
-                VStack(alignment: .leading) {
-                    Text("Status: \(task.status ?? "")")
-                        .foregroundColor(.gray)
-                        .multilineTextAlignment(.leading)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                }
-                .padding()
-                
-                VStack(alignment: .leading) {
-                    Text("Priority: \(task.priority ?? "")")
-                        .foregroundColor(.gray)
-                        .multilineTextAlignment(.leading)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                }
-                .padding()
-            }
-            
-            Section(header: Text("Deadline")) {
-                VStack(alignment: .leading) {
-                    Text(dateFormatter.string(from: task.deadline ?? Date()))
-                        .foregroundColor(.gray)
-                        .multilineTextAlignment(.leading)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                }
-                .padding()
-            }
-            
-            Section(header: Text("Group")) {
-                VStack(alignment: .leading) {
-                    Text(task.group ?? "")
-                        .foregroundColor(.gray)
-                        .multilineTextAlignment(.leading)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                }
-                .padding()
-            }
-            
-            Section(header: Text("Assigned to")) {
-                VStack(alignment: .leading) {
-                    Text(task.assignee ?? "")
-                        .foregroundColor(.gray)
-                        .multilineTextAlignment(.leading)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                }
-                .padding()
-            }
-            
-            
-            Section(header: Text("Created")) {
-                VStack(alignment: .leading) {
-                    Text("By: \(task.createdBy ?? "")")
-                        .foregroundColor(.gray)
-                        .multilineTextAlignment(.leading)
-                }
-                .padding()
-                
-                VStack(alignment: .leading) {
-                    Text("At: \(dateFormatter.string(from: task.createdAt ?? Date()))")
-                        .foregroundColor(.gray)
-                        .multilineTextAlignment(.leading)
-                }
-                .padding()
-            }
-            
-            .frame(maxWidth: .infinity, alignment: .leading)
-            
-            
-            Section(header: Text("Comments")) {
-                ForEach(commentStore.comments) { comment in
-                    VStack(alignment: .leading) {
-                        Text(comment.comment)
-                            .foregroundColor(.gray)
-                            .multilineTextAlignment(.leading)
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                        Text("By: \(comment.commentedBy)")
-                            .font(.caption2)
-                            .foregroundColor(.gray)
-                            .multilineTextAlignment(.leading)
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                    }
-                    .padding()
-                }
-            }
-                
-            Section(header: Text("Add Comment")) {
-                VStack(alignment: .leading) {
-                    TextEditor(text: $comment)
-                        .foregroundColor(.black)
-                        .multilineTextAlignment(.leading)
-                        .frame(maxWidth: .infinity, minHeight: 100, alignment: .leading)
-                        .padding()
-                }
-                .background(Color.gray.opacity(0.1))
-                .cornerRadius(15)
-                .padding(.vertical)
-                    
-                Button(action: {
-                    // Add the new comment to the store
-                    commentStore.addComment(comment: comment, commentedBy: userData.userName ?? "Unknown", taskID: task.id ?? "")
-
-
-                    // Clear the comment text editor
-                    comment = ""
-                                            
-                }, label: {
-                    Text("Add Comment")
-                })
-                .frame(maxWidth: .infinity, alignment: .trailing)
-                .padding()
-            }
-
-            
-            
         }
         
         .listStyle(InsetGroupedListStyle())
@@ -185,8 +62,10 @@ struct TaskDetail_Preview: PreviewProvider {
                               priority: "Test Priority",
                               assignee: "Test assignee",
                               group: "Test Group",
+                              groupID: "1",
                               deadline: Date(),
                               createdBy: "Charles Roy",
-                              createdAt: Date()))
+                              createdAt: Date(),
+                              taskID: "1"))
     }
 }

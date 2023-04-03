@@ -14,7 +14,7 @@ class GroupViewModel: ObservableObject {
     @Published var searchTerm = ""
     @Published var navTitle = "Groups"
     var filteredUsers: [(id: String, name: String)] = []
-
+    
     init() {
         fetchGroups()
         
@@ -42,8 +42,8 @@ class GroupViewModel: ObservableObject {
             }
     }
     
-
-
+    
+    
     func addGroup(_ group: Groups) {
         do {
             let _ = try db.collection("groups").addDocument(from: group)
@@ -52,7 +52,7 @@ class GroupViewModel: ObservableObject {
             fatalError("Unable to encode group: \(error.localizedDescription).")
         }
     }
-
+    
     func updateGroup(_ group: Groups) {
         if let groupID = group.id {
             do {
@@ -63,8 +63,8 @@ class GroupViewModel: ObservableObject {
             }
         }
     }
-
-
+    
+    
     func deleteGroup(_ documentID: String) {
         let docRef = db.collection("groups").document(documentID)
         docRef.delete { error in
@@ -75,7 +75,7 @@ class GroupViewModel: ObservableObject {
             }
         }
     }
-
+    
     func addMembersToGroup(id: String, members: [String]) {
         print(id + " " + members[0])
         if let groupIndex = listData.firstIndex(where: { $0.id == id }) {
@@ -93,18 +93,18 @@ class GroupViewModel: ObservableObject {
     
     func moveGroup(from: IndexSet, to: Int) {
         listData.move(fromOffsets: from, toOffset: to)
-
+        
         // Update the order field of the Firestore documents
         for i in 0..<listData.count {
             let groupID = listData[i].groupID
             db.collection("groups").document(groupID).updateData(["order": i])
         }
-
+        
         // Update the filteredData array, if applicable
         filterSearchResults()
     }
-
-
+    
+    
     func resetData() {
         let batch = db.batch()
         for i in 0..<listData.count {
@@ -119,17 +119,17 @@ class GroupViewModel: ObservableObject {
             }
         }
     }
-
-        func filterSearchResults() {
-            if searchTerm.isEmpty {
-                filteredData = listData
-            } else {
-                filteredData = listData.filter { group in
-                    group.name.lowercased().contains(searchTerm.lowercased())
-                }
+    
+    func filterSearchResults() {
+        if searchTerm.isEmpty {
+            filteredData = listData
+        } else {
+            filteredData = listData.filter { group in
+                group.name.lowercased().contains(searchTerm.lowercased())
             }
         }
-
+    }
+    
     func filterSearchResultsU(searchTerm: String) {
         if searchTerm.isEmpty {
             self.filteredUsers = []
@@ -153,17 +153,19 @@ class GroupViewModel: ObservableObject {
                 }
         }
     }
-
-
-var displayCount: String {
-if filteredData.count == listData.count {
-    return "\(listData.count) groups"
-} else {
-    return "\(filteredData.count) of \(listData.count) groups"
-}
-}
-
-deinit {
-listenerRegistration?.remove()
-}
+    func getGroupID(groupName: String) -> String? {
+        filteredData.first(where: { $0.name == groupName })?.id
+    }
+    
+    var displayCount: String {
+        if filteredData.count == listData.count {
+            return "\(listData.count) groups"
+        } else {
+            return "\(filteredData.count) of \(listData.count) groups"
+        }
+    }
+    
+    deinit {
+        listenerRegistration?.remove()
+    }
 }
