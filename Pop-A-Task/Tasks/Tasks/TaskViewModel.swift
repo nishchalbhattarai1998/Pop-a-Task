@@ -1,104 +1,124 @@
+
 //
-//  TaskViewModel.swift
+//  demotaskviewmodel.swift
 //  Pop-A-Task
 //
-//  Created by manpreet Kaur on 2023-03-20.
+//  Created by nishchal bhattarai on 2023-04-02.
 //
 
 import Foundation
 
 import Foundation
-import Firebase
 import FirebaseFirestore
 import FirebaseFirestoreSwift
+import SwiftUI
 
 class TaskViewModel: ObservableObject {
-    
+    @ObservedObject var userData = UserData()
     let db = Firestore.firestore()
+    private var listenerRegistration: ListenerRegistration?
+    @Published var task = Task(id: "", name: "", description: "", category: "", status: "", priority: "", assignee: "", group: "", groupID: "", deadline: Date(), createdBy: "", createdAt: Date(), taskID: "")
+    @Published var listData = [Task]()
+    @Published var filteredData = [Task]()
+    @Published var searchTerm = ""
+    @Published var navTitle = "Tasks"
+    var filteredUsers: [(id: String, name: String)] = []
     
-    @Published var tasks = [Task]()
-    @Published var filteredTasks = [Task]()
-    @Published var searchTaskTerm = ""
-    
-    var taskCount: Int {
-        tasks.count
+    init() {
+        fetchTasks()
+        
     }
-    
-    func createTask(_ task: Task) {
-        do {
-            let taskRef = try db.collection("tasks").addDocument(from: task)
-            let taskID = taskRef.documentID
-            var updatedTask = task
-            updatedTask.id = taskID
-            try taskRef.setData(from: updatedTask)
-            print("Task added successfully to Firestore")
-        } catch let error {
-            print("Error adding task to Firestore: \(error.localizedDescription)")
+    func fetchTasks() {
+        guard let userID = userData.userID else {
+            return
         }
-    }
-    
-    func fetchTasks(completion: @escaping ([Task]) -> Void) {
-        db.collection("tasks").addSnapshotListener { snapshot, error in
-            guard let documents = snapshot?.documents else {
-                print("Error fetching documents: \(error!)")
-                return
-            }
-            
-            var tasks = [Task]()
-            
-            for document in documents {
-                do {
-                    if let task = try document.data(as: Task.self, with: .estimate) as Task? {
-                        tasks.append(task)
+        listenerRegistration = db.collection("tasks")
+            .order(by: "name")
+//            .whereField("members", arrayContains: userID)
+            .addSnapshotListener { (querySnapshot, error) in
+                if let querySnapshot = querySnapshot {
+                    self.listData = querySnapshot.documents.compactMap { document in
+                        do {
+                            let task = try document.data(as: Task.self)
+                            return task
+                        } catch {
+                            print(error)
+                        }
+                        return nil
                     }
-                } catch let error {
-                    print("Error decoding task: \(error.localizedDescription)")
+                    self.filterSearchResults()
                 }
             }
-            
-            completion(tasks)
+    }
+    
+    
+    
+    func addTask(_ group: Groups) {
+        do {
+            let _ = try db.collection("tasks").addDocument(from: group)
+        }
+        catch {
+            fatalError("Unable to encode task: \(error.localizedDescription).")
         }
     }
-
-
-    func deleteTask(_ task: Task) {
+    
+    func updateTask(_ task: Task) {
         if let taskID = task.id {
-            db.collection("tasks").document(taskID).delete { error in
-                if let error = error {
-                    print("Error deleting task: \(error.localizedDescription)")
+            do {
+                try db.collection("tasks").document(taskID).setData(from: task)
+            }
+            catch {
+                fatalError("Unable to encode task: \(error.localizedDescription).")
+            }
+        }
+    }
+    
+    
+    func deletaTask(_ documentID: String) {
+        let docRef = db.collection("tasks").document(documentID)
+        docRef.delete { error in
+            if let error = error {
+                print("Error deleting task: \(error.localizedDescription)")
+            } else {
+                print("Task successfully deleted")
+            }
+        }
+    }
+    
+    func addMembersToTask(id: String, assigne: [String]) {
+        print(id + " " + assigne[0])
+        if let taskindex = listData.firstIndex(where: { $0.id == id }) {
+            var updatedTask = listData[taskindex]
+            for member in assigne {
+                if updatedTask.assignee!.contains(member) {
+                    print("User \(member) is already a member of this task")
                 } else {
-                    print("Task successfully deleted")
+                    updatedTask.assignee?.append(member)
                 }
             }
+            updateTask(updatedTask)
         }
     }
     
     func moveTask(from: IndexSet, to: Int) {
-        tasks.move(fromOffsets: from, toOffset: to)
+        listData.move(fromOffsets: from, toOffset: to)
         
-        for i in 0..<tasks.count {
-            let taskID = tasks[i].id
-            db.collection("tasks").document(taskID!).updateData(["order": i])
+        // Update the order field of the Firestore documents
+        for i in 0..<listData.count {
+            let groupID = listData[i].groupID!
+            db.collection("tasks").document(groupID).updateData(["order": i])
         }
         
-        filterTasks()
+        // Update the filteredData array, if applicable
+        filterSearchResults()
     }
     
-    func filterTasks() {
-        if searchTaskTerm.isEmpty {
-            filteredTasks = tasks
-        } else {
-            filteredTasks = tasks.filter { task in
-                task.name.lowercased().contains(searchTaskTerm.lowercased())
-            }
-        }
-    }
     
     func resetData() {
         let batch = db.batch()
-        for i in 0..<tasks.count {
-            let taskRef = db.collection("tasks").document(tasks[i].id!)
-            batch.updateData(["order": i], forDocument: taskRef)
+        for i in 0..<listData.count {
+            let groupRef = db.collection("tasks").document(listData[i].id!)
+            batch.updateData(["order": i], forDocument: groupRef)
         }
         batch.commit() { error in
             if let error = error {
@@ -109,9 +129,19 @@ class TaskViewModel: ObservableObject {
         }
     }
     
-    func filterSearchResults(searchTerm: String, completion: @escaping (_ users: [(id: String, name: String)]) -> Void) {
+    func filterSearchResults() {
         if searchTerm.isEmpty {
-            completion([])
+            filteredData = listData
+        } else {
+            filteredData = listData.filter { group in
+                group.name.lowercased().contains(searchTerm.lowercased())
+            }
+        }
+    }
+    
+    func filterSearchResultsU(searchTerm: String) {
+        if searchTerm.isEmpty {
+            self.filteredUsers = []
         } else {
             db.collection("users")
                 .whereField("name", isGreaterThanOrEqualTo: searchTerm)
@@ -119,17 +149,34 @@ class TaskViewModel: ObservableObject {
                 .getDocuments { querySnapshot, error in
                     if let error = error {
                         print("Error getting search results: \(error.localizedDescription)")
-                        completion([])
+                        //Demo Data for view preview can be removed
+                        self.filteredUsers = [(id: "1", name: "John"), (id: "2", name: "Jane"), (id: "3", name: "Bob")]
+                        //Demo Data
                     } else {
-                        let filteredUsers = querySnapshot?.documents.map {
+                        self.filteredUsers = querySnapshot?.documents.map {
                             (id: $0.documentID, name: $0.data()["name"] as? String ?? "")
                         } ?? []
-                        completion(filteredUsers)
+                        
+                        print(self.filteredUsers)
                     }
                 }
         }
     }
+//    func getTaskID(taskName: String) -> String? {
+//        filteredData.first(where: { $0.name == taskName })?.id
+//    }
     
-
-
+    var displayCount: String {
+        if filteredData.count == listData.count {
+            return "\(listData.count) tasks"
+        } else {
+            return "\(filteredData.count) of \(listData.count) tasks"
+        }
+    }
+    
+    deinit {
+        listenerRegistration?.remove()
+    }
 }
+
+

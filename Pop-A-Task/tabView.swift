@@ -32,7 +32,7 @@ struct tabView: View {
                     }
                     .tag(0)
                 
-                taskView(categories: $categories, status: $status, priority: $priority)
+                taskView()
                     .tabItem {
                         Image(systemName: "tray.circle.fill")
                         Text("Task")

@@ -1,73 +1,90 @@
 
-//  taskView.swift
-//  Pop-A-Task
-//
-//  Created by nishchal bhattarai on 2023-02-06.
-//
 
 import Foundation
 import SwiftUI
-import Firebase
-import FirebaseAuth
 import FirebaseFirestore
+import Firebase
 
 struct taskView: View {
-    @State private var isTaskModal = false
-    @State private var isTaskSetting = false
-    @State private var showMenu = false
+    @ObservedObject var viewModel = TaskViewModel()
     @ObservedObject var userData = UserData()
-    @Binding var categories: [String]
-    @Binding var status: [String]
-    @Binding var priority: [String]
-    
-    @State private var searchText = ""
-    @State private var tasks = [Task]()
-    private let taskViewModel = TaskViewModel()
+    @State private var isShowingModal = false
+    let db = Firestore.firestore()
+//    let group = Groups
+
     
     var body: some View {
         NavigationView {
-            VStack {
-                List(tasks.filter {
-                    searchText.isEmpty ? true : $0.name.localizedCaseInsensitiveContains(searchText)
-                }) { task in
-                    TaskRow(task: task)
-                }
-                .searchable(text: $searchText)
-                .onAppear {
-                    taskViewModel.fetchTasks { fetchedTasks in
-                        self.tasks = fetchedTasks
+            List {
+//                let userID = userData.userID
+                    ForEach(viewModel.filteredData) { task in
+                        TaskRow(task: task)
                     }
+//                    .onMove(perform: moveTask)
+//                    .onDelete(perform: deletGroup)
+                    //                .frame(width: 350.0)
+                HStack {
+                    Spacer()
+                    Text(viewModel.displayCount)
+                        .foregroundColor(.green)
+                    
+                    Spacer()
                 }
-                .toolbar {
-                    HStack {
-                        Button("Add Task") {
-                            isTaskModal = true
-                        }
-                        .sheet(isPresented: $isTaskModal) {
-                            AddTaskModalView(isTaskModal: $isTaskModal)
-                        }
-                        
-                        Button("Task Setting") {
-                            isTaskSetting = true
-                        }
-                        .sheet(isPresented: $isTaskSetting) {
-                            TaskSettingsModal(isTaskSetting: $isTaskSetting)
-                        }
-                    }
-                }
-                
-                Text("Total tasks: \(tasks.count)")
-                    .padding(.top, 10)
             }
-            .navigationTitle("Tasks")
+            .id(viewModel.listData) // observe the viewModel's listData property
+            .navigationTitle(viewModel.navTitle)
+            .backgroundStyle(.gray)
+//            .cornerRadius(15)
+            .searchable(text: $viewModel.searchTerm,
+                        placement: .navigationBarDrawer(displayMode: .automatic),
+                        prompt: "Search for tasks")
+            .onChange(of: viewModel.searchTerm) { newValue in
+                viewModel.filterSearchResults()
+            }
+            .animation(.default, value: viewModel.searchTerm)
+
+            // Toolbar: Add and Edit
+            .toolbar {
+                HStack {
+                    Button("Add"){
+                        isShowingModal = true
+                        
+                    }.sheet(isPresented: $isShowingModal) {
+                        AddTaskModalView(isTaskModal: $isShowingModal)
+                            .cornerRadius(20)
+//                            .padding(50)
+//                            .shadow(radius: 20)
+//                            .background(Color.gray)
+                    }
+                        Spacer()
+                        EditButton()
+//                        Button("Reset", action: resetData)
+                    
+                }
+            }
         }
     }
+    
+//    func resetData() {
+//        viewModel.resetData()
+//    }
+    
+    func moveGroup(from: IndexSet, to: Int) {
+        withAnimation {
+            viewModel.moveTask(from: from, to: to)
+        }
+    }
+    
+//    func deletGroup(offsets: IndexSet) {
+//        withAnimation {
+//            viewModel.deleteGroup(at: offsets)
+//        }
+//    }
+
 }
 
-struct taskView_Previews: PreviewProvider {
+struct taskVIew_Previews: PreviewProvider {
     static var previews: some View {
-        taskView(categories: .constant(["Category1", "Category2", "Category3"]),
-                 status: .constant(["Status1", "Status2", "Status3"]),
-                 priority: .constant(["Priority1", "Priority2", "Priority3"]))
+        taskView(viewModel: TaskViewModel())
     }
 }

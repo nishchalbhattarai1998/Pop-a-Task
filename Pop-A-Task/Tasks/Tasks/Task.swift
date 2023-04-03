@@ -1,7 +1,8 @@
+
 import Foundation
 import FirebaseFirestoreSwift
 
-struct Task: Identifiable, Codable {
+struct Task: Identifiable, Codable, Hashable {
     @DocumentID var id: String?
     var name: String
     var description: String?
@@ -31,7 +32,7 @@ struct Task: Identifiable, Codable {
         case createdAt
         case taskID
     }
-    
+
     init(id: String?, name: String, description: String?, category: String?, status: String?, priority: String?, assignee: String?, group: String?, groupID: String?, deadline: Date?, createdBy: String?, createdAt: Date?, taskID: String?) {
         self.id = id
         self.name = name
@@ -47,7 +48,7 @@ struct Task: Identifiable, Codable {
         self.createdAt = createdAt
         self.taskID = taskID
     }
-    
+
     init() {
         self.id = ""
         self.name = ""
@@ -62,5 +63,21 @@ struct Task: Identifiable, Codable {
         self.createdBy = ""
         self.createdAt = Date()
         self.taskID = ""
+    }
+
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+        hasher.combine(name)
+        hasher.combine(description)
+        hasher.combine(category)
+        hasher.combine(status)
+        hasher.combine(priority)
+        hasher.combine(assignee)
+        hasher.combine(group)
+        hasher.combine(groupID)
+        hasher.combine(deadline)
+        hasher.combine(createdBy)
+        hasher.combine(createdAt)
+        hasher.combine(taskID)
     }
 }
