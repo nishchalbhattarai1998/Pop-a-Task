@@ -79,6 +79,7 @@
 		A40F6A162975E69B00F82F50 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		A40F6A182975E69D00F82F50 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A40F6A1B2975E69D00F82F50 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		A44D542529DAFA0C00662FDA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		A47859BD299F4E5000B9D07A /* AddGroupModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddGroupModalView.swift; sourceTree = "<group>"; };
 		A4E4756B298E64C100763BEE /* HomePage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePage.swift; sourceTree = "<group>"; };
 		A4EAFEEB2991B04100F8E84E /* taskView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = taskView.swift; sourceTree = "<group>"; };
@@ -169,6 +170,7 @@
 		A40F6A132975E69B00F82F50 /* Pop-A-Task */ = {
 			isa = PBXGroup;
 			children = (
+				A44D542529DAFA0C00662FDA /* Info.plist */,
 				A40F6A142975E69B00F82F50 /* Pop_A_TaskApp.swift */,
 				D3E78E5E29A53F2800C48081 /* SplashView.swift */,
 				D3C7804529AD94A400789412 /* tabView.swift */,
@@ -554,11 +556,13 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Pop-A-Task/Preview Content\"";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = VK62U9G5W9;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Pop-A-Task/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Pop A Task";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
+				INFOPLIST_KEY_NSCalendarsUsageDescription = "This app uses your calendar to schedule tasks and reminders.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -587,11 +591,13 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Pop-A-Task/Preview Content\"";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = VK62U9G5W9;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Pop-A-Task/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Pop A Task";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
+				INFOPLIST_KEY_NSCalendarsUsageDescription = "This app uses your calendar to schedule tasks and reminders.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

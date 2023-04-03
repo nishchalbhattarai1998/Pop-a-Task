@@ -50,7 +50,18 @@ struct taskView: View {
                         isShowingModal = true
                         
                     }.sheet(isPresented: $isShowingModal) {
-                        AddTaskModalView(isTaskModal: $isShowingModal)
+                        AddTaskModalView(isTaskModal: $isShowingModal, task: Task(id: "1", name: "Test Task",
+                                                                                  description: "My Task Description",
+                                                                                  category: "Test Category",
+                                                                                  status: "Test Status",
+                                                                                  priority: "Test Priority",
+                                                                                  assignee: "Test assignee",
+                                                                                  group: "Test Group",
+                                                                                  groupID: "1",
+                                                                                  deadline: Date(),
+                                                                                 createdBy: "Charles Roy",
+                                                                                  createdAt: Date(),
+                                                                                  taskID:"1"))
                             .cornerRadius(20)
 //                            .padding(50)
 //                            .shadow(radius: 20)
