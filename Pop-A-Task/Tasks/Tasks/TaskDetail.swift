@@ -9,6 +9,7 @@ struct TaskDetail: View {
     @ObservedObject var commentStore: CommentStore
     @State private var taskName: String
     @State private var taskDescription: String
+    @State private var showAlert = false
     
     // Add the following properties
     @ObservedObject var categoryViewModel: CategoryViewModel
@@ -314,6 +315,29 @@ struct TaskDetail: View {
                 .frame(maxWidth: .infinity, alignment: .trailing)
                 .padding()
             }
+            
+            Button("Permanently Delete Group") {
+                
+                if
+                    userData.userName! == task.createdBy {
+                    showAlert = true
+                    print("showAlert: \(showAlert)")
+                    print(userData.userName!)
+                    print(task.createdBy ?? "No User Found")
+                }
+                
+            }
+            .alert(isPresented: $showAlert) {
+                Alert(title: Text("Are you sure you want to delete this task?"), message: Text("All the data and activities conneced to this task will be also deleted. This action cannot be undone."), primaryButton: .destructive(Text("Delete")) {
+                    print("Deleted")
+                    taskViewModel.deletaTask(task.id!)
+                }, secondaryButton: .cancel())
+            }
+            .buttonStyle(.plain)
+            .foregroundColor(.red)
+            .padding(.leading, 50.0)
+            .opacity(userData.userName != task.createdBy ? 0.5 : 1.0) // Change opacity based on condition
+            .disabled(userData.userName != task.createdBy)
             
         }
         
