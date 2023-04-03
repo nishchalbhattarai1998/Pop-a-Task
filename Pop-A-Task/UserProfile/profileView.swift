@@ -36,6 +36,13 @@ struct profileView: View {
                         Label("Help", systemImage: "questionmark.circle")
                     }
                     Button(action: {
+                        isDarkMode.toggle()
+                    }) {
+                        Label("Toggle Dark Mode", systemImage: isDarkMode ? "sun.max" : "moon")
+                    }
+
+                .preferredColorScheme(isDarkMode ? .dark : .light) // Set preferred color scheme based on isDarkMode
+                    Button(action: {
                         self.isShowingLogoutConfirmation = true
                     }) {
                         Label("Logout", systemImage: "power")
@@ -50,13 +57,7 @@ struct profileView: View {
                             secondaryButton: .cancel()
                         )
                     }
-                    Button(action: {
-                        isDarkMode.toggle()
-                    }) {
-                        Label("Toggle Dark Mode", systemImage: isDarkMode ? "sun.max" : "moon")
-                    }
                 }
-                .preferredColorScheme(isDarkMode ? .dark : .light) // Set preferred color scheme based on isDarkMode
             }
             .navigationTitle("Settings")
             .navigationBarTitleDisplayMode(.inline)

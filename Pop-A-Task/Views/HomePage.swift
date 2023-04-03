@@ -26,7 +26,7 @@ struct HomeView: View {
                 .padding(.top, 5)
                 
                 VStack{
-                    ProgressCircleView1(progress: tasks.count, color: .orange, title: "Tasks")
+                    ProgressCircleView1(progress: taskViewModel.filteredData.count, color: .orange, title: "Tasks")
                 }
                 .onAppear {
                     withAnimation(Animation.linear(duration: 100)) {

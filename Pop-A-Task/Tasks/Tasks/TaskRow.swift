@@ -16,17 +16,23 @@ struct TaskRow: View {
         formatter.timeStyle = .short
         return formatter
     }()
-
+    
     var body: some View {
         NavigationLink(destination: TaskDetail(task: task)) {
             VStack {
-                Text(task.name)
-                    .font(.headline)
-                    .multilineTextAlignment(.leading)
-                    .padding(.leading)
-                    .padding(.bottom, 0.1)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-
+                HStack {
+                   
+                    Text(task.name)
+                        .font(.headline)
+                        .multilineTextAlignment(.leading)
+                        .padding(.leading)
+                    Spacer()
+                    deadlineBadge(for: task.deadline!)
+                    
+                }
+                .padding(.bottom, 0.1)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                
                 Text(task.description ?? "")
                     .font(.subheadline)
                     .foregroundColor(.gray)
@@ -57,7 +63,7 @@ struct TaskRow: View {
                     .multilineTextAlignment(.leading)
                     .padding(.leading)
                     .frame(maxWidth: .infinity, alignment: .leading)
-
+                
                 HStack {
                     Text("Created By: \(task.createdBy ?? "")")
                         .font(.caption)
@@ -71,16 +77,51 @@ struct TaskRow: View {
                         .fontWeight(.light)
                         .foregroundColor(.gray)
                         .multilineTextAlignment(.leading)
-                        .padding(.leading)
+//                        .padding(.leading)
                     Spacer()
                 }
-                .frame(maxWidth: .infinity, alignment: .leading) 
+                .frame(maxWidth: .infinity, alignment: .leading)
+               
             }
-
+//            .padding(.vertical)
+//            .background(Color(UIColor.systemBackground))
+//            .cornerRadius(10)
+//            .shadow(color: .gray, radius: 1, x: 0, y: 1)
         }
     }
+    
+    private func deadlineBadge(for date: Date) -> some View {
+        let now = Date()
+        let daysUntilDeadline = Calendar.current.dateComponents([.day], from: now, to: date).day ?? 0
+        
+        var badgeColor: Color
+        var badgeText: String
+        
+        switch daysUntilDeadline {
+        case ..<0:
+            badgeColor = .purple
+            badgeText = "Overdue"
+        case 0...2:
+            badgeColor = .red
+            badgeText = "Due Soon"
+        case 3...7:
+            badgeColor = .orange
+            badgeText = "Due This Week"
+        default:
+            badgeColor = .green
+            badgeText = "Due Later"
+        }
+        
+        return Text(badgeText)
+            .font(.caption2)
+            .foregroundColor(.white)
+            .padding(.horizontal, 8)
+            .padding(.vertical, 4)
+            .background(badgeColor)
+            .cornerRadius(10)
+            .padding(.trailing)
+    }
 }
-
 
 struct TaskRow_Previews: PreviewProvider {
         static var previews: some View {
