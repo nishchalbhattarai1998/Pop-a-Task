@@ -124,7 +124,7 @@ struct ContentView: View {
                     .padding(.bottom, 50)
 
                 }
-                NavigationLink(destination: ResetPasswordView().navigationBarBackButtonHidden(true)) {
+                NavigationLink(destination: ResetPasswordView().navigationBarBackButtonHidden(false)) {
                     HStack{
                         
                         Text("Forgot pass?")
