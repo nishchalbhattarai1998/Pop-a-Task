@@ -9,6 +9,11 @@ import Foundation
 import SwiftUI
 
 struct TaskRow: View {
+    @ObservedObject var  taskViewModel = TaskViewModel()
+    @ObservedObject var  categoryViewModel = CategoryViewModel()
+    @ObservedObject var  statusViewModel = StatusViewModel()
+    @ObservedObject var priorityViewModel = PriorityViewModel()
+    @ObservedObject var groupViewModel = GroupViewModel()
     let task: Task
     private let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -18,7 +23,12 @@ struct TaskRow: View {
     }()
     
     var body: some View {
-        NavigationLink(destination: TaskDetail(task: task)) {
+        NavigationLink(destination: TaskDetail(task: task,
+                                               taskViewModel: taskViewModel,
+                                               categoryViewModel: categoryViewModel,
+                                               statusViewModel: statusViewModel,
+                                               priorityViewModel: priorityViewModel,
+                                               groupViewModel: groupViewModel)) {
             VStack {
                 HStack {
                    
