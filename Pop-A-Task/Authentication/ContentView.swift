@@ -124,6 +124,22 @@ struct ContentView: View {
                     .padding(.bottom, 50)
 
                 }
+                NavigationLink(destination: ResetPasswordView().navigationBarBackButtonHidden(true)) {
+                    HStack{
+                        
+                        Text("Forgot pass?")
+                            .font(.subheadline)
+                            .foregroundColor(Color.black)
+                            .padding([.top, .leading, .bottom])
+                        Text("Reset")
+                            .font(.headline)
+                            .fontWeight(.bold)
+                            .foregroundColor(Color("AccentColor"))
+                    }
+//                    .padding(.top, 20)
+                    .padding(.bottom, 50)
+
+                }
                 VStack{
                     Text("\(errorMessage)")
                     .font(.body)
