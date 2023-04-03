@@ -103,7 +103,7 @@ struct tabView: View {
                             }
                             .padding()
                             .frame(maxWidth: .infinity)
-                            .background(Color.white)
+                            .background(Color(UIColor.systemBackground))
                         })
                         Divider().background(Color.gray)
                         Button(action: {
@@ -121,11 +121,11 @@ struct tabView: View {
                             }
                             .padding()
                             .frame(maxWidth: .infinity)
-                            .background(Color.white)
+                            .background(Color(UIColor.systemBackground))
                         })
                     }
                     .padding()
-                    .background(Color.white)
+                    .background(Color(UIColor.systemBackground))
                     .cornerRadius(20)
                     .shadow(radius: 10)
                     .padding(.horizontal, 30)

@@ -14,9 +14,12 @@ struct Pop_A_TaskApp: App {
         FirebaseApp.configure()
     }
     @StateObject private var store = GroupStore.testStore
+    @AppStorage("isDarkMode") private var isDarkMode = false // Store user's preference for color scheme
+    
     var body: some Scene {
         WindowGroup {
             SplashView()
+                .preferredColorScheme(isDarkMode ? .dark : .light) // Set preferred color scheme based on isDarkMode
         }
     }
 }

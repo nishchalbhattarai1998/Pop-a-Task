@@ -19,6 +19,7 @@ struct profileView: View {
     @Binding var selectedTab: Int
     @ObservedObject var userData: UserData
     let username: String
+    @AppStorage("isDarkMode") private var isDarkMode = false
 
     var body: some View {
         NavigationView{
@@ -40,19 +41,25 @@ struct profileView: View {
                         Label("Logout", systemImage: "power")
                     }
                     .alert(isPresented: $isShowingLogoutConfirmation) {
-                                Alert(
-                                    title: Text("Logout"),
-                                    message: Text("Are you sure you want to log out?"),
-                                    primaryButton: .default(Text("Log out"), action: {
-                                        logout()
-                                    }),
-                                    secondaryButton: .cancel()
-                                )
-                            }
+                        Alert(
+                            title: Text("Logout"),
+                            message: Text("Are you sure you want to log out?"),
+                            primaryButton: .default(Text("Log out"), action: {
+                                logout()
+                            }),
+                            secondaryButton: .cancel()
+                        )
+                    }
+                    Button(action: {
+                        isDarkMode.toggle()
+                    }) {
+                        Label("Toggle Dark Mode", systemImage: isDarkMode ? "sun.max" : "moon")
+                    }
                 }
-                .navigationTitle("Settings")
-                .navigationBarTitleDisplayMode(.inline)
+                .preferredColorScheme(isDarkMode ? .dark : .light) // Set preferred color scheme based on isDarkMode
             }
+            .navigationTitle("Settings")
+            .navigationBarTitleDisplayMode(.inline)
         }
     }
 
@@ -61,10 +68,8 @@ struct profileView: View {
             try Auth.auth().signOut()
         } catch let signOutError as NSError {
             print("Error signing out: %@", signOutError)
-//            self.isLoggedIn = false
             print("isLoggedIn if state inside logout function: \(self.isLoggedIn)")
         }
-//        self.isLoggedIn = false
         DispatchQueue.main.async {
             self.isLoggedIn = false
             self.selectedTab = 0
@@ -74,12 +79,23 @@ struct profileView: View {
     }
 }
 
+
 struct profileView_Previews: PreviewProvider {
     static var previews: some View {
-        profileView(
-            isLoggedIn: .constant(false), selectedTab: .constant(0),
-            userData: UserData(),
-            username: "Loading"
-        )
+        Group {
+            profileView(
+                isLoggedIn: .constant(false), selectedTab: .constant(0),
+                userData: UserData(),
+                username: "Loading"
+            )
+            .preferredColorScheme(.light) // Preview in light mode
+            
+            profileView(
+                isLoggedIn: .constant(false), selectedTab: .constant(0),
+                userData: UserData(),
+                username: "Loading"
+            )
+            .preferredColorScheme(.dark) // Preview in dark mode
+        }
     }
 }
