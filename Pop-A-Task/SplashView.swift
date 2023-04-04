@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct SplashView: View {
+    @Binding var isLoggedIn: Bool
+    @State private var selectedTab = 0
     @State private var isActive = false
 
     var body: some View {
@@ -41,13 +43,15 @@ struct SplashView: View {
             }
         }
         .fullScreenCover(isPresented: $isActive) {
-            ContentView(categories: .constant(["Household", "Sports", "Grocery", "Utility"]), status: .constant(["To Do", "In Progress", "Done", "Cancelled"]), priority: .constant(["High", "Medium", "Low"]))
+            tabView(isLoggedIn: $isLoggedIn,
+                userData: UserData(),
+                selectedTab: $selectedTab)
         }
     }
 }
 
 struct SplashView_Previews: PreviewProvider{
     static var previews: some View{
-        SplashView()
+        SplashView(isLoggedIn: .constant(true))
     }
 }

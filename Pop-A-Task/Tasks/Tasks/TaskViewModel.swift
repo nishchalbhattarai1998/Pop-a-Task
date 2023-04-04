@@ -20,6 +20,19 @@ class TaskViewModel: ObservableObject {
     @Published var task = Task(id: "", name: "", description: "", category: "", status: "", priority: "", assignee: "", group: "", groupID: "", deadline: Date(), createdBy: "", createdAt: Date(), taskID: "")
     @Published var listData = [Task]()
     @Published var filteredData = [Task]()
+    @Published var highPriorityCount = 0
+    @Published var mediumPriorityCount = 0
+    @Published var lowPriorityCount = 0
+    
+    @Published var todoCount = 0
+    @Published var inProgressCount = 0
+    @Published var doneCount = 0
+    
+    @Published var overdueCount = 0
+    @Published var dueSoonCount = 0
+    @Published var dueThisWeekCount = 0
+    @Published var dueLaterCount = 0
+    
     @Published var searchTerm = ""
     @Published var navTitle = "Tasks"
     var filteredUsers: [(id: String, name: String)] = []
@@ -33,13 +46,12 @@ class TaskViewModel: ObservableObject {
             return
         }
         listenerRegistration = db.collection("tasks")
-            .order(by: "name")
-//            .whereField("members", arrayContains: userID)
             .addSnapshotListener { (querySnapshot, error) in
                 if let querySnapshot = querySnapshot {
                     self.listData = querySnapshot.documents.compactMap { document in
                         do {
-                            let task = try document.data(as: Task.self)
+                            var task = try document.data(as: Task.self)
+                            task.status = task.status?.trimmingCharacters(in: .whitespacesAndNewlines)
                             return task
                         } catch {
                             print(error)
@@ -47,8 +59,51 @@ class TaskViewModel: ObservableObject {
                         return nil
                     }
                     self.filterSearchResults()
+                    self.updateDeadlineCounts()
+                    print("Fetched tasks: \(self.listData)")
+                    
+                    // Count tasks by priority
+                    self.highPriorityCount = self.filteredData.filter { $0.priority == "High" }.count
+                    self.mediumPriorityCount = self.filteredData.filter { $0.priority == "Medium" }.count
+                    self.lowPriorityCount = self.filteredData.filter { $0.priority == "Low" }.count
+                    
+                    // Count tasks by status
+                    self.todoCount = self.filteredData.filter { $0.status == "ToDo" }.count
+                    self.inProgressCount = self.filteredData.filter { $0.status == "InProgress" }.count
+                    self.doneCount = self.filteredData.filter { $0.status == "Done" }.count
+                    
+                    print("ToDo: \(self.todoCount), InProgress: \(self.inProgressCount), Done: \(self.doneCount)")
                 }
             }
+    }
+    
+    
+    private func updateDeadlineCounts() {
+        let now = Date()
+        overdueCount = 0
+        dueSoonCount = 0
+        dueThisWeekCount = 0
+        dueLaterCount = 0
+        
+        for task in filteredData {
+            guard let deadline = task.deadline else { continue }
+            let daysUntilDeadline = Calendar.current.dateComponents([.day], from: now, to: deadline).day ?? 0
+            
+            switch daysUntilDeadline {
+            case ..<0:
+                overdueCount += 1
+                print(overdueCount)
+            case 0...2:
+                dueSoonCount += 1
+                print(dueSoonCount)
+            case 3...7:
+                dueThisWeekCount += 1
+                print(dueThisWeekCount)
+            default:
+                dueLaterCount += 1
+                print(dueLaterCount)
+            }
+        }
     }
     
     
@@ -162,9 +217,9 @@ class TaskViewModel: ObservableObject {
                 }
         }
     }
-//    func getTaskID(taskName: String) -> String? {
-//        filteredData.first(where: { $0.name == taskName })?.id
-//    }
+    //    func getTaskID(taskName: String) -> String? {
+    //        filteredData.first(where: { $0.name == taskName })?.id
+    //    }
     
     var displayCount: String {
         if filteredData.count == listData.count {

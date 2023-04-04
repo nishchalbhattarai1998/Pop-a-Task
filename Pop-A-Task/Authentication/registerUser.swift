@@ -36,14 +36,14 @@ struct RegisterView: View {
             TextField("Name", text: $name)
                 .padding()
                 .frame(width: 350.0, height: 50.0)
-                .background(Color(hue: 0.345, saturation: 0.095, brightness: 0.952))
+                .background(Color.gray.opacity(0.1).cornerRadius(15.0))
                 .cornerRadius(15.0)
                 .padding(10)
             
             TextField("Mobile", text: $cell)
                 .padding()
                 .frame(width: 350.0, height: 50.0)
-                .background(Color(hue: 0.345, saturation: 0.095, brightness: 0.952))
+                .background(Color.gray.opacity(0.1).cornerRadius(15.0))
                 .cornerRadius(15.0)
                 .padding(10)
                 .keyboardType(.phonePad)
@@ -62,7 +62,7 @@ struct RegisterView: View {
                 .keyboardType(.emailAddress)
                 .padding()
                 .frame(width: 350.0, height: 50.0)
-                .background(Color(hue: 0.345, saturation: 0.095, brightness: 0.952))
+                .background(Color.gray.opacity(0.1).cornerRadius(15.0))
                 .cornerRadius(15.0)
                 .padding(10)
             
@@ -77,7 +77,7 @@ struct RegisterView: View {
             } )
                 .padding()
                 .frame(width: 350.0, height: 50.0)
-                .background(Color(hue: 0.345, saturation: 0.095, brightness: 0.952))
+                .background(Color.gray.opacity(0.1).cornerRadius(15.0))
                 .cornerRadius(15.0)
                 .padding(10)
             
@@ -109,7 +109,6 @@ struct RegisterView: View {
                             
                             Text("Already have an Account?")
                                 .font(.subheadline)
-                                .foregroundColor(Color.black)
                                 .padding([.top, .leading, .bottom])
                             Text("Log In")
                                 .font(.headline)

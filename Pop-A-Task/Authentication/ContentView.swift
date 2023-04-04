@@ -12,31 +12,15 @@ import FirebaseAuth
 
 
 struct ContentView: View {
-//    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @State var isLoggedIn:Bool =  false
     @State private var selectedTab = 0
-    @Binding var categories: [String]
-    @Binding var status: [String]
-    @Binding var priority: [String]
 
     var body: some View {
         VStack {
             if isLoggedIn {
-                tabView(categories: $categories,
-                        status: $status,
-                        priority: $priority,
-                        isLoggedIn: $isLoggedIn,
-                        userData: UserData(),
-                        selectedTab: $selectedTab)
-//                HomeView(categories: $categories, status: $status, priority: $priority)
-//                    .onAppear {
-//                        print("isLoggedIn if state home: \(self.isLoggedIn)")
-//                    }
+                SplashView(isLoggedIn: $isLoggedIn)
             } else {
                 LoginView(isLoggedIn: $isLoggedIn)
-//                    .onAppear {
-//                        print("isLoggedIn else state home: \(self.isLoggedIn)")
-//                    }
             }
         }
     }
@@ -54,7 +38,7 @@ struct ContentView: View {
             VStack {
                 //comment1
                 Image(systemName: "lines.measurement.horizontal")
-                    .padding(.top, 0.0)
+                    .padding(.top, 40.0)
                     .imageScale(.large)
                     .foregroundColor(.green)
                     .font(.largeTitle)
@@ -68,9 +52,9 @@ struct ContentView: View {
                 TextField("Email", text: $email)
                     .autocapitalization(.none).padding()
                     .frame(width: 300.0, height: 50.0)
-                    .background(Color(hue: 0.345, saturation: 0.095, brightness: 0.952))
+                    .background(Color.gray.opacity(0.1).cornerRadius(15.0))
                     .cornerRadius(15.0)
-                    .padding(.top, 40)
+                    .padding(.top, 90)
                     .padding(5)
                 
                 
@@ -86,7 +70,7 @@ struct ContentView: View {
                 
                 .padding()
                 .frame(width: 300.0, height: 50.0)
-                .background(Color(hue: 0.345, saturation: 0.095, brightness: 0.952))
+                .background(Color.gray.opacity(0.1).cornerRadius(15.0))
                 .cornerRadius(15.0)
                 .padding(5)
                 .padding(.bottom, 10.0)
@@ -115,15 +99,14 @@ struct ContentView: View {
                         
                         Text("Don't have an Account?")
                             .font(.subheadline)
-                            .foregroundColor(Color.black)
                             .padding([.top, .leading, .bottom])
                         Text("Sign Up")
                             .font(.headline)
-                            .fontWeight(.bold)
+//                            .fontWeight(.bold)
                             .foregroundColor(Color("AccentColor"))
                     }
-                    .padding(.top, 20)
-                    .padding(.bottom, 50)
+                    .padding(.top)
+                    .padding(.bottom, 0)
 
                 }
                 NavigationLink(destination: ResetPasswordView().navigationBarBackButtonHidden(false)) {
@@ -131,15 +114,14 @@ struct ContentView: View {
                         
                         Text("Forgot pass?")
                             .font(.subheadline)
-                            .foregroundColor(Color.black)
 //                            .padding([.top, .leading, .bottom])
                         Text("Reset")
                             .font(.headline)
-                            .fontWeight(.bold)
+//                            .fontWeight(.bold)
                             .foregroundColor(Color("AccentColor"))
                     }
-                    .padding(.top, 50)
-//                    .padding(.bottom, 50)
+//                    .padding(.top, 50)
+                    .padding(.bottom, 0)
 
                 }
                 VStack{
@@ -183,8 +165,7 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView(categories: .constant(["Household", "Sports", "Grocery", "Utility"]), status: .constant(["To Do", "In Progress", "Done", "Cancelled"]), priority: .constant(["High", "Medium", "Low"]))
+        ContentView()
     }
 }
-
 

@@ -111,15 +111,6 @@ struct userDetails: View {
             }
         }
         
-////        .edgesIgnoringSafeArea(.bottom)
-//            .navigationBarItems(leading:
-//                Button(action: { self.showMenu.toggle() }) {
-//                    Image(systemName: "person.circle")
-//                        .imageScale(.large)
-//
-//    }
-//                                )
-//    }
 
         func updateUserProfile() {
             let data: [String: Any] = ["name": self.name,"email": self.email, "cell": self.cell]

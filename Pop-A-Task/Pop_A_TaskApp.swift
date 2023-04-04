@@ -18,7 +18,7 @@ struct Pop_A_TaskApp: App {
     
     var body: some Scene {
         WindowGroup {
-            SplashView()
+            ContentView()
                 .preferredColorScheme(isDarkMode ? .dark : .light) // Set preferred color scheme based on isDarkMode
         }
     }

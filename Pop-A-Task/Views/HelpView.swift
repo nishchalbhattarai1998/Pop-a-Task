@@ -18,21 +18,6 @@ struct HelpView: View {
     
     var body: some View {
         NavigationView {
-//            ZStack {
-//                HStack{
-//                    if showMenu {
-//                        DrawerView(
-//                                   categories: $categories,
-//                                   status: $status,
-//                                   priority: $priority,
-//                                   menu: menu,
-//                                   username: userData.userName ?? "Loading",
-//                                   isLoggedIn: .constant(true), userData: UserData())
-//                            .transition(.slide)
-//                            .zIndex(1)
-//                    }
-//                }
-                
             VStack {
                 Image(systemName: "lines.measurement.horizontal")
                     .padding(.top, 0.0)
@@ -49,14 +34,7 @@ struct HelpView: View {
 
                 }
             }
-//            .edgesIgnoringSafeArea(.bottom)
-//            .navigationBarItems(leading:
-//            Button(action: { self.showMenu.toggle() }) {
-//            Image(systemName: "person.circle")
-//            .imageScale(.large)
-//            }
-//            )
-//        }
+
     }
 }
 
