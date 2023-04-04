@@ -36,7 +36,8 @@ struct AddTaskModalView: View {
             
             Text("Add Task").font(.largeTitle).padding(.top, 30)
             TextField("Name of the task", text: $taskName)
-                .padding(20)
+//                .padding(20)
+                .textFieldStyle(RoundedBorderTextFieldStyle())
                 .background(Color(hue: 0.345, saturation: 0.095, brightness: 0.952).cornerRadius(15.0))
             
             HStack {
@@ -160,7 +161,7 @@ struct AddTaskModalView: View {
                     .padding()
                 TextEditor(text: $description)
                     .cornerRadius(15.0)
-                    .padding(10)
+                    .padding(3)
                     .background(Color(hue: 0.345, saturation: 0.095, brightness: 0.952).cornerRadius(15.0))
                     .frame(height: 200.0)
             }

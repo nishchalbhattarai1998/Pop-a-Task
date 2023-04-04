@@ -181,3 +181,29 @@ struct RegisterView_Previews: PreviewProvider{
     }
 }
 
+
+
+
+//func resetPassword() {
+//    Auth.auth().fetchSignInMethods(forEmail: email) { (signInMethods, error) in
+//        if let error = error {
+//            // Show error message as a toast message
+//            showToast(message: "Error fetching sign-in methods: \(error.localizedDescription)")
+//        } else if let signInMethods = signInMethods {
+//            if signInMethods.isEmpty {
+//                // Email not found in Firebase Authentication database
+//                // Show error message as a toast message
+//                showToast(message: "Email not registered with Firebase Authentication")
+//            } else {
+//                // Email is registered with Firebase Authentication
+//                Auth.auth().sendPasswordReset(withEmail: email) { error in
+//                    if let error = error {
+//                        // Show error message as a toast message
+//                        showToast(message: "Error sending password reset email: \(error.localizedDescription)")
+//                    } else {
+//                        self.presentationMode.wrappedValue.dismiss()
+//                    }
+//                }
+//            }
+//        }
+//    }

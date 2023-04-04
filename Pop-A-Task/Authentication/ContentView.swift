@@ -44,8 +44,8 @@ struct ContentView: View {
     
     struct LoginView: View {
     @Binding var isLoggedIn: Bool
-    @State var email = "charles@mail.com";
-    @State var password = "Charles123";
+    @State var email = "";
+    @State var password = "";
 //    @State private var error = false
     @State private var errorMessage: String = ""
     var body: some View {
@@ -58,6 +58,7 @@ struct ContentView: View {
                     .imageScale(.large)
                     .foregroundColor(.green)
                     .font(.largeTitle)
+                    
                 
                 Text("Pop A Task").fontWeight(.heavy)
                     .foregroundColor(.green)
@@ -71,6 +72,7 @@ struct ContentView: View {
                     .cornerRadius(15.0)
                     .padding(.top, 40)
                     .padding(5)
+                
                 
                 SecureField("Password", text: $password,onCommit: {
                     if isLoggedIn && email != ""{
@@ -130,14 +132,14 @@ struct ContentView: View {
                         Text("Forgot pass?")
                             .font(.subheadline)
                             .foregroundColor(Color.black)
-                            .padding([.top, .leading, .bottom])
+//                            .padding([.top, .leading, .bottom])
                         Text("Reset")
                             .font(.headline)
                             .fontWeight(.bold)
                             .foregroundColor(Color("AccentColor"))
                     }
-//                    .padding(.top, 20)
-                    .padding(.bottom, 50)
+                    .padding(.top, 50)
+//                    .padding(.bottom, 50)
 
                 }
                 VStack{
@@ -145,7 +147,7 @@ struct ContentView: View {
                     .font(.body)
                     .foregroundColor(.red)
                     .padding()
-                }.padding(.bottom, -50.0)
+                }.padding(.bottom, 50.0)
                 
             }
         }
