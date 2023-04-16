@@ -96,9 +96,7 @@ struct HomeView: View {
                     VStack {
                         Text("Deadlines")
                             .padding(.top,0)
-                        // ...
-                        BarChartView(data: deadlineData, maxHeight: 100, colors: deadlineColors, labels: deadlineLabels)
-                        // ...
+                        BarChartView(data: deadlineData, maxHeight: CGFloat(taskViewModel.filteredData.count * 10), colors: deadlineColors, labels: deadlineLabels)
                     }
                     .padding(.horizontal, 25)
                     .padding()
@@ -115,10 +113,10 @@ struct HomeView: View {
     private var deadlineData: [Double] {
         // Calculate the percentage of tasks for each deadline badge
         return [
-            Double(taskViewModel.overdueCount),
-            Double(taskViewModel.dueSoonCount),
-            Double(taskViewModel.dueThisWeekCount),
-            Double(taskViewModel.dueLaterCount)
+            Double(taskViewModel.overdueCount * 10),
+            Double(taskViewModel.dueSoonCount * 10),
+            Double(taskViewModel.dueThisWeekCount * 10),
+            Double(taskViewModel.dueLaterCount * 10)
         ]
     }
     

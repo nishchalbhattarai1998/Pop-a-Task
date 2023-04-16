@@ -91,7 +91,7 @@ struct GroupDetail: View {
             Section(header: HStack {
                 Text("Task")
                 Spacer()
-                NavigationLink(destination: EmptyView()) {
+                NavigationLink(destination: AddTaskModalView(isTaskModal: .constant(true), task: Task())) {
                     Text("Add Task")
                 }
             }) {

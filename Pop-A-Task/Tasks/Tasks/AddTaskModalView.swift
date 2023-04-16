@@ -161,7 +161,7 @@ struct AddTaskModalView: View {
                 TextEditor(text: $description)
                     .cornerRadius(15.0)
                     .padding(10)
-                    .background(Color(hue: 0.345, saturation: 0.095, brightness: 0.952).cornerRadius(15.0))
+                    .background(Color.gray.opacity(0.2).cornerRadius(15.0))
                     .frame(height: 200.0)
             }
             HStack {

@@ -29,7 +29,10 @@ struct HelpView: View {
                     .foregroundColor(.green)
                     .padding(.bottom, 300)
                     .font(.largeTitle)
-                Text("Welcome \(userData.userName ?? "") to Pop A Task. Pop A Task is a simple task-reminder tool that lets users to create or modify tasks, discuss the work that needs to be done, and reach the milestone in a set period of time. This application can be used at home, in a small group, or in a small business.").multilineTextAlignment(.leading).padding(.bottom, 50)
+                Text("Welcome \(userData.userName ?? "") to Pop A Task. Pop A Task is a simple task-reminder tool that lets users to create or modify tasks, discuss the work that needs to be done, and reach the milestone in a set period of time. This application can be used at home, in a small group, or in a small business.")
+                    .multilineTextAlignment(.leading)
+                    .padding(.bottom, 50)
+                    .padding(20)
                     .frame(width: 400.0)
 
                 }
