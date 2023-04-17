@@ -16,21 +16,21 @@ struct HomeView: View {
             ScrollView{
                 VStack{
                     VStack{
+                        Text("You have")
+                            .padding(.top)
                         HStack{
                             ProgressCircleView2(progress: viewModel.filteredData.count, color: hexToColor(hex: "#60C689"), title: "Groups")
-                            //                            .padding(.trailing)
                             
                             ProgressCircleView2(progress: taskViewModel.filteredData.count, color: hexToColor(hex: "#279880"), title: "Tasks")
-                            //                            .padding(.trailing)
-                            //                        Spacer()
                             
                         }
-                        .padding(.horizontal, 110)
-                        //                    .padding(10)
-                        .background(Color.gray.opacity(0.1))
-                        .cornerRadius(20)
-                        //                    .padding(20)
+
                     }
+                    .padding(.horizontal, 110)
+                    //                    .padding(10)
+                    .background(Color.gray.opacity(0.1))
+                    .cornerRadius(20)
+                    //                    .padding(20)
                     
                     
                     VStack {
@@ -95,8 +95,8 @@ struct HomeView: View {
                     
                     VStack {
                         Text("Deadlines")
-                            .padding(.top,0)
-                        BarChartView(data: deadlineData, maxHeight: CGFloat(taskViewModel.filteredData.count * 10), colors: deadlineColors, labels: deadlineLabels)
+                            .padding(.top, 0)
+                        BarChartView(data: deadlineData, maxHeight: CGFloat(taskViewModel.filteredData.count * 10), colors: deadlineColors, labels: deadlineLabels, showPercentage: true)
                     }
                     .padding(.horizontal, 25)
                     .padding()
@@ -104,6 +104,7 @@ struct HomeView: View {
                     .cornerRadius(20)
                     
                 }
+                .navigationTitle("Pop A Task")
                 
             }
             .padding(.bottom)
@@ -111,14 +112,20 @@ struct HomeView: View {
     }
     
     private var deadlineData: [Double] {
-        // Calculate the percentage of tasks for each deadline badge
-        return [
-            Double(taskViewModel.overdueCount * 10),
-            Double(taskViewModel.dueSoonCount * 10),
-            Double(taskViewModel.dueThisWeekCount * 10),
-            Double(taskViewModel.dueLaterCount * 10)
-        ]
+        let totalCount = Double(taskViewModel.overdueCount + taskViewModel.dueSoonCount + taskViewModel.dueThisWeekCount + taskViewModel.dueLaterCount)
+
+        if totalCount == 0 {
+            return [0, 0, 0, 0]
+        } else {
+            return [
+                Double(taskViewModel.overdueCount) / totalCount * 100,
+                Double(taskViewModel.dueSoonCount) / totalCount * 100,
+                Double(taskViewModel.dueThisWeekCount) / totalCount * 100,
+                Double(taskViewModel.dueLaterCount) / totalCount * 100
+            ]
+        }
     }
+
     
     private var deadlineColors: [Color] {
         return [

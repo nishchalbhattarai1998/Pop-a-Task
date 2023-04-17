@@ -68,7 +68,7 @@ struct ModalView: View {
             }
         }
         .padding()
-        .background(Color(UIColor.systemBackground))
+        
         .cornerRadius(20)
     }
     

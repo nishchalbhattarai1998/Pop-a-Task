@@ -32,25 +32,36 @@ struct ProgressCircleView1: View {
                         
             VStack {
                 Text("\(progressPercent)%")
-                    .font(.system(size: 15))
+                    .font(.system(size: 12))
                     .foregroundColor(color)
                     .bold()
             }
             VStack {
                 Text(title)
                     .font(.system(size: 12))
-                    .padding(.top, 80)
+                    .padding(.top, 120)
+                    .padding(.bottom, 20)
             }
         }
-        .frame(width: 50, height: 120)
+        .frame(width: 50, height: 80)
         .padding()
         .cornerRadius(20)
+        .padding(.bottom)
     }
 }
 
-struct BarChartView_Previews: PreviewProvider {
+//struct BarChartView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        BarChartView(data: [20, 60, 80, 100], maxHeight: 200, colors: [.red, .yellow, .green, .blue], labels: ["Label 1", "Label 2", "Label 3", "Label 4"], showPercentage: true)
+//    }
+//}
+
+struct ProgressCircleView2_Previews: PreviewProvider {
     static var previews: some View {
-        BarChartView(data: [20, 60, 80, 100], maxHeight: 200, colors: [.red, .yellow, .green, .blue], labels: ["Label 1", "Label 2", "Label 3", "Label 4"])
+        VStack {
+            ProgressCircleView2(progress: 75, color: .blue, title: "Completed")
+            ProgressCircleView2(progress: 25, color: .red, title: "Incomplete")
+        }
     }
 }
 
@@ -68,54 +79,115 @@ struct ProgressCircleView2: View {
                 .stroke(lineWidth: 8)
                 .opacity(0.3)
                 .foregroundColor(Color.gray.opacity(0.5))
+                .padding(.top, -20)
             
             Circle()
-                .trim(from: 0, to: CGFloat(Double(progressPercent)))
-                .stroke(style: StrokeStyle(lineWidth: 8, lineCap: .round, lineJoin: .round))
+//                .trim(from: 0, to: CGFloat(Double(progressPercent)))
+//                .stroke(style: StrokeStyle(lineWidth: 8, lineCap: .round, lineJoin: .round))
                 .foregroundColor(color)
                 .rotationEffect(Angle(degrees: -90))
                 .animation(.linear)
+                .padding(.top, -20)
                         
             VStack {
                 Text("\(progressPercent)")
-                    .font(.system(size: 15))
-                    .foregroundColor(color)
+                    .font(.system(size: 25))
+                    .foregroundColor(Color(UIColor.systemBackground))
                     .bold()
+                    .padding(.top, -20)
             }
             VStack {
                 Text(title)
                     .font(.system(size: 12))
-                    .padding(.top, 80)
+                    .padding(.top, 90)
+                    .padding(.bottom, 20)
+                    
             }
         }
-        .frame(width: 50, height: 120)
-        .padding()
+        .frame(width: 50, height: 80)
+        .padding(15)
 //        .background(Color.gray)
-        .cornerRadius(20)
+//        .cornerRadius(20)
     }
 }
 
 
 //Bar Chart
+//import SwiftUI
+//struct BarChartView: View {
+//    let data: [Double]
+//    let maxHeight: CGFloat
+//    let colors: [Color]
+//    let labels: [String]
+//
+//    init(data: [Double], maxHeight: CGFloat, colors: [Color], labels: [String]) {
+//        self.data = data
+//        self.maxHeight = maxHeight
+//        self.colors = colors
+//        self.labels = labels
+//    }
+//
+//    var body: some View {
+//        VStack {
+//            HStack(spacing: 70) {
+//                ForEach(data.indices) { index in
+//                    BarView(value: data[index], maxHeight: maxHeight, color: colors[index])
+//                }
+//            }
+//            HStack(spacing: 25) {
+//                ForEach(labels.indices) { index in
+//                    Text(labels[index])
+//                        .font(.footnote)
+//                        .foregroundColor(.gray)
+//                }
+//            }
+//        }
+//    }
+//}
+//
+//struct BarView: View {
+//    let value: Double
+//    let maxHeight: CGFloat
+//    let color: Color
+//
+//    var body: some View {
+//        VStack {
+//            ZStack(alignment: .bottom) {
+//                Capsule()
+//                    .frame(width: 5, height: maxHeight)
+//                    .foregroundColor(Color.gray.opacity(0.1))
+//
+//                Capsule()
+//                    .frame(width: 10, height: CGFloat(value / 100 * Double(maxHeight)))
+//                    .foregroundColor(color)
+//                    .shadow(radius: 4)
+//            }
+//            Text(String(format: "%.0f", value))
+//        }
+//    }
+//}
 import SwiftUI
+
 struct BarChartView: View {
     let data: [Double]
     let maxHeight: CGFloat
     let colors: [Color]
     let labels: [String]
+    let showPercentage: Bool
     
-    init(data: [Double], maxHeight: CGFloat, colors: [Color], labels: [String]) {
+    init(data: [Double], maxHeight: CGFloat, colors: [Color], labels: [String], showPercentage: Bool = false) {
         self.data = data
         self.maxHeight = maxHeight
         self.colors = colors
         self.labels = labels
+        self.showPercentage = showPercentage
     }
     
     var body: some View {
         VStack {
-            HStack(spacing: 70) {
+            HStack(spacing: 50) {
                 ForEach(data.indices) { index in
-                    BarView(value: data[index], maxHeight: maxHeight, color: colors[index])
+                    BarView(value: data[index], maxHeight: maxHeight, color: colors[index], showPercentage: showPercentage)
                 }
             }
             HStack(spacing: 25) {
@@ -133,6 +205,7 @@ struct BarView: View {
     let value: Double
     let maxHeight: CGFloat
     let color: Color
+    let showPercentage: Bool
     
     var body: some View {
         VStack {
@@ -146,7 +219,11 @@ struct BarView: View {
                     .foregroundColor(color)
                     .shadow(radius: 4)
             }
-            Text(String(format: "%.0f", value))
+            if showPercentage {
+                Text(String(format: "%.0f%%", value))
+            } else {
+                Text(String(format: "%.0f", value))
+            }
         }
     }
 }
