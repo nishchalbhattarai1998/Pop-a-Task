@@ -12,6 +12,12 @@ struct ResetPasswordView: View {
 
     var body: some View {
         VStack {
+            Image("splashLogo")
+                .resizable()
+                .frame(width: 200, height: 200)
+                .padding(.top, -250)
+                .padding(.horizontal)
+            
             Text("Reset Password")
                 .font(.title)
                 .padding()

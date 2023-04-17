@@ -16,10 +16,10 @@ struct taskView: View {
     var body: some View {
         NavigationView {
             List {
-                    ForEach(viewModel.filteredData) { task in
-                        TaskRow(task: task)
-                    }
-                    .onMove(perform: viewModel.moveTask)
+                ForEach(viewModel.filteredData) { task in
+                    TaskRow(task: task)
+                }
+                .onMove(perform: viewModel.moveTask)
                 HStack {
                     Spacer()
                     Text(viewModel.displayCount)
@@ -38,7 +38,7 @@ struct taskView: View {
                 viewModel.filterSearchResults()
             }
             .animation(.default, value: viewModel.searchTerm)
-
+            
             // Toolbar: Add and Edit
             .toolbar {
                 HStack {
@@ -55,23 +55,16 @@ struct taskView: View {
                                                                                   group: "Test Group",
                                                                                   groupID: "1",
                                                                                   deadline: Date(),
-                                                                                 createdBy: "Charles Roy",
+                                                                                  createdBy: "Charles Roy",
                                                                                   createdAt: Date(),
                                                                                   taskID:"1"))
-                            .cornerRadius(20)
+                        .cornerRadius(20)
                     }
-                        Spacer()
-                        EditButton()
+                    Spacer()
+                    EditButton()
                     
                 }
             }
-        }
-    }
-    
-    
-    func moveGroup(from: IndexSet, to: Int) {
-        withAnimation {
-            viewModel.moveTask(from: from, to: to)
         }
     }
 

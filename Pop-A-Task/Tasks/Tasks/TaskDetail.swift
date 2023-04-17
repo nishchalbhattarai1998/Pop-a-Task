@@ -190,7 +190,7 @@ struct TaskDetail: View {
                         ForEach(groupViewModel.filteredData) { group in
                             Button(action: {
                                 self.selectedGroup = group.name
-                                updateTaskGroup()
+                                taskViewModel.changeTaskGroup(taskID: task.id ?? "Not found", newGroupID: group.id ?? "Not Found", newGroupName: group.name)
                             }) {
                                 Text(group.name)
                             }
@@ -369,16 +369,16 @@ struct TaskDetail: View {
                 }
             }
         }
-    func updateTaskGroup() {
-        guard let taskID = task.id else { return }
-        taskViewModel.db.collection("tasks").document(taskID).updateData(["group": selectedGroup]) { error in
-            if let error = error {
-                print("Error updating task group: \(error.localizedDescription)")
-            } else {
-                print("Task group updated successfully")
-            }
-        }
-    }
+//    func updateTaskGroup() {
+//        guard let taskID = task.id else { return }
+//        taskViewModel.db.collection("tasks").document(taskID).updateData(["group": selectedGroup]) { error in
+//            if let error = error {
+//                print("Error updating task group: \(error.localizedDescription)")
+//            } else {
+//                print("Task group updated successfully")
+//            }
+//        }
+//    }
     func updateTaskAssignee() {
         guard let taskID = task.id else { return }
         taskViewModel.db.collection("tasks").document(taskID).updateData(["assignee": selectedAssignee]) { error in

@@ -15,10 +15,12 @@ struct GroupDetail: View {
     @ObservedObject var userData: UserData
     let group: Groups
     @StateObject var viewModel = GroupViewModel()
+    @StateObject var taskViewModel = TaskViewModel()
     @EnvironmentObject var groupViewModel: GroupViewModel
     @State var showAddMemberView = false
     @State private var showAlert = false
     @State private var showNoPermissionAlert = false
+    @State private var memberNames: [String] = []
     
     
     private let dateFormatter: DateFormatter = {
@@ -79,10 +81,10 @@ struct GroupDetail: View {
                 }
             }) {
                 ForEach(group.members, id: \.self) { member in
-                    Text(member)
-                        .padding(.vertical, 8)
-                    
+                    MemberRow(viewModel: viewModel, group: group, userID: member)
                 }
+
+
                 
             }
             .padding()
@@ -96,8 +98,18 @@ struct GroupDetail: View {
                 }
             }) {
                 // Display tasks
+                ForEach(taskViewModel.filteredData.filter { $0.groupID == group.id }) { task in
+                    Text(task.name)
+                        .padding()
+                }
             }
             .listRowInsets(EdgeInsets())
+            .onAppear {
+                taskViewModel.selectedGroupID = group.id
+            }
+
+
+
             
             Button("Permanently Delete Group") {
                 
@@ -141,3 +153,76 @@ struct GroupDetail_Previews: PreviewProvider {
         }
     }
 }
+
+struct MemberRow: View {
+    @ObservedObject var viewModel: GroupViewModel
+    let group: Groups
+    let userID: String
+    @State private var userName = ""
+    @State private var showAlert = false
+
+    var body: some View {
+        HStack {
+            Text(userName)
+                .padding(.vertical, 8)
+            
+            Spacer()
+
+            if viewModel.userData.userID == userID { // Current user
+                if viewModel.userData.userName == group.createBy { // Current user is admin
+                    Text("Admin")
+//                        .padding(.trailing)
+                        .foregroundColor(.red)
+                } else { // Current user is not admin and can leave
+                    Button(action: {
+                        showAlert = true
+                    }) {
+                        Text("Leave")
+                            .foregroundColor(.red)
+                    }
+                    .alert(isPresented: $showAlert) {
+                        Alert(title: Text("Leave group"),
+                              message: Text("Are you sure you want to leave this group?"),
+                              primaryButton: .destructive(Text("Leave")) {
+                                  viewModel.removeMemberFromGroup(groupID: group.id!, memberID: userID)
+                              },
+                              secondaryButton: .cancel())
+                    }
+                }
+            } else if viewModel.userData.userName == group.createBy { // Current user is admin, viewing other members
+                if userName == group.createBy { // Other member is also admin
+                    Text("Admin")
+//                        .padding(.trailing)
+                        .foregroundColor(.red)
+                } else {
+                    Button(action: {
+                        showAlert = true
+                    }) {
+                        Image(systemName: "trash")
+                            .foregroundColor(.red)
+                    }
+                    .alert(isPresented: $showAlert) {
+                        Alert(title: Text("Remove member"),
+                              message: Text("Are you sure you want to remove \(userName) from this group?"),
+                              primaryButton: .destructive(Text("Remove")) {
+                                  viewModel.removeMemberFromGroup(groupID: group.id!, memberID: userID)
+                              },
+                              secondaryButton: .cancel())
+                    }
+                }
+            } else { // Current user is not admin, viewing other members
+                if userName == group.createBy {
+                    Text("Admin")
+//                        .padding(.trailing)
+                        .foregroundColor(.red)
+                }
+            }
+        }
+        .onAppear {
+            viewModel.fetchUserName(by: userID) { fetchedUserName in
+                userName = fetchedUserName
+            }
+        }
+    }
+}
+

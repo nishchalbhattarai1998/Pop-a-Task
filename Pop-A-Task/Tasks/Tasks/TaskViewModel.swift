@@ -19,7 +19,11 @@ class TaskViewModel: ObservableObject {
     private var listenerRegistration: ListenerRegistration?
     @Published var task = Task(id: "", name: "", description: "", category: "", status: "", priority: "", assignee: "", group: "", groupID: "", deadline: Date(), createdBy: "", createdAt: Date(), taskID: "")
     @Published var listData = [Task]()
-    @Published var filteredData = [Task]()
+    @Published var filteredData = [Task](){
+        didSet {
+            updateDeadlineCounts()
+        }
+    }
     @Published var highPriorityCount = 0
     @Published var mediumPriorityCount = 0
     @Published var lowPriorityCount = 0
@@ -37,46 +41,72 @@ class TaskViewModel: ObservableObject {
     @Published var navTitle = "Tasks"
     var filteredUsers: [(id: String, name: String)] = []
     
+    @Published var deadlineData: [Double] = [0, 0, 0, 0]
+    
+    @Published var selectedGroupID: String? {
+        didSet {
+            filterTasksByGroup()
+        }
+    }
+
+
+
+
+    
     init() {
         fetchTasks()
         
     }
+
+    
     func fetchTasks() {
         guard let userID = userData.userID else {
             return
         }
-        listenerRegistration = db.collection("tasks")
-            .addSnapshotListener { (querySnapshot, error) in
-                if let querySnapshot = querySnapshot {
-                    self.listData = querySnapshot.documents.compactMap { document in
-                        do {
-                            var task = try document.data(as: Task.self)
-                            task.status = task.status?.trimmingCharacters(in: .whitespacesAndNewlines)
-                            return task
-                        } catch {
-                            print(error)
+        
+        // Fetch the groups the user is a member of
+        db.collection("groups")
+            .whereField("members", arrayContains: userID)
+            .getDocuments { (querySnapshot, error) in
+                if let error = error {
+                    print("Error getting user groups: \(error.localizedDescription)")
+                } else {
+                    let userGroupIDs = querySnapshot?.documents.map { $0.documentID } ?? []
+                    
+                    // Fetch tasks belonging to the user's groups
+                    self.listenerRegistration = self.db.collection("tasks")
+                        .whereField("groupID", in: userGroupIDs)
+                        .addSnapshotListener { (querySnapshot, error) in
+                            if let querySnapshot = querySnapshot {
+                                self.listData = querySnapshot.documents.compactMap { document in
+                                    do {
+                                        var task = try document.data(as: Task.self)
+                                        task.status = task.status?.trimmingCharacters(in: .whitespacesAndNewlines)
+                                        return task
+                                    } catch {
+                                        print(error)
+                                    }
+                                    return nil
+                                }
+                                self.filterSearchResults()
+                                self.updateDeadlineCounts()
+                                
+                                // Count tasks by priority
+                                self.highPriorityCount = self.filteredData.filter { $0.priority == "High" }.count
+                                self.mediumPriorityCount = self.filteredData.filter { $0.priority == "Medium" }.count
+                                self.lowPriorityCount = self.filteredData.filter { $0.priority == "Low" }.count
+                                
+                                // Count tasks by status
+                                self.todoCount = self.filteredData.filter { $0.status == "ToDo" }.count
+                                self.inProgressCount = self.filteredData.filter { $0.status == "InProgress" }.count
+                                self.doneCount = self.filteredData.filter { $0.status == "Done" }.count
+                            }
                         }
-                        return nil
-                    }
-                    self.filterSearchResults()
-                    self.updateDeadlineCounts()
-                    print("Fetched tasks: \(self.listData)")
-                    
-                    // Count tasks by priority
-                    self.highPriorityCount = self.filteredData.filter { $0.priority == "High" }.count
-                    self.mediumPriorityCount = self.filteredData.filter { $0.priority == "Medium" }.count
-                    self.lowPriorityCount = self.filteredData.filter { $0.priority == "Low" }.count
-                    
-                    // Count tasks by status
-                    self.todoCount = self.filteredData.filter { $0.status == "ToDo" }.count
-                    self.inProgressCount = self.filteredData.filter { $0.status == "InProgress" }.count
-                    self.doneCount = self.filteredData.filter { $0.status == "Done" }.count
-                    
-                    print("ToDo: \(self.todoCount), InProgress: \(self.inProgressCount), Done: \(self.doneCount)")
                 }
             }
+        self.filterTasksByGroup()
     }
-    
+
     
     private func updateDeadlineCounts() {
         let now = Date()
@@ -84,27 +114,37 @@ class TaskViewModel: ObservableObject {
         dueSoonCount = 0
         dueThisWeekCount = 0
         dueLaterCount = 0
-        
+
         for task in filteredData {
-            guard let deadline = task.deadline else { continue }
+            guard let deadline = task.deadline, task.status != "Done" else { continue }
             let daysUntilDeadline = Calendar.current.dateComponents([.day], from: now, to: deadline).day ?? 0
-            
+
             switch daysUntilDeadline {
             case ..<0:
                 overdueCount += 1
-                print(overdueCount)
             case 0...2:
                 dueSoonCount += 1
-                print(dueSoonCount)
             case 3...7:
                 dueThisWeekCount += 1
-                print(dueThisWeekCount)
             default:
                 dueLaterCount += 1
-                print(dueLaterCount)
             }
         }
+
+        let totalCount = Double(overdueCount + dueSoonCount + dueThisWeekCount + dueLaterCount)
+
+        if totalCount == 0 {
+            deadlineData = [0, 0, 0, 0]
+        } else {
+            deadlineData = [
+                Double(overdueCount) / totalCount * 100,
+                Double(dueSoonCount) / totalCount * 100,
+                Double(dueThisWeekCount) / totalCount * 100,
+                Double(dueLaterCount) / totalCount * 100
+            ]
+        }
     }
+
     
     
     
@@ -141,7 +181,7 @@ class TaskViewModel: ObservableObject {
     }
     
     func addMembersToTask(id: String, assigne: [String]) {
-        print(id + " " + assigne[0])
+//        print(id + " " + assigne[0])
         if let taskindex = listData.firstIndex(where: { $0.id == id }) {
             var updatedTask = listData[taskindex]
             for member in assigne {
@@ -212,15 +252,32 @@ class TaskViewModel: ObservableObject {
                             (id: $0.documentID, name: $0.data()["name"] as? String ?? "")
                         } ?? []
                         
-                        print(self.filteredUsers)
+//                        print(self.filteredUsers)
                     }
                 }
         }
     }
-    //    func getTaskID(taskName: String) -> String? {
-    //        filteredData.first(where: { $0.name == taskName })?.id
-    //    }
     
+    func changeTaskGroup(taskID: String, newGroupID: String, newGroupName: String) {
+        if let taskIndex = listData.firstIndex(where: { $0.id == taskID }) {
+            var updatedTask = listData[taskIndex]
+            updatedTask.groupID = newGroupID
+            updatedTask.group = newGroupName
+            updateTask(updatedTask)
+        }
+    }
+
+    private func filterTasksByGroup() {
+        if let selectedGroupID = selectedGroupID {
+            filteredData = listData.filter { task in
+                task.groupID == selectedGroupID
+            }
+        } else {
+            filteredData = listData
+        }
+    }
+
+
     var displayCount: String {
         if filteredData.count == listData.count {
             return "\(listData.count) tasks"

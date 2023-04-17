@@ -21,7 +21,7 @@ struct HomeView: View {
                         HStack{
                             ProgressCircleView2(progress: viewModel.filteredData.count, color: hexToColor(hex: "#60C689"), title: "Groups")
                             
-                            ProgressCircleView2(progress: taskViewModel.filteredData.count, color: hexToColor(hex: "#279880"), title: "Tasks")
+                            ProgressCircleView2(progress: taskViewModel.filteredData.count, color: hexToColor(hex: "#60C689"), title: "Tasks")
                             
                         }
 

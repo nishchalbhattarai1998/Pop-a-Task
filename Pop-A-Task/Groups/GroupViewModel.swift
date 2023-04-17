@@ -65,19 +65,59 @@ class GroupViewModel: ObservableObject {
     }
     
     
+//    func deleteGroup(_ documentID: String) {
+//        let docRef = db.collection("groups").document(documentID)
+//        docRef.delete { error in
+//            if let error = error {
+//                print("Error deleting group: \(error.localizedDescription)")
+//            } else {
+//                print("Group successfully deleted")
+//            }
+//        }
+//    }
+    
     func deleteGroup(_ documentID: String) {
-        let docRef = db.collection("groups").document(documentID)
-        docRef.delete { error in
-            if let error = error {
-                print("Error deleting group: \(error.localizedDescription)")
-            } else {
-                print("Group successfully deleted")
+        // Fetch tasks related to the group
+        db.collection("tasks")
+            .whereField("groupID", isEqualTo: documentID)
+            .getDocuments { querySnapshot, error in
+                if let querySnapshot = querySnapshot {
+                    let group = DispatchGroup()
+
+                    // Delete tasks related to the group
+                    for document in querySnapshot.documents {
+                        group.enter()
+                        document.reference.delete { error in
+                            if let error = error {
+                                print("Error deleting task: \(error.localizedDescription)")
+                            } else {
+                                print("Task successfully deleted")
+                            }
+                            group.leave()
+                        }
+                    }
+
+                    group.notify(queue: .main) {
+                        // Delete the group
+                        let docRef = self.db.collection("groups").document(documentID)
+                        docRef.delete { error in
+                            if let error = error {
+                                print("Error deleting group: \(error.localizedDescription)")
+                            } else {
+                                print("Group successfully deleted")
+                            }
+                        }
+                    }
+                } else if let error = error {
+                    print("Error fetching tasks: \(error.localizedDescription)")
+                }
             }
-        }
     }
+
+
     
     func addMembersToGroup(id: String, members: [String]) {
-        print(id + " " + members[0])
+//        print(id + " " + members[0])
         if let groupIndex = listData.firstIndex(where: { $0.id == id }) {
             var updatedGroup = listData[groupIndex]
             for member in members {
@@ -148,7 +188,7 @@ class GroupViewModel: ObservableObject {
                             (id: $0.documentID, name: $0.data()["name"] as? String ?? "")
                         } ?? []
                         
-                        print(self.filteredUsers)
+//                        print(self.filteredUsers)
                     }
                 }
         }
@@ -164,6 +204,27 @@ class GroupViewModel: ObservableObject {
             return "\(filteredData.count) of \(listData.count) groups"
         }
     }
+    
+    func removeMemberFromGroup(groupID: String, memberID: String) {
+        if let groupIndex = listData.firstIndex(where: { $0.id == groupID }) {
+            var updatedGroup = listData[groupIndex]
+            updatedGroup.members.removeAll { $0 == memberID }
+            updateGroup(updatedGroup)
+        }
+    }
+
+    func fetchUserName(by userID: String, completion: @escaping (String) -> Void) {
+        db.collection("users").document(userID).getDocument { (document, error) in
+            if let document = document, document.exists, let data = document.data(), let userName = data["name"] as? String {
+                completion(userName)
+            } else {
+                print("User not found")
+                completion("Unknown User")
+            }
+        }
+    }
+
+
     
     deinit {
         listenerRegistration?.remove()

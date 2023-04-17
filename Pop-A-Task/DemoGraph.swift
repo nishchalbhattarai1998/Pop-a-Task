@@ -50,20 +50,20 @@ struct ProgressCircleView1: View {
     }
 }
 
-//struct BarChartView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        BarChartView(data: [20, 60, 80, 100], maxHeight: 200, colors: [.red, .yellow, .green, .blue], labels: ["Label 1", "Label 2", "Label 3", "Label 4"], showPercentage: true)
-//    }
-//}
-
-struct ProgressCircleView2_Previews: PreviewProvider {
+struct BarChartView_Previews: PreviewProvider {
     static var previews: some View {
-        VStack {
-            ProgressCircleView2(progress: 75, color: .blue, title: "Completed")
-            ProgressCircleView2(progress: 25, color: .red, title: "Incomplete")
-        }
+        BarChartView(data: [20, 60, 80, 100, 30], maxHeight: 200, colors: [.red, .yellow, .green, .blue, .green], labels: ["Label 1", "Label 2", "Label 3", "Label 4", "Laqbel 5"], showPercentage: true)
     }
 }
+
+//struct ProgressCircleView2_Previews: PreviewProvider {
+//    static var previews: some View {
+//        VStack {
+//            ProgressCircleView2(progress: 75, color: .blue, title: "Completed")
+//            ProgressCircleView2(progress: 25, color: .red, title: "Incomplete")
+//        }
+//    }
+//}
 
 
 struct ProgressCircleView2: View {
@@ -106,66 +106,11 @@ struct ProgressCircleView2: View {
         }
         .frame(width: 50, height: 80)
         .padding(15)
-//        .background(Color.gray)
-//        .cornerRadius(20)
     }
 }
 
 
-//Bar Chart
-//import SwiftUI
-//struct BarChartView: View {
-//    let data: [Double]
-//    let maxHeight: CGFloat
-//    let colors: [Color]
-//    let labels: [String]
-//
-//    init(data: [Double], maxHeight: CGFloat, colors: [Color], labels: [String]) {
-//        self.data = data
-//        self.maxHeight = maxHeight
-//        self.colors = colors
-//        self.labels = labels
-//    }
-//
-//    var body: some View {
-//        VStack {
-//            HStack(spacing: 70) {
-//                ForEach(data.indices) { index in
-//                    BarView(value: data[index], maxHeight: maxHeight, color: colors[index])
-//                }
-//            }
-//            HStack(spacing: 25) {
-//                ForEach(labels.indices) { index in
-//                    Text(labels[index])
-//                        .font(.footnote)
-//                        .foregroundColor(.gray)
-//                }
-//            }
-//        }
-//    }
-//}
-//
-//struct BarView: View {
-//    let value: Double
-//    let maxHeight: CGFloat
-//    let color: Color
-//
-//    var body: some View {
-//        VStack {
-//            ZStack(alignment: .bottom) {
-//                Capsule()
-//                    .frame(width: 5, height: maxHeight)
-//                    .foregroundColor(Color.gray.opacity(0.1))
-//
-//                Capsule()
-//                    .frame(width: 10, height: CGFloat(value / 100 * Double(maxHeight)))
-//                    .foregroundColor(color)
-//                    .shadow(radius: 4)
-//            }
-//            Text(String(format: "%.0f", value))
-//        }
-//    }
-//}
+
 import SwiftUI
 
 struct BarChartView: View {

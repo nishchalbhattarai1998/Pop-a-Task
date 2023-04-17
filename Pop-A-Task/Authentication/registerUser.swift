@@ -22,11 +22,10 @@ struct RegisterView: View {
     
     var body: some View {
         VStack {
-            Image(systemName: "lines.measurement.horizontal")
-                .padding(.top, 0.0)
-                .imageScale(.large)
-                .foregroundColor(.green)
-                .font(.largeTitle)
+            Image("splashLogo")
+                .resizable()
+                .frame(width: 200, height: 200)
+                .padding(.horizontal)
             
             Text("Pop A Task").fontWeight(.heavy)
                 .foregroundColor(.green)

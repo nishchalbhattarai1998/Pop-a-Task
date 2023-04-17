@@ -24,6 +24,15 @@ struct profileView: View {
     var body: some View {
         NavigationView{
             VStack {
+                ZStack {
+                    Circle()
+                        .foregroundColor(.green)
+                    Text(getInitials(from: username))
+                        .foregroundColor(.white)
+                        .font(.system(size: 50, weight: .bold))
+                }
+                .frame(width: 200, height: 200)
+                
                 Text(username)
                     .padding()
                     .font(.title)
@@ -32,8 +41,8 @@ struct profileView: View {
                     NavigationLink(destination: userDetails(userData: UserData()))  {
                         Label("Profile", systemImage: "person")
                     }
-                    NavigationLink(destination: HelpView()) {
-                        Label("Help", systemImage: "questionmark.circle")
+                    NavigationLink(destination: AboutView()) {
+                        Label("About", systemImage: "questionmark.circle")
                     }
                     Button(action: {
                         isDarkMode.toggle()
@@ -78,6 +87,14 @@ struct profileView: View {
             print("isLoggedIn if state inside logout function manual change: \(self.isLoggedIn)")
         }
     }
+    private func getInitials(from name: String) -> String {
+            let components = name.components(separatedBy: " ")
+            var initials = ""
+            for component in components {
+                initials += component.prefix(1)
+            }
+            return initials
+        }
 }
 
 

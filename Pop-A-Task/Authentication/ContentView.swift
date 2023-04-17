@@ -37,11 +37,10 @@ struct ContentView: View {
             
             VStack {
                 //comment1
-                Image(systemName: "lines.measurement.horizontal")
-                    .padding(.top, 40.0)
-                    .imageScale(.large)
-                    .foregroundColor(.green)
-                    .font(.largeTitle)
+                Image("splashLogo")
+                    .resizable()
+                    .frame(width: 200, height: 200)
+                    .padding(.horizontal)
                     
                 
                 Text("Pop A Task").fontWeight(.heavy)
