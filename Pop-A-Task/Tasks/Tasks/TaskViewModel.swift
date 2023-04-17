@@ -73,39 +73,47 @@ class TaskViewModel: ObservableObject {
                 } else {
                     let userGroupIDs = querySnapshot?.documents.map { $0.documentID } ?? []
                     
-                    // Fetch tasks belonging to the user's groups
-                    self.listenerRegistration = self.db.collection("tasks")
-                        .whereField("groupID", in: userGroupIDs)
-                        .addSnapshotListener { (querySnapshot, error) in
-                            if let querySnapshot = querySnapshot {
-                                self.listData = querySnapshot.documents.compactMap { document in
-                                    do {
-                                        var task = try document.data(as: Task.self)
-                                        task.status = task.status?.trimmingCharacters(in: .whitespacesAndNewlines)
-                                        return task
-                                    } catch {
-                                        print(error)
+                    // Check if userGroupIDs array is not empty
+                    if !userGroupIDs.isEmpty {
+                        // Fetch tasks belonging to the user's groups
+                        self.listenerRegistration = self.db.collection("tasks")
+                            .whereField("groupID", in: userGroupIDs)
+                            .addSnapshotListener { (querySnapshot, error) in
+                                if let querySnapshot = querySnapshot {
+                                    self.listData = querySnapshot.documents.compactMap { document in
+                                        do {
+                                            var task = try document.data(as: Task.self)
+                                            task.status = task.status?.trimmingCharacters(in: .whitespacesAndNewlines)
+                                            return task
+                                        } catch {
+                                            print(error)
+                                        }
+                                        return nil
                                     }
-                                    return nil
+                                    self.filterSearchResults()
+                                    self.updateDeadlineCounts()
+                                    
+                                    // Count tasks by priority
+                                    self.highPriorityCount = self.filteredData.filter { $0.priority == "High" }.count
+                                    self.mediumPriorityCount = self.filteredData.filter { $0.priority == "Medium" }.count
+                                    self.lowPriorityCount = self.filteredData.filter { $0.priority == "Low" }.count
+                                    
+                                    // Count tasks by status
+                                    self.todoCount = self.filteredData.filter { $0.status == "ToDo" }.count
+                                    self.inProgressCount = self.filteredData.filter { $0.status == "InProgress" }.count
+                                    self.doneCount = self.filteredData.filter { $0.status == "Done" }.count
                                 }
-                                self.filterSearchResults()
-                                self.updateDeadlineCounts()
-                                
-                                // Count tasks by priority
-                                self.highPriorityCount = self.filteredData.filter { $0.priority == "High" }.count
-                                self.mediumPriorityCount = self.filteredData.filter { $0.priority == "Medium" }.count
-                                self.lowPriorityCount = self.filteredData.filter { $0.priority == "Low" }.count
-                                
-                                // Count tasks by status
-                                self.todoCount = self.filteredData.filter { $0.status == "ToDo" }.count
-                                self.inProgressCount = self.filteredData.filter { $0.status == "InProgress" }.count
-                                self.doneCount = self.filteredData.filter { $0.status == "Done" }.count
                             }
-                        }
+                    } else {
+                        // If userGroupIDs array is empty, clear the listData and filteredData arrays
+                        self.listData = []
+                        self.filteredData = []
+                    }
                 }
             }
         self.filterTasksByGroup()
     }
+
 
     
     private func updateDeadlineCounts() {

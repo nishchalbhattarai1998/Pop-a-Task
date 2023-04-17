@@ -8,7 +8,7 @@ class GroupViewModel: ObservableObject {
     @ObservedObject var userData = UserData()
     private let db = Firestore.firestore()
     private var listenerRegistration: ListenerRegistration?
-    @Published var group = Groups(id:"",name: "", description: "", members: [], createDate: Date(), createBy: "", groupID: "")
+    @Published var group = Groups(id:"", name: "", description: "", members: [], createDate: Date(), createBy: "", groupID: "")
     @Published var listData = [Groups]()
     @Published var filteredData = [Groups]()
     @Published var searchTerm = ""
@@ -17,31 +17,38 @@ class GroupViewModel: ObservableObject {
     
     init() {
         fetchGroups()
-        
     }
     func fetchGroups() {
         guard let userID = userData.userID else {
+            print("Error: UserData userID is not set")
             return
         }
         listenerRegistration = db.collection("groups")
             .order(by: "name")
             .whereField("members", arrayContains: userID)
             .addSnapshotListener { (querySnapshot, error) in
+                if let error = error {
+                    print("Error fetching groups: \(error.localizedDescription)")
+                    return
+                }
+                
                 if let querySnapshot = querySnapshot {
                     self.listData = querySnapshot.documents.compactMap { document in
                         do {
                             let group = try document.data(as: Groups.self)
                             return group
                         } catch {
-                            print(error)
+                            print("Error decoding group document: \(error.localizedDescription)")
                         }
                         return nil
                     }
                     self.filterSearchResults()
+                } else {
+                    print("Error: Query snapshot is nil")
                 }
             }
     }
-    
+
     
     
     func addGroup(_ group: Groups) {
@@ -49,7 +56,7 @@ class GroupViewModel: ObservableObject {
             let _ = try db.collection("groups").addDocument(from: group)
         }
         catch {
-            fatalError("Unable to encode group: \(error.localizedDescription).")
+            print("Error adding group: \(error.localizedDescription)")
         }
     }
     
@@ -59,8 +66,10 @@ class GroupViewModel: ObservableObject {
                 try db.collection("groups").document(groupID).setData(from: group)
             }
             catch {
-                fatalError("Unable to encode group: \(error.localizedDescription).")
+                print("Error updating group: \(error.localizedDescription)")
             }
+        } else {
+            print("Error: Group id is not set")
         }
     }
     

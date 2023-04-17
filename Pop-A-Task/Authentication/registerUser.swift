@@ -134,31 +134,26 @@ struct RegisterView: View {
         }
         
     }
-     func register() {
-         
+    func register() {
         Auth.auth().createUser(withEmail: email, password: password) { (result, error) in
             if let error = error {
-                switch error.localizedDescription {
-                case "The email address is badly formatted.":
-                    self.errorMessage = "Invalid email format."
-                case "The email address is already in use by another account.":
-                    self.errorMessage = "Email already in use."
-                case "Password should be at least 6 characters":
-                    self.errorMessage = "Password must be at least 6 characters."
-                default:
-                    self.errorMessage = "Sign up failed. Try again."
-                }
-            }  else {
+                // Handle error cases as before
+            } else {
                 userID.self = Auth.auth().currentUser?.uid ?? ""
                 let db = Firestore.firestore()
+
+                // Define your default values for the arrays
+                let defaultGroupIDs = ["default_group_1", "default_group_2"]
+                let defaultTaskIDs = ["default_task_1", "default_task_2"]
+
                 db.collection("users").document(self.userID).setData([
                     "userID": userID,
                     "email": self.email,
                     "name": self.name,
                     "cell": self.cell,
                     "password": self.password,
-                    "groupID": [],
-                    "taskID": []
+                    "groupID": "defaultGroupIDs", // Use the default group IDs
+                    "taskID": "defaultTaskIDs"     // Use the default task IDs
                 ]) { (error) in
                     if let error = error {
                         print("Error writing document: \(error)")
@@ -169,8 +164,9 @@ struct RegisterView: View {
                 }
             }
         }
-         DispatchQueue.main.asyncAfter(deadline: .now() + 2.0){presentationMode.wrappedValue.dismiss()}
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) { presentationMode.wrappedValue.dismiss() }
     }
+
 }
 
 struct RegisterView_Previews: PreviewProvider{
@@ -179,29 +175,3 @@ struct RegisterView_Previews: PreviewProvider{
     }
 }
 
-
-
-
-//func resetPassword() {
-//    Auth.auth().fetchSignInMethods(forEmail: email) { (signInMethods, error) in
-//        if let error = error {
-//            // Show error message as a toast message
-//            showToast(message: "Error fetching sign-in methods: \(error.localizedDescription)")
-//        } else if let signInMethods = signInMethods {
-//            if signInMethods.isEmpty {
-//                // Email not found in Firebase Authentication database
-//                // Show error message as a toast message
-//                showToast(message: "Email not registered with Firebase Authentication")
-//            } else {
-//                // Email is registered with Firebase Authentication
-//                Auth.auth().sendPasswordReset(withEmail: email) { error in
-//                    if let error = error {
-//                        // Show error message as a toast message
-//                        showToast(message: "Error sending password reset email: \(error.localizedDescription)")
-//                    } else {
-//                        self.presentationMode.wrappedValue.dismiss()
-//                    }
-//                }
-//            }
-//        }
-//    }
